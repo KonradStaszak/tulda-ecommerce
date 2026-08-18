@@ -6,11 +6,31 @@ import type {
   CatalogueVariant,
   GbpCurrencyCode,
 } from '../../types/catalog'
-import type { CategoryRow, ProductCategoryRow, ProductImageRow, ProductRow, ProductVariantRow } from './types'
+import type { CategoryRow, ProductCategoryRow, ProductImageRow, ProductRow, ProductVariantRow, TechnicalDocumentRow } from './types'
 
 export interface CatalogueData {
   categories: CatalogueCategory[]
   products: CatalogueProduct[]
+}
+
+export interface CatalogueTechnicalDocument {
+  id: string
+  title: string
+  documentType: string
+  externalUrl: string | null
+  storagePath: string | null
+  version: string | null
+  publishedAt: string | null
+}
+
+export interface CatalogueTechnicalDocument {
+  id: string
+  title: string
+  documentType: string
+  externalUrl: string | null
+  storagePath: string | null
+  version: string | null
+  publishedAt: string | null
 }
 
 let cataloguePromise: Promise<CatalogueData> | null = null
@@ -176,6 +196,19 @@ export async function getCategories() {
 
 export async function getProductBySlug(slug: string) {
   return (await getCatalogue()).products.find((product) => product.slug === slug) ?? null
+}
+
+export async function getTechnicalDocumentsByProductId(productId: string): Promise<CatalogueTechnicalDocument[]> {
+  const result = await supabase.from('technical_documents').select('*').eq('product_id', productId).order('published_at', { ascending: false })
+  return requireData(result.data, result.error).map((document: TechnicalDocumentRow) => ({
+    id: document.id,
+    title: document.title,
+    documentType: document.document_type,
+    externalUrl: document.external_url,
+    storagePath: document.storage_path,
+    version: document.version,
+    publishedAt: document.published_at,
+  }))
 }
 
 export async function getProductsByCategory(slug: string) {

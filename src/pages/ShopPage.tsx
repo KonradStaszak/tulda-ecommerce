@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { filterProducts } from '../services/catalogue/repository'
 import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct, FilterState, SortKey } from '../types/catalog'
 import ProductCard from '../components/ProductCard'
@@ -24,32 +25,44 @@ const defaultFilters: FilterState = {
 }
 
 interface ShopPageProps {
-  onNavigateHome: () => void
   onAddToCart: (item: CatalogueCartLine) => void
   wishlist: string[]
   onToggleWishlist: (id: string) => void
-  initialCategory?: string
   products: CatalogueProduct[]
   categories: CatalogueCategory[]
   loading: boolean
   error: Error | null
 }
 
-export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onToggleWishlist, initialCategory, products, categories, loading, error }: ShopPageProps) {
-  const [filters, setFilters] = useState<FilterState>({
-    ...defaultFilters,
-    categories: initialCategory ? [initialCategory] : [],
-  })
+export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, products, categories, loading, error }: ShopPageProps) {
+  const { categorySlug } = useParams()
+  const navigate = useNavigate()
+  const routeCategory = categories.find((category) => category.slug === categorySlug)
+  const invalidCategory = Boolean(categorySlug) && !loading && !routeCategory
+  const [filters, setFilters] = useState<FilterState>(defaultFilters)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  useEffect(() => {
+    setFilters((current) => ({ ...current, categories: routeCategory ? [routeCategory.id] : [], page: 1 }))
+  }, [routeCategory?.id, categorySlug])
 
   const filtered = useMemo(() => filterProducts(products, filters), [products, filters])
   const paginated = filtered.slice(0, filters.page * PAGE_SIZE)
   const hasMore = paginated.length < filtered.length
 
+  const updateFilters = (next: FilterState) => {
+    if (next.categories.length === 0 && categorySlug) navigate('/products')
+    if (next.categories.length === 1) {
+      const nextCategory = categories.find((category) => category.id === next.categories[0])
+      if (nextCategory && nextCategory.slug !== categorySlug) navigate(`/products/${nextCategory.slug}`)
+    }
+    setFilters(next)
+  }
+
   const activeFilterChips: { label: string; remove: () => void }[] = [
     ...filters.categories.map(c => ({
       label: categories.find(x => x.id === c)?.name ?? c,
-      remove: () => setFilters(f => ({ ...f, categories: f.categories.filter(x => x !== c), page: 1 })),
+      remove: () => updateFilters({ ...filters, categories: filters.categories.filter(x => x !== c), page: 1 }),
     })),
     ...(filters.inStockOnly ? [{ label: 'In stock', remove: () => setFilters(f => ({ ...f, inStockOnly: false, page: 1 })) }] : []),
     ...filters.sizes.map(s => ({
@@ -67,11 +80,11 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
         <div className="max-w-[1400px] mx-auto px-6 py-5">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 mb-4" aria-label="Breadcrumb">
-            <button onClick={onNavigateHome}
+            <Link to="/"
               className="text-[12px] transition-colors hover:text-[var(--primary)]"
               style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
               Home
-            </button>
+            </Link>
             <svg className="w-3 h-3" style={{ color: 'var(--muted-foreground)' }} fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 4l4 4-4 4" />
             </svg>
@@ -94,7 +107,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
             {/* Category nav pills — horizontal scroll */}
             <div className="flex gap-2 overflow-x-auto pb-1 shrink-0" style={{ scrollbarWidth: 'none' }}>
               <button
-                onClick={() => setFilters(f => ({ ...f, categories: [], page: 1 }))}
+                onClick={() => navigate('/products')}
                 className="shrink-0 px-3.5 py-1.5 text-[12px] font-semibold rounded-sm border transition-all"
                 style={{
                   borderColor: filters.categories.length === 0 ? 'var(--primary)' : 'var(--border)',
@@ -108,13 +121,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
                 const active = filters.categories.includes(cat.id)
                 return (
                   <button key={cat.id}
-                    onClick={() => {
-                      setFilters(f => ({
-                        ...f,
-                        categories: active ? f.categories.filter(c => c !== cat.id) : [cat.id],
-                        page: 1,
-                      }))
-                    }}
+                    onClick={() => navigate(active ? '/products' : `/products/${cat.slug}`)}
                     className="shrink-0 px-3.5 py-1.5 text-[12px] font-semibold rounded-sm border transition-all"
                     style={{
                       borderColor: active ? 'var(--primary)' : 'var(--border)',
@@ -232,7 +239,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
               </span>
             ))}
             <button
-              onClick={() => setFilters(f => ({ ...f, categories: [], inStockOnly: false, sizes: [], page: 1 }))}
+              onClick={() => updateFilters({ ...filters, categories: [], inStockOnly: false, sizes: [], page: 1 })}
               className="text-[11px] font-medium transition-colors hover:text-[var(--primary)]"
               style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
               Clear all
@@ -246,7 +253,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
           <div className="hidden lg:block shrink-0" style={{ width: 220 }}>
             <FilterSidebar
               filters={filters}
-              onChange={setFilters}
+              onChange={updateFilters}
               totalCount={products.length}
               filteredCount={filtered.length}
               categories={categories}
@@ -259,12 +266,14 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[370px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }} />)}
               </div>
+            ) : invalidCategory ? (
+              <InvalidCategory categorySlug={categorySlug} />
             ) : error ? (
               <LoadError />
             ) : products.length === 0 ? (
               <EmptyCatalogue />
             ) : filtered.length === 0 ? (
-              <EmptyState onClear={() => setFilters(defaultFilters)} />
+              <EmptyState onClear={() => updateFilters(defaultFilters)} />
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -308,7 +317,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
         open={mobileFiltersOpen}
         onClose={() => setMobileFiltersOpen(false)}
         filters={filters}
-        onChange={setFilters}
+        onChange={updateFilters}
         totalCount={products.length}
         filteredCount={filtered.length}
         categories={categories}
@@ -355,6 +364,16 @@ function EmptyCatalogue() {
     <div className="flex flex-col items-center justify-center py-24 text-center">
       <p className="text-base font-semibold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>No products are available</p>
       <p className="text-[13px] max-w-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Please check back shortly.</p>
+    </div>
+  )
+}
+
+function InvalidCategory({ categorySlug }: { categorySlug?: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <p className="text-base font-semibold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Category not found</p>
+      <p className="text-[13px] max-w-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>“{categorySlug}” is not a catalogue category.</p>
+      <Link to="/products" className="mt-6 px-6 py-2.5 text-[13px] font-semibold rounded-sm" style={{ backgroundColor: 'var(--primary)', color: '#fff', fontFamily: 'Inter, sans-serif' }}>View all products</Link>
     </div>
   )
 }

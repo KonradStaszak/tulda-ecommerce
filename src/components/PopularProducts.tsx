@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ProductCard from './ProductCard'
 import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct } from '../types/catalog'
+import { Link } from 'react-router-dom'
 
 interface PopularProductsProps {
   products: CatalogueProduct[]
@@ -10,10 +11,9 @@ interface PopularProductsProps {
   onAddToCart: (item: CatalogueCartLine) => void
   wishlist: string[]
   onToggleWishlist: (id: string) => void
-  onViewAll?: () => void
 }
 
-export default function PopularProducts({ products, categories, loading, error, onAddToCart, wishlist, onToggleWishlist, onViewAll }: PopularProductsProps) {
+export default function PopularProducts({ products, categories, loading, error, onAddToCart, wishlist, onToggleWishlist }: PopularProductsProps) {
   const [activeFilter, setActiveFilter] = useState('All')
 
   const filtered = activeFilter === 'All'
@@ -84,8 +84,8 @@ export default function PopularProducts({ products, categories, loading, error, 
 
         {/* CTA */}
         <div className="flex justify-center mt-12">
-          <button
-            onClick={onViewAll}
+          <Link
+            to="/products"
             className="flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-sm border transition-colors hover:bg-[var(--foreground)] hover:text-[var(--background)]"
             style={{
               borderColor: 'var(--foreground)',
@@ -98,7 +98,7 @@ export default function PopularProducts({ products, categories, loading, error, 
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </button>
+          </Link>
         </div>
       </div>
     </section>

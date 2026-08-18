@@ -1,12 +1,12 @@
 import type { CatalogueCategory } from '../types/catalog'
+import { Link } from 'react-router-dom'
 
 interface ShopByCategoryProps {
   categories: CatalogueCategory[]
   loading: boolean
-  onCategoryClick?: (id: string) => void
 }
 
-export default function ShopByCategory({ categories, loading, onCategoryClick }: ShopByCategoryProps) {
+export default function ShopByCategory({ categories, loading }: ShopByCategoryProps) {
   return (
     <section id="categories" className="py-20 md:py-28" style={{ backgroundColor: 'var(--background)' }}>
       <div className="max-w-[1400px] mx-auto px-6">
@@ -43,10 +43,9 @@ export default function ShopByCategory({ categories, loading, onCategoryClick }:
         {/* Categories grid — asymmetric layout */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {(loading ? Array.from({ length: 6 }, (_, i) => ({ id: `loading-${i}`, name: '', image: null, productCount: 0, slug: '', woocommerceId: null, description: null, parentId: null, color: 'var(--muted)' })) : categories).map((cat, i) => (
-            <a
+            <Link
               key={cat.id}
-              href="#"
-              onClick={e => { e.preventDefault(); onCategoryClick?.(cat.id) }}
+              to={cat.slug ? `/products/${cat.slug}` : '/products'}
               className={`group relative overflow-hidden rounded-sm cursor-pointer ${
                 i === 0 ? 'col-span-2 row-span-2 md:col-span-2' : ''
               }`}
@@ -100,7 +99,7 @@ export default function ShopByCategory({ categories, loading, onCategoryClick }:
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,23 +1,22 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import tuldaLogo from '../assets/brand/tulda-logo.png'
 import type { CatalogueCategory } from '../types/catalog'
 
 interface HeaderProps {
   cartCount: number
   onCartOpen: () => void
-  onNavigateShop: () => void
-  onNavigateHome: () => void
   categories: CatalogueCategory[]
 }
 
 const navLinks = [
   { label: 'Products', hasMega: true },
-  { label: 'Technical Docs', href: '#technical' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Technical Docs', to: '/technical-documents' },
+  { label: 'About', to: '/#about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
-export default function Header({ cartCount, onCartOpen, onNavigateShop, onNavigateHome, categories }: HeaderProps) {
+export default function Header({ cartCount, onCartOpen, categories }: HeaderProps) {
   const [megaOpen, setMegaOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -73,9 +72,9 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
           <div className="flex items-center justify-between h-[58px]">
 
             {/* Logo */}
-            <button onClick={onNavigateHome} className="flex items-center gap-2.5 shrink-0 mr-8">
+            <Link to="/" className="flex items-center gap-2.5 shrink-0 mr-8">
               <img src={tuldaLogo} alt="Tulda" className="h-7 w-auto object-contain" />
-            </button>
+            </Link>
 
             {/* Nav */}
             <nav className="hidden lg:flex items-center flex-1">
@@ -86,18 +85,10 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
                   onMouseEnter={link.hasMega ? openMega : undefined}
                   onMouseLeave={link.hasMega ? closeMega : undefined}
                 >
-                  <a
-                    href={link.hasMega ? '#' : link.href}
-                    className="flex items-center gap-1 px-3.5 py-1.5 text-[13px] font-medium rounded-sm transition-colors hover:text-[var(--primary)]"
-                    style={{
-                      fontFamily: 'Inter, sans-serif',
-                      color: megaOpen && link.hasMega ? 'var(--primary)' : 'var(--foreground)',
-                      letterSpacing: '0.005em',
-                    }}
-                    onClick={e => { if (link.hasMega) { e.preventDefault(); onNavigateShop() } }}
-                  >
-                    {link.label}
-                    {link.hasMega && (
+                  {link.hasMega ? (
+                    <Link to="/products" className="flex items-center gap-1 px-3.5 py-1.5 text-[13px] font-medium rounded-sm transition-colors hover:text-[var(--primary)]"
+                      style={{ fontFamily: 'Inter, sans-serif', color: megaOpen ? 'var(--primary)' : 'var(--foreground)', letterSpacing: '0.005em' }}>
+                      {link.label}
                       <svg
                         className="w-3 h-3"
                         style={{ transition: 'transform 0.15s', transform: megaOpen ? 'rotate(180deg)' : 'none' }}
@@ -105,8 +96,18 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 6l4 4 4-4" />
                       </svg>
-                    )}
-                  </a>
+                    </Link>
+                  ) : link.to ? (
+                    <NavLink to={link.to} className="flex items-center gap-1 px-3.5 py-1.5 text-[13px] font-medium rounded-sm transition-colors hover:text-[var(--primary)]"
+                      style={{ fontFamily: 'Inter, sans-serif', color: 'var(--foreground)', letterSpacing: '0.005em' }}>
+                      {link.label}
+                    </NavLink>
+                  ) : (
+                    <Link to="/products" className="flex items-center gap-1 px-3.5 py-1.5 text-[13px] font-medium rounded-sm transition-colors hover:text-[var(--primary)]"
+                      style={{ fontFamily: 'Inter, sans-serif', color: 'var(--foreground)', letterSpacing: '0.005em' }}>
+                      {link.label}
+                    </Link>
+                  )}
                 </div>
               ))}
             </nav>
@@ -227,19 +228,19 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
                       Every Tulda product is formulated for professional results — consistent, reliable, and built for daily use in demanding environments.
                     </p>
                   </div>
-                  <a href="#products" className="inline-flex items-center gap-1.5 text-xs font-semibold mt-5 transition-opacity hover:opacity-80"
+                  <Link to="/products" className="inline-flex items-center gap-1.5 text-xs font-semibold mt-5 transition-opacity hover:opacity-80"
                     style={{ color: 'var(--primary)', fontFamily: 'Inter, sans-serif' }}>
                     View all products
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Categories */}
                 <div className="col-span-5 grid grid-cols-3 gap-2.5">
                   {categories.map(cat => (
-                    <a key={cat.id} href={`#${cat.slug}`}
+                    <Link key={cat.id} to={`/products/${cat.slug}`}
                       className="group flex items-start gap-3 p-3.5 rounded-sm border transition-all hover:border-[var(--primary)]"
                       style={{ borderColor: 'var(--border)' }}>
                       <div className="w-9 h-9 rounded-sm shrink-0 flex items-center justify-center text-white text-[10px] font-bold"
@@ -255,7 +256,7 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
                           {cat.productCount} products
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -268,21 +269,26 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
           <div className="lg:hidden border-t" style={{ borderColor: 'var(--border)' }}>
             <div className="px-6 py-4 space-y-1">
               {navLinks.map(link => (
-                <a key={link.label} href={link.href ?? '#'}
+                link.to ? <NavLink key={link.label} to={link.to}
                   className="block py-2.5 text-[13px] font-medium border-b"
                   style={{ borderColor: 'var(--border)', fontFamily: 'Inter, sans-serif' }}
                   onClick={() => setMobileOpen(false)}>
                   {link.label}
-                </a>
+                </NavLink> : <Link key={link.label} to="/products"
+                  className="block py-2.5 text-[13px] font-medium border-b"
+                  style={{ borderColor: 'var(--border)', fontFamily: 'Inter, sans-serif' }}
+                  onClick={() => setMobileOpen(false)}>
+                  {link.label}
+                </Link>
               ))}
               <div className="pt-3 space-y-1">
                 {categories.map(cat => (
-                  <a key={cat.id} href={`#${cat.slug}`}
+                  <Link key={cat.id} to={`/products/${cat.slug}`}
                     className="block py-2 pl-3 text-[13px] border-l-2"
                     style={{ borderColor: 'var(--primary)', color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}
                     onClick={() => setMobileOpen(false)}>
                     {cat.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

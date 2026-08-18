@@ -1,6 +1,5 @@
-interface FooterProps {
-  onNavigateShop?: () => void
-}
+import { Link } from 'react-router-dom'
+import tuldaLogo from '../assets/brand/tulda-logo.png'
 
 const footerLinks = {
   Products: [
@@ -33,7 +32,16 @@ const footerLinks = {
   ],
 }
 
-export default function Footer({ onNavigateShop: _onNavigateShop }: FooterProps) {
+const productSlugs: Record<string, string> = {
+  Clearcoats: 'clearcoats',
+  Primers: 'primers',
+  Abrasives: 'abrasives',
+  Fillers: 'fillers',
+  Thinners: 'thinners',
+  Kits: 'kits',
+}
+
+export default function Footer() {
   return (
     <footer style={{ backgroundColor: 'var(--surface-dark)' }}>
       {/* Main footer */}
@@ -103,13 +111,13 @@ export default function Footer({ onNavigateShop: _onNavigateShop }: FooterProps)
               <ul className="space-y-2.5">
                 {links.map(link => (
                   <li key={link}>
-                    <a
-                      href="#"
+                    <Link
+                      to={productSlugs[link] ? `/products/${productSlugs[link]}` : link === 'Contact Us' || link === 'Book a Demo' ? '/contact' : link.includes('Data') || link.includes('Guides') ? '/technical-documents' : '/'}
                       className="text-xs transition-colors hover:text-[var(--primary)]"
                       style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif' }}
                     >
                       {link}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -175,4 +183,3 @@ export default function Footer({ onNavigateShop: _onNavigateShop }: FooterProps)
     </footer>
   )
 }
-import tuldaLogo from '../assets/brand/tulda-logo.png'

@@ -1,6 +1,4 @@
-interface HeroProps {
-  onShopNow: () => void
-}
+import { Link } from 'react-router-dom'
 
 const packshots = [
   { code: 'CT90', label: 'VHS Clearcoat', color: '#1c3a5e', height: 'h-52' },
@@ -9,7 +7,7 @@ const packshots = [
   { code: 'ST10', label: 'Thinner', color: '#3a3a3a', height: 'h-36' },
 ]
 
-export default function Hero({ onShopNow }: HeroProps) {
+export default function Hero() {
   return (
     <section
       style={{
@@ -61,8 +59,8 @@ export default function Hero({ onShopNow }: HeroProps) {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
-              <button
-                onClick={onShopNow}
+              <Link
+                to="/products"
                 className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm transition-opacity hover:opacity-90"
                 style={{
                   backgroundColor: 'var(--primary)',
@@ -75,7 +73,7 @@ export default function Hero({ onShopNow }: HeroProps) {
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </button>
+              </Link>
               <a
                 href="#categories"
                 className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm border transition-colors hover:border-[var(--foreground)]"
