@@ -1,7 +1,4 @@
 -- Corrects RETURNS TABLE output-variable ambiguity in the deployed draft-order RPC.
-Exit code: 0
-Wall time: 0.2 seconds
-Output:
 create or replace function public.create_order_draft(p_payload jsonb)
 returns table (
   order_id uuid,
@@ -294,4 +291,3 @@ $$;
 revoke all on function public.create_order_draft(jsonb) from public, anon, authenticated;
 
 grant execute on function public.create_order_draft(jsonb) to service_role;
-
