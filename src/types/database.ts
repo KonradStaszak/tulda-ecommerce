@@ -61,6 +61,201 @@ export type Database = {
           },
         ]
       }
+      order_addresses: {
+        Row: {
+          address_line_1: string
+          address_line_2: string | null
+          address_type: string
+          city: string
+          company: string | null
+          country: string
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+          order_id: string
+          postcode: string
+          region: string | null
+        }
+        Insert: {
+          address_line_1: string
+          address_line_2?: string | null
+          address_type: string
+          city: string
+          company?: string | null
+          country: string
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+          order_id: string
+          postcode: string
+          region?: string | null
+        }
+        Update: {
+          address_line_1?: string
+          address_line_2?: string | null
+          address_type?: string
+          city?: string
+          company?: string | null
+          country?: string
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          order_id?: string
+          postcode?: string
+          region?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_addresses_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          image_path: string | null
+          line_total_minor: number
+          order_id: string
+          product_code: string | null
+          product_id: string | null
+          product_name: string
+          product_slug: string | null
+          quantity: number
+          sku: string | null
+          unit_price_minor: number
+          variant_id: string | null
+          variant_label: string
+        }
+        Insert: {
+          created_at?: string
+          currency: string
+          id?: string
+          image_path?: string | null
+          line_total_minor: number
+          order_id: string
+          product_code?: string | null
+          product_id?: string | null
+          product_name: string
+          product_slug?: string | null
+          quantity: number
+          sku?: string | null
+          unit_price_minor: number
+          variant_id?: string | null
+          variant_label: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          image_path?: string | null
+          line_total_minor?: number
+          order_id?: string
+          product_code?: string | null
+          product_id?: string | null
+          product_name?: string
+          product_slug?: string | null
+          quantity?: number
+          sku?: string | null
+          unit_price_minor?: number
+          variant_id?: string | null
+          variant_label?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          currency: string
+          email: string
+          fulfillment_status: string
+          id: string
+          idempotency_hash: string
+          idempotency_key: string
+          notes: string | null
+          order_number: number
+          order_status: string
+          payment_status: string
+          phone: string
+          shipping_minor: number | null
+          subtotal_minor: number
+          tax_minor: number | null
+          total_minor: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          email: string
+          fulfillment_status?: string
+          id?: string
+          idempotency_hash: string
+          idempotency_key: string
+          notes?: string | null
+          order_number?: never
+          order_status?: string
+          payment_status?: string
+          phone: string
+          shipping_minor?: number | null
+          subtotal_minor: number
+          tax_minor?: number | null
+          total_minor?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          email?: string
+          fulfillment_status?: string
+          id?: string
+          idempotency_hash?: string
+          idempotency_key?: string
+          notes?: string | null
+          order_number?: never
+          order_status?: string
+          payment_status?: string
+          phone?: string
+          shipping_minor?: number | null
+          subtotal_minor?: number
+          tax_minor?: number | null
+          total_minor?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       product_categories: {
         Row: {
           category_id: string
