@@ -25,6 +25,7 @@ export type Database = {
           slug: string
           sort_order: number
           updated_at: string
+          woocommerce_id: number | null
         }
         Insert: {
           created_at?: string
@@ -36,6 +37,7 @@ export type Database = {
           slug: string
           sort_order?: number
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Update: {
           created_at?: string
@@ -47,6 +49,7 @@ export type Database = {
           slug?: string
           sort_order?: number
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Relationships: [
           {
@@ -150,6 +153,7 @@ export type Database = {
           sort_order: number
           stock_quantity: number | null
           updated_at: string
+          woocommerce_id: number | null
         }
         Insert: {
           created_at?: string
@@ -164,6 +168,7 @@ export type Database = {
           sort_order?: number
           stock_quantity?: number | null
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Update: {
           created_at?: string
@@ -178,6 +183,7 @@ export type Database = {
           sort_order?: number
           stock_quantity?: number | null
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Relationships: [
           {
@@ -202,6 +208,7 @@ export type Database = {
           short_description: string | null
           slug: string
           updated_at: string
+          woocommerce_id: number | null
         }
         Insert: {
           brand?: string
@@ -215,6 +222,7 @@ export type Database = {
           short_description?: string | null
           slug: string
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Update: {
           brand?: string
@@ -228,6 +236,7 @@ export type Database = {
           short_description?: string | null
           slug?: string
           updated_at?: string
+          woocommerce_id?: number | null
         }
         Relationships: []
       }
