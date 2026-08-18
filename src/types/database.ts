@@ -484,7 +484,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_order_draft: {
+        Args: { p_payload: Json }
+        Returns: {
+          currency: string
+          order_id: string
+          order_number: number
+          order_status: string
+          payment_status: string
+          reused_existing_order: boolean
+          subtotal_minor: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
