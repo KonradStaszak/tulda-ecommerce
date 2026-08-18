@@ -1,21 +1,22 @@
 import { useState } from 'react'
-import type { Product, CartItem } from '../types/catalog'
+import type { CatalogueCartLine, CatalogueProduct, Product as MockProduct } from '../types/catalog'
+import { formatMoney } from '../services/catalogue/money'
 
 interface ProductCardProps {
-  product: Product
-  onAddToCart: (item: CartItem) => void
+  product: CatalogueProduct
+  onAddToCart: (item: CatalogueCartLine) => void
   isWishlisted: boolean
   onToggleWishlist: () => void
 }
 
 export default function ProductCard({ product, onAddToCart, isWishlisted, onToggleWishlist }: ProductCardProps) {
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0])
+  const [selectedVariant, setSelectedVariant] = useState(product.variants[0])
   const [adding, setAdding] = useState(false)
 
   const handleAddToCart = () => {
-    if (!product.inStock) return
+    if (!selectedVariant.isInStock) return
     setAdding(true)
-    onAddToCart({ product, quantity: 1, size: selectedSize.label })
+    onAddToCart({ product, variant: selectedVariant, size: selectedVariant.label, quantity: 1 })
     setTimeout(() => setAdding(false), 1200)
   }
 
@@ -33,24 +34,21 @@ export default function ProductCard({ product, onAddToCart, isWishlisted, onTogg
         className="relative flex items-end justify-center pt-6 pb-4 overflow-hidden"
         style={{ backgroundColor: '#f4f4f4', minHeight: '180px' }}
       >
-        {/* Product bottle packshot */}
-        <ProductBottle product={product} />
+        {product.primaryImage ? (
+          <img
+            src={product.primaryImage.path}
+            alt={product.primaryImage.altText ?? product.name}
+            className="h-[172px] w-full object-contain px-5"
+          />
+        ) : (
+          <div className="flex h-[172px] items-center justify-center text-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
+            Product image unavailable
+          </div>
+        )}
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1">
-          {product.isNew && (
-            <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-sm text-white"
-              style={{ backgroundColor: 'var(--primary)', fontFamily: 'Inter, sans-serif', letterSpacing: '0.08em' }}>
-              New
-            </span>
-          )}
-          {product.badge && !product.isNew && (
-            <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-sm text-white"
-              style={{ backgroundColor: 'var(--surface-dark)', fontFamily: 'Inter, sans-serif', letterSpacing: '0.08em' }}>
-              {product.badge}
-            </span>
-          )}
-          {!product.inStock && (
+          {!product.isInStock && (
             <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-sm"
               style={{ backgroundColor: '#e5e5e5', color: '#666', fontFamily: 'Inter, sans-serif', letterSpacing: '0.08em' }}>
               Out of stock
@@ -82,33 +80,33 @@ export default function ProductCard({ product, onAddToCart, isWishlisted, onTogg
         {/* Category */}
         <p className="text-[10px] font-semibold uppercase tracking-widest mb-1.5"
           style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.14em' }}>
-          {product.categoryLabel}
+          {product.categories[0]?.name ?? 'Tulda'}
         </p>
 
         {/* Name */}
         <h3 className="text-[13px] font-semibold leading-snug mb-1.5"
           style={{ fontFamily: 'Inter, sans-serif', color: 'var(--foreground)' }}>
-          {product.shortName}
+          {product.name}
         </h3>
 
         {/* Key spec */}
         <p className="text-[11px] mb-3 leading-snug"
           style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
-          {product.keySpec}
+          {product.shortDescription ?? product.description ?? 'Professional automotive refinishing product.'}
         </p>
 
         {/* Size selector — show max 3, scroll if more */}
         <div className="flex flex-wrap gap-1 mb-4">
-          {product.sizes.slice(0, 4).map(size => (
-            <button key={size.label} onClick={() => setSelectedSize(size)}
+          {product.variants.slice(0, 4).map(variant => (
+            <button key={variant.id} onClick={() => setSelectedVariant(variant)}
               className="px-2 py-1 text-[10px] font-medium rounded-sm border transition-all"
               style={{
-                borderColor: selectedSize.label === size.label ? 'var(--primary)' : 'var(--border)',
-                backgroundColor: selectedSize.label === size.label ? 'var(--primary)' : 'transparent',
-                color: selectedSize.label === size.label ? '#fff' : 'var(--foreground)',
+                borderColor: selectedVariant.id === variant.id ? 'var(--primary)' : 'var(--border)',
+                backgroundColor: selectedVariant.id === variant.id ? 'var(--primary)' : 'transparent',
+                color: selectedVariant.id === variant.id ? '#fff' : 'var(--foreground)',
                 fontFamily: 'Inter, sans-serif',
               }}>
-              {size.label}
+              {variant.label}
             </button>
           ))}
         </div>
@@ -119,16 +117,16 @@ export default function ProductCard({ product, onAddToCart, isWishlisted, onTogg
           <div>
             <span className="text-base font-bold"
               style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--foreground)', letterSpacing: '0.01em' }}>
-              {product.currency}{selectedSize.price.toFixed(2)}
+              {formatMoney(selectedVariant.priceMinor, selectedVariant.currency)}
             </span>
-            {product.sizes.length > 1 && selectedSize.label === product.sizes[0].label && (
+            {product.variants.length > 1 && selectedVariant.id === product.variants[0].id && (
               <span className="text-[10px] ml-1" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
                 from
               </span>
             )}
           </div>
 
-          <button onClick={handleAddToCart} disabled={!product.inStock}
+          <button onClick={handleAddToCart} disabled={!selectedVariant.isInStock}
             className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-semibold rounded-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             style={{
               backgroundColor: adding ? '#166534' : 'var(--primary)',
@@ -161,7 +159,8 @@ export default function ProductCard({ product, onAddToCart, isWishlisted, onTogg
 }
 
 /* Packshot visual — styled bottle/container per product category */
-function ProductBottle({ product }: { product: Product }) {
+// Retained temporarily for the legacy mock catalogue path; real catalogue cards use local product images above.
+function ProductBottle({ product }: { product: MockProduct }) {
   const isAbrasive = product.category === 'abrasives'
   const isFiller = product.category === 'filler'
   const isKit = product.category === 'kits'

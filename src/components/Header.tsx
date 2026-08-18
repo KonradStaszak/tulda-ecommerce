@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
-import { categories } from '../data/products'
+import tuldaLogo from '../assets/brand/tulda-logo.png'
+import type { CatalogueCategory } from '../types/catalog'
 
 interface HeaderProps {
   cartCount: number
   onCartOpen: () => void
   onNavigateShop: () => void
   onNavigateHome: () => void
+  categories: CatalogueCategory[]
 }
 
 const navLinks = [
@@ -15,7 +17,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export default function Header({ cartCount, onCartOpen, onNavigateShop, onNavigateHome }: HeaderProps) {
+export default function Header({ cartCount, onCartOpen, onNavigateShop, onNavigateHome, categories }: HeaderProps) {
   const [megaOpen, setMegaOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -72,18 +74,7 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
 
             {/* Logo */}
             <button onClick={onNavigateHome} className="flex items-center gap-2.5 shrink-0 mr-8">
-              <div
-                className="w-7 h-7 flex items-center justify-center font-black text-white rounded-sm text-sm"
-                style={{ backgroundColor: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif' }}
-              >
-                T
-              </div>
-              <span
-                className="text-[1.2rem] font-black tracking-tight"
-                style={{ fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '-0.01em', color: 'var(--foreground)' }}
-              >
-                TULDA
-              </span>
+              <img src={tuldaLogo} alt="Tulda" className="h-7 w-auto object-contain" />
             </button>
 
             {/* Nav */}
@@ -261,7 +252,7 @@ export default function Header({ cartCount, onCartOpen, onNavigateShop, onNaviga
                           {cat.name}
                         </p>
                         <p className="text-[11px] leading-snug" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
-                          {cat.count} products
+                          {cat.productCount} products
                         </p>
                       </div>
                     </a>

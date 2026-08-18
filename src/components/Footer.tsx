@@ -43,18 +43,7 @@ export default function Footer({ onNavigateShop: _onNavigateShop }: FooterProps)
           <div className="lg:col-span-2">
             {/* Logo */}
             <div className="flex items-center gap-2.5 mb-5">
-              <div
-                className="w-8 h-8 flex items-center justify-center font-black text-white text-sm rounded-sm"
-                style={{ backgroundColor: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif' }}
-              >
-                T
-              </div>
-              <span
-                className="text-xl font-black"
-                style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--surface-dark-foreground)' }}
-              >
-                TULDA
-              </span>
+              <img src={tuldaLogo} alt="Tulda" className="h-8 w-auto object-contain" />
             </div>
 
             <p
@@ -186,3 +175,4 @@ export default function Footer({ onNavigateShop: _onNavigateShop }: FooterProps)
     </footer>
   )
 }
+import tuldaLogo from '../assets/brand/tulda-logo.png'

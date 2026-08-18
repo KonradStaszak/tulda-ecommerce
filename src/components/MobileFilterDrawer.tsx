@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import FilterSidebar from './FilterSidebar'
-import type { FilterState } from '../types/catalog'
+import type { CatalogueCategory, FilterState } from '../types/catalog'
 
 interface MobileFilterDrawerProps {
   open: boolean
@@ -9,9 +9,10 @@ interface MobileFilterDrawerProps {
   onChange: (f: FilterState) => void
   totalCount: number
   filteredCount: number
+  categories: CatalogueCategory[]
 }
 
-export default function MobileFilterDrawer({ open, onClose, filters, onChange, totalCount, filteredCount }: MobileFilterDrawerProps) {
+export default function MobileFilterDrawer({ open, onClose, filters, onChange, totalCount, filteredCount, categories }: MobileFilterDrawerProps) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -58,6 +59,7 @@ export default function MobileFilterDrawer({ open, onClose, filters, onChange, t
             onChange={onChange}
             totalCount={totalCount}
             filteredCount={filteredCount}
+            categories={categories}
           />
         </div>
 

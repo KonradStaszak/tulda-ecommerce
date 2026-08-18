@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
-import type { CartItem } from '../types/catalog'
+import type { CatalogueCartLine } from '../types/catalog'
+import { formatMoney } from '../services/catalogue/money'
 
 interface CartDrawerProps {
   open: boolean
   onClose: () => void
-  items: CartItem[]
-  onRemove: (productId: string, size: string) => void
+  items: CatalogueCartLine[]
+  onRemove: (productId: string, variantId: string) => void
 }
 
 export default function CartDrawer({ open, onClose, items, onRemove }: CartDrawerProps) {
@@ -20,7 +21,7 @@ export default function CartDrawer({ open, onClose, items, onRemove }: CartDrawe
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  const total = items.reduce((sum, i) => sum + i.product.priceFrom * i.quantity, 0)
+  const totalMinor = items.reduce((sum, item) => sum + item.variant.priceMinor * item.quantity, 0)
 
   return (
     <>
@@ -95,28 +96,22 @@ export default function CartDrawer({ open, onClose, items, onRemove }: CartDrawe
           ) : (
             items.map(item => (
               <div
-                key={`${item.product.id}-${item.size}`}
+                key={`${item.product.id}-${item.variant.id}`}
                 className="flex gap-4 pb-4 border-b"
                 style={{ borderColor: 'var(--border)' }}
               >
-                {/* Product color swatch */}
                 <div
-                  className="w-16 h-16 rounded-sm shrink-0 flex items-center justify-center"
-                  style={{ backgroundColor: item.product.accentColor }}
+                  className="w-16 h-16 rounded-sm shrink-0 overflow-hidden"
+                  style={{ backgroundColor: 'var(--muted)' }}
                 >
-                  <span
-                    className="text-white text-xs font-bold"
-                    style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-                  >
-                    {item.product.code}
-                  </span>
+                  {item.product.primaryImage && <img src={item.product.primaryImage.path} alt="" className="h-full w-full object-contain" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p
                     className="text-sm font-semibold leading-snug truncate"
                     style={{ fontFamily: 'Inter, sans-serif' }}
                   >
-                    {item.product.shortName}
+                    {item.product.name}
                   </p>
                   <p
                     className="text-xs mt-0.5"
@@ -128,11 +123,11 @@ export default function CartDrawer({ open, onClose, items, onRemove }: CartDrawe
                     className="text-sm font-semibold mt-1"
                     style={{ color: 'var(--primary)', fontFamily: 'Inter, sans-serif' }}
                   >
-                    {item.product.currency}{(item.product.priceFrom * item.quantity).toFixed(2)}
+                    {formatMoney(item.variant.priceMinor * item.quantity, item.variant.currency)}
                   </p>
                 </div>
                 <button
-                  onClick={() => onRemove(item.product.id, item.size)}
+                  onClick={() => onRemove(item.product.id, item.variant.id)}
                   className="p-1 self-start transition-colors hover:text-[var(--primary)]"
                   style={{ color: 'var(--muted-foreground)' }}
                   aria-label="Remove item"
@@ -155,7 +150,7 @@ export default function CartDrawer({ open, onClose, items, onRemove }: CartDrawe
                 className="text-lg font-bold"
                 style={{ fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.01em' }}
               >
-                £{total.toFixed(2)}
+                {formatMoney(totalMinor)}
               </span>
             </div>
             <p className="text-xs mb-4" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>

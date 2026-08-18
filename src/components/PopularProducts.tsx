@@ -1,23 +1,24 @@
 import { useState } from 'react'
-import { products } from '../data/products'
 import ProductCard from './ProductCard'
-import type { CartItem } from '../types/catalog'
-
-const FILTERS = ['All', 'Clearcoat', 'Primer', 'Abrasives', 'Filler', 'Thinner']
+import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct } from '../types/catalog'
 
 interface PopularProductsProps {
-  onAddToCart: (item: CartItem) => void
+  products: CatalogueProduct[]
+  categories: CatalogueCategory[]
+  loading: boolean
+  error: Error | null
+  onAddToCart: (item: CatalogueCartLine) => void
   wishlist: string[]
   onToggleWishlist: (id: string) => void
   onViewAll?: () => void
 }
 
-export default function PopularProducts({ onAddToCart, wishlist, onToggleWishlist, onViewAll }: PopularProductsProps) {
+export default function PopularProducts({ products, categories, loading, error, onAddToCart, wishlist, onToggleWishlist, onViewAll }: PopularProductsProps) {
   const [activeFilter, setActiveFilter] = useState('All')
 
   const filtered = activeFilter === 'All'
     ? products
-    : products.filter(p => p.category.toLowerCase() === activeFilter.toLowerCase())
+    : products.filter((product) => product.categories.some((category) => category.name === activeFilter))
 
   return (
     <section
@@ -47,7 +48,7 @@ export default function PopularProducts({ onAddToCart, wishlist, onToggleWishlis
 
           {/* Filter tabs */}
           <div className="flex flex-wrap gap-2">
-            {FILTERS.map(f => (
+            {['All', ...categories.map((category) => category.name)].map(f => (
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
@@ -68,7 +69,8 @@ export default function PopularProducts({ onAddToCart, wishlist, onToggleWishlis
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtered.map(product => (
+          {loading && Array.from({ length: 4 }).map((_, index) => <div key={index} className="h-[370px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)' }} />)}
+          {!loading && filtered.map(product => (
             <ProductCard
               key={product.id}
               product={product}
@@ -78,6 +80,7 @@ export default function PopularProducts({ onAddToCart, wishlist, onToggleWishlis
             />
           ))}
         </div>
+        {!loading && error && <p className="mt-5 text-sm" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>The product range could not be loaded. Please try again shortly.</p>}
 
         {/* CTA */}
         <div className="flex justify-center mt-12">

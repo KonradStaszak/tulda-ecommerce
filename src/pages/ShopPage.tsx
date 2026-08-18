@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
-import { products, applyFilters, categories } from '../data/products'
-import type { FilterState, CartItem, CategoryId, SortKey } from '../types/catalog'
+import { filterProducts } from '../services/catalogue/repository'
+import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct, FilterState, SortKey } from '../types/catalog'
 import ProductCard from '../components/ProductCard'
 import FilterSidebar from '../components/FilterSidebar'
 import MobileFilterDrawer from '../components/MobileFilterDrawer'
@@ -25,20 +25,24 @@ const defaultFilters: FilterState = {
 
 interface ShopPageProps {
   onNavigateHome: () => void
-  onAddToCart: (item: CartItem) => void
+  onAddToCart: (item: CatalogueCartLine) => void
   wishlist: string[]
   onToggleWishlist: (id: string) => void
-  initialCategory?: CategoryId
+  initialCategory?: string
+  products: CatalogueProduct[]
+  categories: CatalogueCategory[]
+  loading: boolean
+  error: Error | null
 }
 
-export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onToggleWishlist, initialCategory }: ShopPageProps) {
+export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onToggleWishlist, initialCategory, products, categories, loading, error }: ShopPageProps) {
   const [filters, setFilters] = useState<FilterState>({
     ...defaultFilters,
     categories: initialCategory ? [initialCategory] : [],
   })
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
-  const filtered = useMemo(() => applyFilters(products, filters), [filters])
+  const filtered = useMemo(() => filterProducts(products, filters), [products, filters])
   const paginated = filtered.slice(0, filters.page * PAGE_SIZE)
   const hasMore = paginated.length < filtered.length
 
@@ -245,12 +249,21 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
               onChange={setFilters}
               totalCount={products.length}
               filteredCount={filtered.length}
+              categories={categories}
             />
           </div>
 
           {/* Product grid */}
           <div className="flex-1 min-w-0">
-            {filtered.length === 0 ? (
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[370px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }} />)}
+              </div>
+            ) : error ? (
+              <LoadError />
+            ) : products.length === 0 ? (
+              <EmptyCatalogue />
+            ) : filtered.length === 0 ? (
               <EmptyState onClear={() => setFilters(defaultFilters)} />
             ) : (
               <>
@@ -298,6 +311,7 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
         onChange={setFilters}
         totalCount={products.length}
         filteredCount={filtered.length}
+        categories={categories}
       />
     </div>
   )
@@ -323,6 +337,24 @@ function EmptyState({ onClear }: { onClear: () => void }) {
         style={{ backgroundColor: 'var(--primary)', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
         Clear Filters
       </button>
+    </div>
+  )
+}
+
+function LoadError() {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <p className="text-base font-semibold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Catalogue unavailable</p>
+      <p className="text-[13px] max-w-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>We could not load the product range. Please refresh and try again.</p>
+    </div>
+  )
+}
+
+function EmptyCatalogue() {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <p className="text-base font-semibold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>No products are available</p>
+      <p className="text-[13px] max-w-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Please check back shortly.</p>
     </div>
   )
 }

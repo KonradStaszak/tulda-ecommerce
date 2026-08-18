@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { categories } from '../data/products'
-import type { FilterState, CategoryId } from '../types/catalog'
+import type { CatalogueCategory, FilterState } from '../types/catalog'
 
 interface FilterSidebarProps {
   filters: FilterState
   onChange: (f: FilterState) => void
   totalCount: number
   filteredCount: number
+  categories: CatalogueCategory[]
 }
 
 const SIZE_GROUPS = [
@@ -67,8 +67,8 @@ function Checkbox({ checked, onChange, label, count }: { checked: boolean; onCha
   )
 }
 
-export default function FilterSidebar({ filters, onChange, totalCount, filteredCount }: FilterSidebarProps) {
-  const toggleCategory = (id: CategoryId) => {
+export default function FilterSidebar({ filters, onChange, totalCount, filteredCount, categories }: FilterSidebarProps) {
+  const toggleCategory = (id: string) => {
     const next = filters.categories.includes(id)
       ? filters.categories.filter(c => c !== id)
       : [...filters.categories, id]
@@ -117,7 +117,7 @@ export default function FilterSidebar({ filters, onChange, totalCount, filteredC
               checked={filters.categories.includes(cat.id)}
               onChange={() => toggleCategory(cat.id)}
               label={cat.name}
-              count={cat.count}
+              count={cat.productCount}
             />
           ))}
         </div>

@@ -1,5 +1,8 @@
 import type { Category, FilterState, Product, ProductVariant } from '../types/catalog'
 
+// Legacy Figma Make mock catalogue. Retained temporarily as a non-active fallback/reference;
+// the storefront now reads the real catalogue through src/services/catalogue.
+
 export const categories: Category[] = [
   {
     id: 'clearcoat',

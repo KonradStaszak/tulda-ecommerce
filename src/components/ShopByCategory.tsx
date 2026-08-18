@@ -1,11 +1,12 @@
-import { categories } from '../data/products'
-import type { CategoryId } from '../types/catalog'
+import type { CatalogueCategory } from '../types/catalog'
 
 interface ShopByCategoryProps {
-  onCategoryClick?: (id: CategoryId) => void
+  categories: CatalogueCategory[]
+  loading: boolean
+  onCategoryClick?: (id: string) => void
 }
 
-export default function ShopByCategory({ onCategoryClick }: ShopByCategoryProps) {
+export default function ShopByCategory({ categories, loading, onCategoryClick }: ShopByCategoryProps) {
   return (
     <section id="categories" className="py-20 md:py-28" style={{ backgroundColor: 'var(--background)' }}>
       <div className="max-w-[1400px] mx-auto px-6">
@@ -41,7 +42,7 @@ export default function ShopByCategory({ onCategoryClick }: ShopByCategoryProps)
 
         {/* Categories grid — asymmetric layout */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {categories.map((cat, i) => (
+          {(loading ? Array.from({ length: 6 }, (_, i) => ({ id: `loading-${i}`, name: '', image: null, productCount: 0, slug: '', woocommerceId: null, description: null, parentId: null, color: 'var(--muted)' })) : categories).map((cat, i) => (
             <a
               key={cat.id}
               href="#"
@@ -51,11 +52,7 @@ export default function ShopByCategory({ onCategoryClick }: ShopByCategoryProps)
               }`}
               style={{ aspectRatio: i === 0 ? 'auto' : '3/4', minHeight: i === 0 ? '280px' : '200px' }}
             >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {cat.image && <img src={cat.image} alt={cat.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />}
               {/* Overlay */}
               <div
                 className="absolute inset-0 transition-opacity duration-300"
@@ -90,7 +87,7 @@ export default function ShopByCategory({ onCategoryClick }: ShopByCategoryProps)
                         display: i === 0 ? 'block' : 'none',
                       }}
                     >
-                      {cat.count} products
+                      {cat.productCount} products
                     </p>
                   </div>
                   <div

@@ -11,18 +11,21 @@ import TechnicalResources from './components/TechnicalResources'
 import ContactCTA from './components/ContactCTA'
 import Footer from './components/Footer'
 import ShopPage from './pages/ShopPage'
-import type { CartItem, CategoryId } from './types/catalog'
+import type { CatalogueCartLine } from './types/catalog'
+import { useCatalogue } from './services/catalogue/useCatalogue'
 
 type Page = 'home' | 'shop'
 
 export default function App() {
   const [page, setPage] = useState<Page>('home')
-  const [shopCategory, setShopCategory] = useState<CategoryId | undefined>()
+  const [shopCategory, setShopCategory] = useState<string | undefined>()
   const [cartOpen, setCartOpen] = useState(false)
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CatalogueCartLine[]>([])
   const [wishlist, setWishlist] = useState<string[]>([])
 
-  const navigateToShop = (category?: CategoryId) => {
+  const { data: catalogue, loading: catalogueLoading, error: catalogueError } = useCatalogue()
+
+  const navigateToShop = (category?: string) => {
     setShopCategory(category)
     setPage('shop')
     window.scrollTo({ top: 0 })
@@ -33,14 +36,14 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }
 
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CatalogueCartLine) => {
     setCartItems(prev => {
-      const existing = prev.find(i => i.product.id === item.product.id && i.size === item.size)
+      const existing = prev.find((line) => line.product.id === item.product.id && line.variant.id === item.variant.id)
       if (existing) {
-        return prev.map(i =>
-          i.product.id === item.product.id && i.size === item.size
-            ? { ...i, quantity: i.quantity + item.quantity }
-            : i
+        return prev.map((line) =>
+          line.product.id === item.product.id && line.variant.id === item.variant.id
+            ? { ...line, quantity: line.quantity + item.quantity }
+            : line
         )
       }
       return [...prev, item]
@@ -48,8 +51,8 @@ export default function App() {
     setCartOpen(true)
   }
 
-  const removeFromCart = (productId: string, size: string) => {
-    setCartItems(prev => prev.filter(i => !(i.product.id === productId && i.size === size)))
+  const removeFromCart = (productId: string, variantId: string) => {
+    setCartItems(prev => prev.filter((line) => !(line.product.id === productId && line.variant.id === variantId)))
   }
 
   const toggleWishlist = (productId: string) => {
@@ -67,6 +70,7 @@ export default function App() {
         onCartOpen={() => setCartOpen(true)}
         onNavigateShop={() => navigateToShop()}
         onNavigateHome={navigateHome}
+        categories={catalogue?.categories ?? []}
       />
       <CartDrawer
         open={cartOpen}
@@ -79,8 +83,12 @@ export default function App() {
         <main>
           <Hero onShopNow={() => navigateToShop()} />
           <TrustBar />
-          <ShopByCategory onCategoryClick={navigateToShop} />
+          <ShopByCategory categories={catalogue?.categories ?? []} loading={catalogueLoading} onCategoryClick={navigateToShop} />
           <PopularProducts
+            products={catalogue?.products ?? []}
+            categories={catalogue?.categories ?? []}
+            loading={catalogueLoading}
+            error={catalogueError}
             onAddToCart={addToCart}
             wishlist={wishlist}
             onToggleWishlist={toggleWishlist}
@@ -102,6 +110,10 @@ export default function App() {
             wishlist={wishlist}
             onToggleWishlist={toggleWishlist}
             initialCategory={shopCategory}
+            products={catalogue?.products ?? []}
+            categories={catalogue?.categories ?? []}
+            loading={catalogueLoading}
+            error={catalogueError}
           />
           <Footer onNavigateShop={() => navigateToShop()} />
         </main>
