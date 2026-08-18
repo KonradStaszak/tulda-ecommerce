@@ -1,0 +1,2271 @@
+{
+  "source": {
+    "site": "https://tulda.co/",
+    "retrievedAt": "2026-08-18T10:28:24.209Z",
+    "endpoints": {
+      "products": "https://tulda.co/wp-json/wc/store/v1/products",
+      "categories": "https://tulda.co/wp-json/wc/store/v1/products/categories",
+      "variations": "https://tulda.co/wp-json/wc/store/v1/products?type=variation"
+    },
+    "pagination": {
+      "products": {
+        "total": 15,
+        "pages": 1
+      },
+      "categories": {
+        "total": 9,
+        "pages": 1
+      },
+      "variations": {
+        "total": 48,
+        "pages": 1
+      }
+    },
+    "logo": {
+      "sourceUrl": "https://tulda.co/wp-content/uploads/2022/12/tulda2.png",
+      "fileType": "png",
+      "width": 191,
+      "height": 40,
+      "usage": "Current public site header logo"
+    }
+  },
+  "categories": [
+    {
+      "sourceWooId": 71,
+      "slug": "abrasives",
+      "name": "Abrasives",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 4,
+      "permalink": "https://tulda.co/product-category/abrasives/"
+    },
+    {
+      "sourceWooId": 611,
+      "slug": "binders",
+      "name": "Binders",
+      "descriptionHtml": null,
+      "parentWooId": 610,
+      "productCount": 2,
+      "permalink": "https://tulda.co/product-category/industrial/binders/"
+    },
+    {
+      "sourceWooId": 20,
+      "slug": "clearcoat",
+      "name": "Clearcoat",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 4,
+      "permalink": "https://tulda.co/product-category/clearcoat/"
+    },
+    {
+      "sourceWooId": 1410,
+      "slug": "filler",
+      "name": "Filler",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 1,
+      "permalink": "https://tulda.co/product-category/filler/"
+    },
+    {
+      "sourceWooId": 610,
+      "slug": "industrial",
+      "name": "Industrial",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 2,
+      "permalink": "https://tulda.co/product-category/industrial/"
+    },
+    {
+      "sourceWooId": 79,
+      "slug": "kits",
+      "name": "Kits",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 6,
+      "permalink": "https://tulda.co/product-category/kits/"
+    },
+    {
+      "sourceWooId": 72,
+      "slug": "primer",
+      "name": "Primer",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 2,
+      "permalink": "https://tulda.co/product-category/primer/"
+    },
+    {
+      "sourceWooId": 73,
+      "slug": "primer-kits",
+      "name": "Primer Kits",
+      "descriptionHtml": null,
+      "parentWooId": 72,
+      "productCount": 2,
+      "permalink": "https://tulda.co/product-category/primer/primer-kits/"
+    },
+    {
+      "sourceWooId": 80,
+      "slug": "thinner",
+      "name": "THINNER",
+      "descriptionHtml": null,
+      "parentWooId": null,
+      "productCount": 2,
+      "permalink": "https://tulda.co/product-category/thinner/"
+    }
+  ],
+  "products": [
+    {
+      "sourceWooId": 18718,
+      "slug": "bt01-bodyfiller",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/bt01-bodyfiller/",
+      "name": "BT01 Bodyfiller",
+      "type": "simple",
+      "sku": "0740111730563",
+      "shortDescriptionHtml": "<p><span style=\"font-weight: 400\">The </span><b>BT01 Body Filler</b><span style=\"font-weight: 400\"> is a 2K multifiller with excellent filling properties, easy sanding, and a smooth finish, making it ideal for levelling imperfections in automotive and industrial applications. With robust mechanical strength and VOC compliance, it ensures a durable, professional-quality finish while meeting regulatory standards for safer use. Perfect for aluminium, stainless steel, galvanised steel, bare metal and polyester.</span></p>",
+      "descriptionHtml": "<p><a href=\"http://tulda.co/wp-content/uploads/2024/12/Tulda-TDS-BT01-BODYFILLER.pdf\"><br />\nTechnical DATA SHEET<br />\n</a><br />\n<a><br />\nSAFETY DATA SHEET<br />\n</a><br />\n<a><br />\nSAFETY DATA SHEET<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 3361,
+        "regularPriceMinor": 3361,
+        "salePriceMinor": 3361,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 1410,
+          "slug": "filler",
+          "name": "Filler",
+          "permalink": "https://tulda.co/product-category/filler/"
+        }
+      ],
+      "attributes": [],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": []
+    },
+    {
+      "sourceWooId": 13897,
+      "slug": "upvc-2k-binder-561-topcoat-4l",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/upvc-2k-binder-561-topcoat-4l/",
+      "name": "UPVC 2K Binder 561 Topcoat 4L + H63 Hardener 1L",
+      "type": "simple",
+      "sku": "T50302kit",
+      "shortDescriptionHtml": "<p>UPVC 2K Binder 561 is a two-component topcoat based on an acrylic binder and isocyanate hardener. It is characterized by fast drying, good chemical and mechanical resistance and can be directly applied to a wide range of surfaces, such as PVCu (uPVC), GRP, polyester powder-coated and anodized aluminium, stainless steel, durable plastics, cast iron, steel, galvanized and phosphated steel, composite doors, glass, and other materials.</p>",
+      "descriptionHtml": "<p>UPVC 2K Binder 561 is a two-component topcoat based on an acrylic binder and isocyanate hardener. It is characterized by fast drying, good chemical and mechanical resistance and can be directly applied to a wide range of surfaces, such as PVCu (uPVC), GRP, polyester powder-coated and anodized aluminium, stainless steel, durable plastics, cast iron, steel, galvanized and phosphated steel, composite doors, glass, and other materials.</p>\n<p>\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2025/05/Tulda-TDS-UPVC-2K-Binder-561-Topcoat-2025.05.21.pdf\"><br />\n\t\t\t\t\tTECHNICAL DATA SHEET<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2024/05/SDS-TULDA-UPVC-2K-Topcoat-561.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET 2K BINDER<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2024/05/SDS-TULDA-UPVC-Hardener-H-63.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET H63<br />\n\t\t\t\t\t\t\t</a></p>",
+      "prices": {
+        "priceMinor": 12556,
+        "regularPriceMinor": 12556,
+        "salePriceMinor": 12556,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": false,
+      "isOnBackorder": false,
+      "lowStockRemaining": 0,
+      "categories": [
+        {
+          "sourceWooId": 611,
+          "slug": "binders",
+          "name": "Binders",
+          "permalink": "https://tulda.co/product-category/industrial/binders/"
+        },
+        {
+          "sourceWooId": 610,
+          "slug": "industrial",
+          "name": "Industrial",
+          "permalink": "https://tulda.co/product-category/industrial/"
+        }
+      ],
+      "attributes": [],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": []
+    },
+    {
+      "sourceWooId": 13887,
+      "slug": "upvc-1k-binder-731-topcoat-4-25l",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/upvc-1k-binder-731-topcoat-4-25l/",
+      "name": "UPVC 1K Binder 731 Topcoat 4.25L",
+      "type": "simple",
+      "sku": "T50301",
+      "shortDescriptionHtml": "<p>TULDA UPVC 1K Topcoat is a one-component coating specially formulated for superior adhesion on a wide range of hard and flexible plastic surfaces including UPVC, foamex board and flexible PVC materials. Ideal for revitalising old and worn cladding and fascia boards, offering an economical alternative to replacement. The formulation ensures compatibility with UPVC windows, providing excellent adhesion and a fast-drying feature for quick and easy application.</p>",
+      "descriptionHtml": "<ul>\n<li><strong>Enhanced adhesion:</strong> Tulda UPVC 1K Binder features a one-component formulation specially crafted for superior adhesion on various hard and flexible plastic surfaces, including UPVC, foamex board, and flexible PVC materials.</li>\n<li><strong>Cost-effective revitalization:</strong> Ideal for rejuvenating old and worn cladding and fascia boards, this topcoat offers an economical alternative to replacement, saving you both time and money on renovation projects.</li>\n<li><strong>Compatibility assurance:</strong> Formulated for compatibility with UPVC windows, Tulda UPVC 1K Binder ensures excellent adhesion and compatibility, guaranteeing a seamless finish every time.</li>\n<li><strong>Fast-drying feature:</strong> With its fast-drying formula, this topcoat facilitates quick and easy application, allowing you to complete your projects efficiently and effectively.</li>\n<li><strong>Versatile application:</strong> Suitable for a wide range of surfaces, Tulda UPVC 1K Binder is a versatile solution for various applications, making it an essential addition to your coating arsenal.</li>\n</ul>\n<p>\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2025/05/Tulda-TDS-UPVC-1K-Topcoat-2025.05.21.pdf\"><br />\n\t\t\t\t\tTechnical DATA SHEET<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2024/05/SDS-TULDA-UPVC-1K-Topcoat-731.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET UPVC 1K<br />\n\t\t\t\t\t\t\t</a></p>",
+      "prices": {
+        "priceMinor": 9350,
+        "regularPriceMinor": 9350,
+        "salePriceMinor": 9350,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": false,
+      "isOnBackorder": false,
+      "lowStockRemaining": 0,
+      "categories": [
+        {
+          "sourceWooId": 611,
+          "slug": "binders",
+          "name": "Binders",
+          "permalink": "https://tulda.co/product-category/industrial/binders/"
+        },
+        {
+          "sourceWooId": 610,
+          "slug": "industrial",
+          "name": "Industrial",
+          "permalink": "https://tulda.co/product-category/industrial/"
+        }
+      ],
+      "attributes": [],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": []
+    },
+    {
+      "sourceWooId": 13508,
+      "slug": "xct100-clearcoat-21-vhs-extra-speed-clear",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/xct100-clearcoat-21-vhs-extra-speed-clear/",
+      "name": "XCT100 Clearcoat 2+1 VHS Extra Speed Clear",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": "<p>Two-component, VOC-compliant acrylic clearcoat which ensures extremely fast drying by oven as well as by air. Long open time allows to paint a large number of elements and entire cars. The coating has a high gloss, high hardness and scratch resistance. Clearcoat can be polished already after 3 hours at 20°C or after 5 minutes at 60°C.</p>",
+      "descriptionHtml": "<p><a href=\"http://tulda.co/wp-content/uploads/2024/03/TDS-Tulda-XCT100-VHS-2_1-VHS.pdf\"><br />\nTechnical DATA SHEET<br />\n</a><br />\n<a href=\"http://tulda.co/wp-content/uploads/2024/05/SDS-Clearcoat-TULDA-XCT-100.pdf\"><br />\nSAFETY DATA SHEET XCT100<br />\n</a><br />\n<a href=\"http://tulda.co/wp-content/uploads/2024/05/SDS-Hardener-TULDA-XHT-100.pdf\"><br />\nSAFETY DATA SHEET XHT100<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 3398,
+        "regularPriceMinor": 3398,
+        "salePriceMinor": 3398,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 92,
+              "name": "1.5Litre Kit",
+              "slug": "1-5litre-kit"
+            },
+            {
+              "sourceWooId": 568,
+              "name": "2.5Litre Kit",
+              "slug": "2-5litre-kit"
+            },
+            {
+              "sourceWooId": 222,
+              "name": "7.5Litre Kit",
+              "slug": "7-5litre-kit"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 13544,
+          "parentWooId": 13508,
+          "label": "Size: 1.5Litre Kit",
+          "sku": null,
+          "permalink": "https://tulda.co/product/xct100-clearcoat-21-vhs-extra-speed-clear/?attribute_pa_size=1-5litre-kit",
+          "prices": {
+            "priceMinor": 3398,
+            "regularPriceMinor": 3398,
+            "salePriceMinor": 3398,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13513,
+          "parentWooId": 13508,
+          "label": "Size: 7.5Litre Kit",
+          "sku": null,
+          "permalink": "https://tulda.co/product/xct100-clearcoat-21-vhs-extra-speed-clear/?attribute_pa_size=7-5litre-kit",
+          "prices": {
+            "priceMinor": 15985,
+            "regularPriceMinor": 15985,
+            "salePriceMinor": 15985,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 12210,
+      "slug": "ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/",
+      "name": "CT50 2+1 UNI ECOCLEAR 2K CLEAR COAT | 1.5L &#038; 7.5L KIT",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<p>2+1 UNI ECOCLEAR is a two-part universal acrylic clearcoat characterised by its rapid curing time and easy application process. High resilience to UV radiation and adverse weather conditions, along with good scratch resistance. The product boasts outstanding flow properties and provides a remarkable, high-gloss finish, enhancing the overall appearance of the surface. This clearcoat can be polished in just 4 hours at 20°C or 30 minutes at a minimum of 60°C after cooling.</p>\n<p><a href=\"http://tulda.co/wp-content/uploads/2023/09/TDS-CT50-21-UNI-ECOCLEAR.pdf\"><br />\nTechnical DATA SHEET<br />\n</a><br />\n<a href=\"http://tulda.co/wp-content/uploads/2023/09/SDS-CT-50-2-1-UNI-ECOCLEAR.pdf\"><br />\nSAFETY DATA SHEET CT50<br />\n</a><br />\n<a href=\"http://tulda.co/wp-content/uploads/2023/09/SDS-HT-51-2K-UNI-ECOHARD.pdf\"><br />\nSAFETY DATA SHEET HT51<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 2304,
+        "regularPriceMinor": 2304,
+        "salePriceMinor": 2304,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 92,
+              "name": "1.5Litre Kit",
+              "slug": "1-5litre-kit"
+            },
+            {
+              "sourceWooId": 222,
+              "name": "7.5Litre Kit",
+              "slug": "7-5litre-kit"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 0,
+          "name": "Speed",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "Slow",
+              "slug": "Slow"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "Standard",
+              "slug": "Standard"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "Fast",
+              "slug": "Fast"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 12227,
+          "parentWooId": 12210,
+          "label": "Size: 7.5Litre Kit, Speed: Fast",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=7-5litre-kit&attribute_speed=Fast",
+          "prices": {
+            "priceMinor": 9233,
+            "regularPriceMinor": 9233,
+            "salePriceMinor": 9233,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 12226,
+          "parentWooId": 12210,
+          "label": "Size: 7.5Litre Kit, Speed: Standard",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=7-5litre-kit&attribute_speed=Standard",
+          "prices": {
+            "priceMinor": 9233,
+            "regularPriceMinor": 9233,
+            "salePriceMinor": 9233,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 12225,
+          "parentWooId": 12210,
+          "label": "Size: 7.5Litre Kit, Speed: Slow",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=7-5litre-kit&attribute_speed=Slow",
+          "prices": {
+            "priceMinor": 9233,
+            "regularPriceMinor": 9233,
+            "salePriceMinor": 9233,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 12224,
+          "parentWooId": 12210,
+          "label": "Size: 1.5Litre Kit, Speed: Fast",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=1-5litre-kit&attribute_speed=Fast",
+          "prices": {
+            "priceMinor": 2304,
+            "regularPriceMinor": 2304,
+            "salePriceMinor": 2304,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 12223,
+          "parentWooId": 12210,
+          "label": "Size: 1.5Litre Kit, Speed: Standard",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=1-5litre-kit&attribute_speed=Standard",
+          "prices": {
+            "priceMinor": 2304,
+            "regularPriceMinor": 2304,
+            "salePriceMinor": 2304,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 12222,
+          "parentWooId": 12210,
+          "label": "Size: 1.5Litre Kit, Speed: Slow",
+          "sku": null,
+          "permalink": "https://tulda.co/product/ct50-21-uni-ecoclear-2k-clear-coat-1-5l-7-5l-kit/?attribute_pa_size=1-5litre-kit&attribute_speed=Slow",
+          "prices": {
+            "priceMinor": 2304,
+            "regularPriceMinor": 2304,
+            "salePriceMinor": 2304,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 11642,
+      "slug": "tulda-paper-strips-70x420-14h-all-grits-box-of-50",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/",
+      "name": "TULDA PAPER STRIPS 70&#215;420 [14H] &#8211; ALL GRITS &#8211; Box of 50",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": "<p>Paper sanding strips (70x420mm) with 14 holes for sanding all surfaces. Long lasting, efficient and easy to use.</p>",
+      "descriptionHtml": "<h3><strong>TULDA Paper Strips 70&#215;420</strong><strong>  [14H]</strong><strong> (Box of 50)</strong></h3>\n<p>Paper sanding strips (70x420mm) with 14 holes for sanding all surfaces. Long lasting, efficient and easy to use.</p>\n<p>Aluminium Oxide abrasive strips. They are double resin bonded on &#8216;C&#8217; paper backing. The paper strips have a long life and low heat in sanding processes. Durable and suitable for sanding at high speeds. Very versatile, can be used for many purposes. Designed to provide an optimal sanding result with no clogging. Suitable for use on wood, metal, composites and automotive materials, used widely in the Automotive, Woodworking, Aerospace, CV, Rail and Marine Industries.</p>\n<h3>Different grits available:</h3>\n<p>P40<br />\nP60<br />\nP80<br />\nP120<br />\nP180<br />\nP240<br />\nP320</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+      "prices": {
+        "priceMinor": 2863,
+        "regularPriceMinor": 2863,
+        "salePriceMinor": 2863,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 71,
+          "slug": "abrasives",
+          "name": "Abrasives",
+          "permalink": "https://tulda.co/product-category/abrasives/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 0,
+          "name": "Grit",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "P40",
+              "slug": "P40"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P60",
+              "slug": "P60"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P80",
+              "slug": "P80"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P120",
+              "slug": "P120"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P180",
+              "slug": "P180"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P240",
+              "slug": "P240"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P320",
+              "slug": "P320"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 11649,
+          "parentWooId": 11642,
+          "label": "Grit: P320",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P320",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11648,
+          "parentWooId": 11642,
+          "label": "Grit: P240",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P240",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11647,
+          "parentWooId": 11642,
+          "label": "Grit: P180",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P180",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11646,
+          "parentWooId": 11642,
+          "label": "Grit: P120",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P120",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11645,
+          "parentWooId": 11642,
+          "label": "Grit: P80",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P80",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11644,
+          "parentWooId": 11642,
+          "label": "Grit: P60",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P60",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11643,
+          "parentWooId": 11642,
+          "label": "Grit: P40",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70x420-14h-all-grits-box-of-50/?attribute_grit=P40",
+          "prices": {
+            "priceMinor": 2863,
+            "regularPriceMinor": 2863,
+            "salePriceMinor": 2863,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 11626,
+      "slug": "tulda-paper-strips-70-198",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/",
+      "name": "TULDA PAPER STRIPS 70&#215;198 [8H] &#8211; ALL GRITS &#8211; Box of 50",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": "<p>Paper sanding strips (70x198mm) with 8 holes for sanding all surfaces. Long lasting, efficient and easy to use.</p>",
+      "descriptionHtml": "<h3><strong>TULDA Paper Strips 70&#215;198</strong><strong>  [8H]</strong><strong> (Box of 50)</strong></h3>\n<p>Paper sanding strips (70x198mm) with 8 holes for sanding all surfaces. Long lasting, efficient and easy to use.</p>\n<p>Aluminium Oxide abrasive strips. They are double resin bonded on &#8216;C&#8217; paper backing. The paper strips have a long life and low heat in sanding processes. Durable and suitable for sanding at high speeds. Very versatile, can be used for many purposes. Designed to provide an optimal sanding result with no clogging. Suitable for use on wood, metal, composites and automotive materials, used widely in the Automotive, Woodworking, Aerospace, CV, Rail and Marine Industries.</p>\n<h3>Different grits available:</h3>\n<p>P40<br />\nP60<br />\nP80<br />\nP120<br />\nP180<br />\nP240<br />\nP320</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+      "prices": {
+        "priceMinor": 1376,
+        "regularPriceMinor": 1376,
+        "salePriceMinor": 1376,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 71,
+          "slug": "abrasives",
+          "name": "Abrasives",
+          "permalink": "https://tulda.co/product-category/abrasives/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 0,
+          "name": "Grit",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "P40",
+              "slug": "P40"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P60",
+              "slug": "P60"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P80",
+              "slug": "P80"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P120",
+              "slug": "P120"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P180",
+              "slug": "P180"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P240",
+              "slug": "P240"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P320",
+              "slug": "P320"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 11639,
+          "parentWooId": 11626,
+          "label": "Grit: P320",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P320",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11638,
+          "parentWooId": 11626,
+          "label": "Grit: P240",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P240",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11637,
+          "parentWooId": 11626,
+          "label": "Grit: P180",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P180",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11636,
+          "parentWooId": 11626,
+          "label": "Grit: P120",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P120",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11635,
+          "parentWooId": 11626,
+          "label": "Grit: P80",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P80",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11634,
+          "parentWooId": 11626,
+          "label": "Grit: P60",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P60",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 11633,
+          "parentWooId": 11626,
+          "label": "Grit: P40",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-paper-strips-70-198/?attribute_grit=P40",
+          "prices": {
+            "priceMinor": 1376,
+            "regularPriceMinor": 1376,
+            "salePriceMinor": 1376,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8819,
+      "slug": "tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/",
+      "name": "TULDA 6&#8243; 150mm 15H SANDING PAPER DISC ALL GRITS (Box of 100)",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<div><b><span style=\"font-size: x-large\"> </span></b><span style=\"font-family: Arial;font-size: x-large\"><b>TULDA Paper Velcro Discs 150mm [15H] All Grits (Box of 100)</b></span></div>\n<hr />\n<h2>Features:</h2>\n<p>150mm sanding paper discs with 15 holes for sanding all surfaces. Long lasting, efficient and easy to use. These discs feature a Velcro attachment</p>\n<div class=\"product attribute description\">\n<div class=\"value\">\n<p>Tulda Velcro Paper Discs are available in the following grades (100 pieces),</p>\n<ul>\n<li>P60</li>\n<li>P80</li>\n<li>P120</li>\n<li>P180</li>\n<li>P240</li>\n<li>P320</li>\n<li>P800</li>\n</ul>\n</div>\n</div>\n<div></div>",
+      "prices": {
+        "priceMinor": 2530,
+        "regularPriceMinor": 2530,
+        "salePriceMinor": 2530,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 71,
+          "slug": "abrasives",
+          "name": "Abrasives",
+          "permalink": "https://tulda.co/product-category/abrasives/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 4,
+          "name": "Box Quantity",
+          "taxonomy": "pa_box-quantity",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 77,
+              "name": "100",
+              "slug": "100"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 0,
+          "name": "Grit",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "P60",
+              "slug": "P60"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P80",
+              "slug": "P80"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P120",
+              "slug": "P120"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P180",
+              "slug": "P180"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P240",
+              "slug": "P240"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P320",
+              "slug": "P320"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P800",
+              "slug": "P800"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 8872,
+          "parentWooId": 8819,
+          "label": "Grit: P800",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P800",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8871,
+          "parentWooId": 8819,
+          "label": "Grit: P320",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P320",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8870,
+          "parentWooId": 8819,
+          "label": "Grit: P240",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P240",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8869,
+          "parentWooId": 8819,
+          "label": "Grit: P180",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P180",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8868,
+          "parentWooId": 8819,
+          "label": "Grit: P120",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P120",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8867,
+          "parentWooId": 8819,
+          "label": "Grit: P80",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P80",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": false,
+          "isOnBackorder": false,
+          "lowStockRemaining": 0,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8820,
+          "parentWooId": 8819,
+          "label": "Grit: P60",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/?attribute_grit=P60",
+          "prices": {
+            "priceMinor": 2530,
+            "regularPriceMinor": 2530,
+            "salePriceMinor": 2530,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8584,
+      "slug": "tulda-st10",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-st10/",
+      "name": "TULDA ST10  &#8211; 2K UNIVERSAL THINNER",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<h2>2K UNIVERSL ACRYLIC THINNER</h2>\n<ul>\n<li>suitable for the dilution of: basecoats with metallic / pearl and non-metallic effect polyurethane varnishes acrylic paints/varnishes primers</li>\n<li>available in 5ltr + 1ltr sizes</li>\n</ul>\n<p><a href=\"https://tulda.co/wp-content/uploads/2023/01/TULDA-Universal-thinner-standard.pdf\"><br />\nSAFETY DATA SHEET<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 724,
+        "regularPriceMinor": 724,
+        "salePriceMinor": 724,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 80,
+          "slug": "thinner",
+          "name": "THINNER",
+          "permalink": "https://tulda.co/product-category/thinner/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 41,
+              "name": "1Litre",
+              "slug": "1litre"
+            },
+            {
+              "sourceWooId": 74,
+              "name": "5Litre",
+              "slug": "5litre"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 8591,
+          "parentWooId": 8584,
+          "label": "Size: 5Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-st10/?attribute_pa_size=5litre",
+          "prices": {
+            "priceMinor": 3409,
+            "regularPriceMinor": 3409,
+            "salePriceMinor": 3409,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": false,
+          "isOnBackorder": false,
+          "lowStockRemaining": 0,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8590,
+          "parentWooId": 8584,
+          "label": "Size: 1Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-st10/?attribute_pa_size=1litre",
+          "prices": {
+            "priceMinor": 724,
+            "regularPriceMinor": 724,
+            "salePriceMinor": 724,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8550,
+      "slug": "tulda-pt30-multiprimer",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/",
+      "name": "TULDA PT30 MULTIPRIMER",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<h3>4+1 HS ACRYLIC PRIMER</h3>\n<p><strong>4:1 Mixing ratio</strong><br />\nHS Acrylic Primer / Filler 4+1 a filling primer based on acrylic resins. Thanks to a high spray viscosity, the product can be applied in very thick layers that perfectly repair even relatively large scratches and irregularities of substrate. The product has a very good adhesion to various substrates and short drying time. It is easy to treatment, has excellent sanding and good filling properties &#8211; high flexibility and impact resistance which guarantees excellent appearance of top coat.</p>\n<h2>Feature:</h2>\n<ul>\n<li>Excellent Adhesion</li>\n<li>Easy to Sand</li>\n<li>Built in Guide Coat</li>\n<li>Fast drying 20 mins @ 60C, 2 hours @ 20c</li>\n<li>VOC content &lt; 540 g/l</li>\n<li>Old paint coatings (including thermoplastic paints) &#8211; Polyester putties &#8211; Steel &#8211; Aluminium &#8211; Stainless Steel &#8211; Wash Primers &#8211; Epoxy Primers &#8211; Plastics &#8211; Polyester laminates</li>\n<li>Available in: 1.5L &amp; 5L kits with hardener, in WHITE, GREY &amp; BLACK</li>\n</ul>\n<p><a href=\"http://tulda.co/wp-content/uploads/2024/03/TDS-PT30-MULTIPRIMER-41-HS-Acrylic-Primer-WOW.pdf\"><br />\nTECHNICAL DATA SHEET<br />\n</a><br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/PT-30-4：1-2K-Primer-MSDS-1.pdf\"><br />\nSAFETY DATA SHEET FOR PT 30<br />\n</a><br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/HT-31-Primer-Hardener-MSDS-1-1.pdf\"><br />\nSAFETY DATA SHEET FOR HT 31<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 1920,
+        "regularPriceMinor": 1920,
+        "salePriceMinor": 1920,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        },
+        {
+          "sourceWooId": 72,
+          "slug": "primer",
+          "name": "Primer",
+          "permalink": "https://tulda.co/product-category/primer/"
+        },
+        {
+          "sourceWooId": 73,
+          "slug": "primer-kits",
+          "name": "Primer Kits",
+          "permalink": "https://tulda.co/product-category/primer/primer-kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 92,
+              "name": "1.5Litre Kit",
+              "slug": "1-5litre-kit"
+            },
+            {
+              "sourceWooId": 41,
+              "name": "1Litre",
+              "slug": "1litre"
+            },
+            {
+              "sourceWooId": 88,
+              "name": "4Litre",
+              "slug": "4litre"
+            },
+            {
+              "sourceWooId": 91,
+              "name": "5Litre Kit",
+              "slug": "5litre-kit"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 0,
+          "name": "Colour",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "White",
+              "slug": "White"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "Grey",
+              "slug": "Grey"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "Black",
+              "slug": "Black"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 13630,
+          "parentWooId": 8550,
+          "label": "Size: 5Litre Kit, Colour: Grey",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=5litre-kit&attribute_colour=Grey",
+          "prices": {
+            "priceMinor": 5785,
+            "regularPriceMinor": 5785,
+            "salePriceMinor": 5785,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13629,
+          "parentWooId": 8550,
+          "label": "Size: 5Litre Kit, Colour: White",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=5litre-kit&attribute_colour=White",
+          "prices": {
+            "priceMinor": 0,
+            "regularPriceMinor": 0,
+            "salePriceMinor": 0,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": false,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13628,
+          "parentWooId": 8550,
+          "label": "Size: 5Litre Kit, Colour: Black",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=5litre-kit&attribute_colour=Black",
+          "prices": {
+            "priceMinor": 0,
+            "regularPriceMinor": 0,
+            "salePriceMinor": 0,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": false,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13621,
+          "parentWooId": 8550,
+          "label": "Size: 1.5Litre Kit, Colour: Grey",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=1-5litre-kit&attribute_colour=Grey",
+          "prices": {
+            "priceMinor": 1920,
+            "regularPriceMinor": 1920,
+            "salePriceMinor": 1920,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13620,
+          "parentWooId": 8550,
+          "label": "Size: 1.5Litre Kit, Colour: White",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=1-5litre-kit&attribute_colour=White",
+          "prices": {
+            "priceMinor": 1920,
+            "regularPriceMinor": 1920,
+            "salePriceMinor": 1920,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 13619,
+          "parentWooId": 8550,
+          "label": "Size: 1.5Litre Kit, Colour: Black",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-pt30-multiprimer/?attribute_pa_size=1-5litre-kit&attribute_colour=Black",
+          "prices": {
+            "priceMinor": 1920,
+            "regularPriceMinor": 1920,
+            "salePriceMinor": 1920,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8520,
+      "slug": "tulda-6-150mm-15h-sanding-film-discs-all-grits",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/",
+      "name": "TULDA 6&#8243; 150mm 15H SANDING FILM DISCS ALL GRITS &#8211; Box of 50",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<h1>TULDA 6&#8243; 150mm 15H SANDING FILM DISCS ALL GRITS</h1>\n<hr />\n<h2>Features:</h2>\n<p>150mm Film discs with 15 holes for sanding all surfaces. Proving a very popular option due to their long lasting and cut. These discs feature a Velcro attachment</p>\n<div class=\"product attribute description\">\n<div class=\"value\">\n<p>Tulda Velcro Film discs are available in the following grades (100 pieces),</p>\n<ul>\n<li>P240</li>\n<li>P500</li>\n<li>P800</li>\n<li>P1000</li>\n<li>P1200</li>\n<li>P1500</li>\n<li>P2000</li>\n</ul>\n</div>\n</div>\n<div></div>",
+      "prices": {
+        "priceMinor": 2434,
+        "regularPriceMinor": 2434,
+        "salePriceMinor": 2434,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 71,
+          "slug": "abrasives",
+          "name": "Abrasives",
+          "permalink": "https://tulda.co/product-category/abrasives/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 4,
+          "name": "Box Quantity",
+          "taxonomy": "pa_box-quantity",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 90,
+              "name": "50",
+              "slug": "50"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 0,
+          "name": "Grit",
+          "taxonomy": null,
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 0,
+              "name": "P240",
+              "slug": "P240"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P500",
+              "slug": "P500"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P800",
+              "slug": "P800"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P1000",
+              "slug": "P1000"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P1200",
+              "slug": "P1200"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P1500",
+              "slug": "P1500"
+            },
+            {
+              "sourceWooId": 0,
+              "name": "P2000",
+              "slug": "P2000"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 8878,
+          "parentWooId": 8520,
+          "label": "Grit: P2000",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P2000",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8877,
+          "parentWooId": 8520,
+          "label": "Grit: P1500",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P1500",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8876,
+          "parentWooId": 8520,
+          "label": "Grit: P1200",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P1200",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8875,
+          "parentWooId": 8520,
+          "label": "Grit: P1000",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P1000",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": false,
+          "isOnBackorder": false,
+          "lowStockRemaining": 0,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8874,
+          "parentWooId": 8520,
+          "label": "Grit: P800",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P800",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8873,
+          "parentWooId": 8520,
+          "label": "Grit: P500",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P500",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": false,
+          "isOnBackorder": false,
+          "lowStockRemaining": 0,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8816,
+          "parentWooId": 8520,
+          "label": "Grit: P240",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-6-150mm-15h-sanding-film-discs-all-grits/?attribute_grit=P240",
+          "prices": {
+            "priceMinor": 2434,
+            "regularPriceMinor": 2434,
+            "salePriceMinor": 2434,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8506,
+      "slug": "tulda-xpt20-hs-rapid-primer-5l-kit-2k-acrylic-fast-air-dry",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-xpt20-hs-rapid-primer-5l-kit-2k-acrylic-fast-air-dry/",
+      "name": "TULDA XPT20 HS Rapid Primer 5L Kit 2K Acrylic FAST AIR DRY",
+      "type": "simple",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<h1>TULDA XPT20 HS Rapid Primer 5L Kit 2K Acrylic FAST AIR DRY</h1>\n<p>Multi-purpose two pack fast drying primer, with strong filling power and great adhesion between coats. It has excellent<br />\nflexibility and impact resistance which can increase gloss and build of topcoats. Available with different hardeners and<br />\nthinners, it can be used for rapid repair, medium area repair and total resprays.</p>\n<h2>Features &amp; benefits :</h2>\n<ul>\n<li>Very fast drying two component primer</li>\n<li>Air dry and ready to sand after only 20 minutes at 25c</li>\n<li>Easy to apply and sand</li>\n<li>High Build</li>\n<li>Excellent flexibility characteristics</li>\n<li>Versatility: suitable for rapid, standard and overall repairs including wet-on-wet process for new parts</li>\n</ul>\n<h2><b></b>Hazards &amp; Warnings</h2>\n<p>May cause skin irritation. May cause an allergic skin reaction. May cause serious eye damage. Use PPE, handle with care and keep out of reach of children and pets. Please refer to the manufacturer&#8217;s Safety Data Sheet for more information.</p>\n<p><a href=\"https://tulda.co/wp-content/uploads/2023/01/Tulda-TDS-XPT-20-31-Rapid-Primer-Plus.pdf\"><br />\nTechnical DATA SHEET<br />\n</a><br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/XHT-21-Rapid-Primer-Hardener-MSDS.pdf\"><br />\nSAFETY DATA SHEET XHT-21<br />\n</a><br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/XPT20-Rapid-Primer-Plus-MSDS.pdf\"><br />\nSAFETY DATA SHEET XPT-20<br />\n</a><br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/XST22-Thinner-MSDS-1.pdf\"><br />\nSAFETY DATA SHEET XST-22<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 10134,
+        "regularPriceMinor": 10134,
+        "salePriceMinor": 10134,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": false,
+      "isOnBackorder": false,
+      "lowStockRemaining": 0,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        },
+        {
+          "sourceWooId": 72,
+          "slug": "primer",
+          "name": "Primer",
+          "permalink": "https://tulda.co/product-category/primer/"
+        },
+        {
+          "sourceWooId": 73,
+          "slug": "primer-kits",
+          "name": "Primer Kits",
+          "permalink": "https://tulda.co/product-category/primer/primer-kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 5,
+          "name": "Speedline",
+          "taxonomy": "pa_speedline",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 82,
+              "name": "Speedline",
+              "slug": "speedline"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": []
+    },
+    {
+      "sourceWooId": 8500,
+      "slug": "tulda-st11-acrylic-thinner-slow-1l",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-st11-acrylic-thinner-slow-1l/",
+      "name": "TULDA ST11 ACRYLIC THINNER &#8211; SLOW 1L",
+      "type": "simple",
+      "sku": null,
+      "shortDescriptionHtml": null,
+      "descriptionHtml": "<h1>TULDA ST11 ACRYLIC THINNER &#8211; SLOW 1L</h1>\n<hr />\n<h2>Features &amp; benefits :</h2>\n<ul>\n<li>Basecoats with metallic</li>\n<li>pearl and non-metallic effect polyurethane varnishes acrylic paints</li>\n<li>varnishes primers</li>\n</ul>\n<h2><b></b>Hazards &amp; Warnings</h2>\n<p>May cause skin irritation. May cause an allergic skin reaction. May cause serious eye damage. Use PPE, handle with care and keep out of reach of children and pets. Please refer to the manufacturer&#8217;s Safety Data Sheet for more information.<br />\n<a href=\"https://tulda.co/wp-content/uploads/2023/01/TULDA-Universal-Thinner-slow-2.pdf\"><br />\nTechnical DATA SHEET<br />\n</a></p>",
+      "prices": {
+        "priceMinor": 746,
+        "regularPriceMinor": 746,
+        "salePriceMinor": 746,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": false,
+      "isOnBackorder": false,
+      "lowStockRemaining": 0,
+      "categories": [
+        {
+          "sourceWooId": 80,
+          "slug": "thinner",
+          "name": "THINNER",
+          "permalink": "https://tulda.co/product-category/thinner/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 41,
+              "name": "1Litre",
+              "slug": "1litre"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": []
+    },
+    {
+      "sourceWooId": 8491,
+      "slug": "tulda-ct90-vhs-speedline-acrylic-clearcoat-1l",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-ct90-vhs-speedline-acrylic-clearcoat-1l/",
+      "name": "TULDA CT90 VHS SPEEDLINE ACRYLIC CLEARCOAT &#8211; 1.5L &#038; 7.5L KIT",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": "<p>Clearcoat CT90 VHS is a Very High-Solid two-component acrylic clearcoat in SPEED LINE with<br />\nvery low content of volatile organic compounds and very short time of curing of clearcoat<br />\ncoating. It&#8217;s very resistant to UV rays. It has an excellent flow and very high gloss giving the<br />\nsurface a great look.</p>",
+      "descriptionHtml": "<h1>TULDA CT90 VHS SPEEDLINE ACRYLIC CLEARCOAT</h1>\n<p><strong>2:1 Mixing ratio</strong></p>\n<p>Clearcoat CT90 VHS is a Very High-Solid two-component acrylic clearcoat in SPEED LINE with<br />very low content of volatile organic compounds and very short time of curing of clearcoat<br />coating. It&#8217;s very resistant to UV rays. It has an excellent flow and very high gloss giving the<br />surface a great look.</p>\n<h2>Features &amp; benefits :</h2>\n<ul>\n<li>VOC compliant &lt;420 g/l</li>\n<li>Fast drying 10mins @ 50c</li>\n<li>Very High Solids</li>\n<li>Excellent Scratch Resistance</li>\n<li>High UV protection</li>\n<li>Excellent Flowability and high gloss</li>\n<li>Suitable for all size repairs</li>\n<li>Available in 7.5 litre and 1.5 litre kits</li>\n</ul>\n<h2><b></b>Hazards &amp; Warnings</h2>\n<p>May cause skin irritation. May cause an allergic skin reaction. May cause serious eye damage. Use PPE, handle with care and keep out of reach of children and pets. Please refer to the manufacturer&#8217;s Safety Data Sheet for more information.</p>\n<p> <br />\n\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2024/03/TDS-Tulda-CT90-VHS-2_1-VHS-FAST-MULTICLEAR.pdf\"><br />\n\t\t\t\t\tTechnical DATA SHEET<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"https://tulda.co/wp-content/uploads/2023/02/TULDA-Clearcoat-CT-90-VHS.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET CT90<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"https://tulda.co/wp-content/uploads/2023/02/TULDA-Hardener-HT-90-VHS.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET HT90<br />\n\t\t\t\t\t\t\t</a></p>",
+      "prices": {
+        "priceMinor": 3534,
+        "regularPriceMinor": 3534,
+        "salePriceMinor": 3534,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 89,
+              "name": "1.5Litre",
+              "slug": "1-5litre"
+            },
+            {
+              "sourceWooId": 41,
+              "name": "1Litre",
+              "slug": "1litre"
+            },
+            {
+              "sourceWooId": 74,
+              "name": "5Litre",
+              "slug": "5litre"
+            },
+            {
+              "sourceWooId": 49,
+              "name": "7.5Litre",
+              "slug": "7-5litre"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 8809,
+          "parentWooId": 8491,
+          "label": "Size: 7.5Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-ct90-vhs-speedline-acrylic-clearcoat-1l/?attribute_pa_size=7-5litre",
+          "prices": {
+            "priceMinor": 17383,
+            "regularPriceMinor": 17383,
+            "salePriceMinor": 17383,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8808,
+          "parentWooId": 8491,
+          "label": "Size: 1.5Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-ct90-vhs-speedline-acrylic-clearcoat-1l/?attribute_pa_size=1-5litre",
+          "prices": {
+            "priceMinor": 3534,
+            "regularPriceMinor": 3534,
+            "salePriceMinor": 3534,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "sourceWooId": 8487,
+      "slug": "tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l",
+      "slugSource": "permalink_path",
+      "permalink": "https://tulda.co/product/tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l/",
+      "name": "TULDA CT60 Multi-Clear 2:1 HS Speedline Acrylic Lacquer &#8211; 1.5L &#038; 7.5L Kit",
+      "type": "variable",
+      "sku": null,
+      "shortDescriptionHtml": "<p>Clearcoat CT60 HS is a High-Solid two-component acrylic clearcoat in SPEED LINE with very<br />\nlow content of volatile organic compounds and very short time of curing of clearcoat coating.<br />\nIt&#8217;s very resistant to UV rays and weather conditions and have very good scratch resistant. It<br />\nhas an excellent flow and very high gloss giving the surface a great look.</p>",
+      "descriptionHtml": "<h1>TULDA CT60&nbsp; Multi-Clear 2:1 HS Speedline Acrylic Lacquer Kit 7.5L</h1>\n<p><strong>2:1 Mixing ratio</strong><br />\n&nbsp;<br />\nClearcoat CT60 HS is a High-Solid two-component acrylic clearcoat in SPEED LINE with very<br />low content of volatile organic compounds and very short time of curing of clearcoat coating.<br />It&#8217;s very resistant to UV rays and weather conditions and have very good scratch resistant. It<br />has an excellent flow and very high gloss giving the surface a great look.</p>\n<p>Kit includes: TULDA CT60 Clearcoat 5L&nbsp; + TULDA HT60 Hardener 2.5L</p>\n<h2>Features &amp; benefits :</h2>\n<ul>\n<li>\nFast drying 15mins&nbsp;@ 60c\n</li>\n<li>\nHigh Solids\n</li>\n<li>\nExcellent Scratch Resistance\n</li>\n<li>\nHigh UV protection\n</li>\n<li>\nExcellent Flowability and high gloss\n</li>\n<li>\nSuitable&nbsp;for all size repairs\n</li>\n<li>\nAvailable in 7.5 litre and 1.5 litre kits<br />\n&nbsp;\n</li>\n</ul>\n<p>\t\t\t<a href=\"http://tulda.co/wp-content/uploads/2023/07/TDS-CT60-HS-2_1-HS-FAST-MULTICLEAR.pdf\"><br />\n\t\t\t\t\tTechnical DATA SHEET<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"https://tulda.co/wp-content/uploads/2023/02/TULDA-Clearcoat-CT-60-HS.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET CT60<br />\n\t\t\t\t\t\t\t</a><br />\n\t\t\t<a href=\"https://tulda.co/wp-content/uploads/2023/02/TULDA-Hardener-HT-60-HS.pdf\"><br />\n\t\t\t\t\tSAFETY DATA SHEET HT60<br />\n\t\t\t\t\t\t\t</a></p>",
+      "prices": {
+        "priceMinor": 2741,
+        "regularPriceMinor": 2741,
+        "salePriceMinor": 2741,
+        "currencyCode": "GBP",
+        "currencyMinorUnit": 2,
+        "currencySymbol": "£"
+      },
+      "isOnSale": false,
+      "isPurchasable": true,
+      "isInStock": true,
+      "isOnBackorder": false,
+      "lowStockRemaining": null,
+      "categories": [
+        {
+          "sourceWooId": 79,
+          "slug": "kits",
+          "name": "Kits",
+          "permalink": "https://tulda.co/product-category/kits/"
+        }
+      ],
+      "attributes": [
+        {
+          "sourceWooId": 2,
+          "name": "Brand",
+          "taxonomy": "pa_brand",
+          "hasVariations": false,
+          "terms": [
+            {
+              "sourceWooId": 76,
+              "name": "TULDA",
+              "slug": "tulda"
+            }
+          ]
+        },
+        {
+          "sourceWooId": 3,
+          "name": "Size",
+          "taxonomy": "pa_size",
+          "hasVariations": true,
+          "terms": [
+            {
+              "sourceWooId": 89,
+              "name": "1.5Litre",
+              "slug": "1-5litre"
+            },
+            {
+              "sourceWooId": 49,
+              "name": "7.5Litre",
+              "slug": "7-5litre"
+            }
+          ]
+        }
+      ],
+      "relatedProductIds": null,
+      "relatedProductsAvailable": false,
+      "variations": [
+        {
+          "sourceWooId": 8813,
+          "parentWooId": 8487,
+          "label": "Size: 7.5Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l/?attribute_pa_size=7-5litre",
+          "prices": {
+            "priceMinor": 13361,
+            "regularPriceMinor": 13361,
+            "salePriceMinor": 13361,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        },
+        {
+          "sourceWooId": 8812,
+          "parentWooId": 8487,
+          "label": "Size: 1.5Litre",
+          "sku": null,
+          "permalink": "https://tulda.co/product/tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l/?attribute_pa_size=1-5litre",
+          "prices": {
+            "priceMinor": 2741,
+            "regularPriceMinor": 2741,
+            "salePriceMinor": 2741,
+            "currencyCode": "GBP",
+            "currencyMinorUnit": 2,
+            "currencySymbol": "£"
+          },
+          "isPurchasable": true,
+          "isInStock": true,
+          "isOnBackorder": false,
+          "lowStockRemaining": null,
+          "attributes": []
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "productCount": 15,
+    "categoryCount": 9,
+    "variationCount": 48,
+    "productCountByType": {
+      "simple": 5,
+      "variable": 10
+    },
+    "productsWithoutSku": [
+      13508,
+      12210,
+      11642,
+      11626,
+      8819,
+      8584,
+      8550,
+      8520,
+      8506,
+      8500,
+      8491,
+      8487
+    ],
+    "variationsWithoutSku": [
+      13630,
+      13629,
+      13628,
+      13621,
+      13620,
+      13619,
+      13544,
+      13513,
+      12227,
+      12226,
+      12225,
+      12224,
+      12223,
+      12222,
+      11649,
+      11648,
+      11647,
+      11646,
+      11645,
+      11644,
+      11643,
+      11639,
+      11638,
+      11637,
+      11636,
+      11635,
+      11634,
+      11633,
+      8878,
+      8877,
+      8876,
+      8875,
+      8874,
+      8873,
+      8872,
+      8871,
+      8870,
+      8869,
+      8868,
+      8867,
+      8820,
+      8816,
+      8813,
+      8812,
+      8809,
+      8808,
+      8591,
+      8590
+    ],
+    "productsWithoutImages": [],
+    "productsWithoutPrices": [],
+    "productsWithMultipleCategories": [
+      13897,
+      13887,
+      8550,
+      8506
+    ],
+    "unmatchedVariationParentIds": [],
+    "apiErrors": [],
+    "ambiguities": [
+      "The Store API does not expose a direct product slug field; each manifest slug is parsed from the verified WooCommerce permalink path.",
+      "The Store API does not expose related-product data in these responses; relatedProductIds is null.",
+      "Variation attributes are empty in the Store API variation responses; the verified variation label and permalink are retained.",
+      "Exact stock quantity is not exposed; lowStockRemaining is retained when provided and stock quantity must remain null on import."
+    ]
+  }
+}
