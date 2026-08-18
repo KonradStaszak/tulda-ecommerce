@@ -14,6 +14,7 @@ import Footer from './components/Footer'
 import ShopPage from './pages/ShopPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
+import CheckoutPage from './pages/CheckoutPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ScrollToTop from './components/ScrollToTop'
 import { useCatalogue } from './services/catalogue/useCatalogue'
@@ -41,6 +42,7 @@ function Storefront({ data: catalogue, loading: catalogueLoading, error: catalog
       <Route path="/products/:categorySlug?" element={<main><ShopPage onAddToCart={addToCart} wishlist={wishlist} onToggleWishlist={toggleWishlist} products={products} categories={categories} loading={catalogueLoading} error={catalogueError} /><Footer /></main>} />
       <Route path="/product/:productSlug" element={<><ProductDetailPage allProducts={products} onAddToCart={addToCart} wishlist={wishlist} onToggleWishlist={toggleWishlist} /><Footer /></>} />
       <Route path="/cart" element={<><CartPage /><Footer /></>} />
+      <Route path="/checkout" element={<><CheckoutPage /><Footer /></>} />
       <Route path="/technical-documents" element={<main><TechnicalResources /><Footer /></main>} />
       <Route path="/contact" element={<main><ContactCTA /><Footer /></main>} />
       <Route path="*" element={<main><NotFoundPage /><Footer /></main>} />
