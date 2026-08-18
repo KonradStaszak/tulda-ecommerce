@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import FilterSidebar from './FilterSidebar'
-import type { FilterState } from '../data/products'
+import type { FilterState } from '../types/catalog'
 
 interface MobileFilterDrawerProps {
   open: boolean

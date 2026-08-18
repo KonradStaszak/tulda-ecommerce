@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Product, CartItem } from '../data/products'
+import type { Product, CartItem } from '../types/catalog'
 
 interface ProductCardProps {
   product: Product

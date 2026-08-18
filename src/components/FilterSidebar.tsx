@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { categories } from '../data/products'
-import type { FilterState, CategoryId } from '../data/products'
+import type { FilterState, CategoryId } from '../types/catalog'
 
 interface FilterSidebarProps {
   filters: FilterState
@@ -114,8 +114,8 @@ export default function FilterSidebar({ filters, onChange, totalCount, filteredC
           {categories.map(cat => (
             <Checkbox
               key={cat.id}
-              checked={filters.categories.includes(cat.id as CategoryId)}
-              onChange={() => toggleCategory(cat.id as CategoryId)}
+              checked={filters.categories.includes(cat.id)}
+              onChange={() => toggleCategory(cat.id)}
               label={cat.name}
               count={cat.count}
             />

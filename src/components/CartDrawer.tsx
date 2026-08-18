@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import type { CartItem } from '../data/products'
+import type { CartItem } from '../types/catalog'
 
 interface CartDrawerProps {
   open: boolean

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { products } from '../data/products'
 import ProductCard from './ProductCard'
-import type { CartItem } from '../data/products'
+import type { CartItem } from '../types/catalog'
 
 const FILTERS = ['All', 'Clearcoat', 'Primer', 'Abrasives', 'Filler', 'Thinner']
 

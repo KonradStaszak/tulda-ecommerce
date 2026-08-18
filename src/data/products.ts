@@ -1,35 +1,4 @@
-export type CategoryId = 'clearcoat' | 'primer' | 'abrasives' | 'filler' | 'thinner' | 'kits'
-
-export interface Product {
-  id: string
-  code: string
-  name: string
-  shortName: string
-  category: CategoryId
-  categoryLabel: string
-  priceFrom: number
-  priceTo?: number
-  currency: string
-  description: string
-  keySpec: string
-  badge?: string
-  isNew?: boolean
-  inStock: boolean
-  accentColor: string
-  bottleColor: string
-  sizes: { label: string; price: number }[]
-  addedAt: string // ISO date for "newest" sort
-}
-
-export interface Category {
-  id: CategoryId | 'all'
-  name: string
-  slug: string
-  description: string
-  count: number
-  image: string
-  color: string
-}
+import type { Category, FilterState, Product, ProductVariant } from '../types/catalog'
 
 export const categories: Category[] = [
   {
@@ -445,28 +414,11 @@ export const products: Product[] = [
   },
 ]
 
-export interface CartItem {
-  product: Product
-  quantity: number
-  size: string
-}
-
-export const ALL_SIZES = [
+export const ALL_SIZES: ProductVariant['label'][] = [
   '1L', '1L Kit', '1.5L Kit', '3.5L Kit', '5L', '5L Kit', '7.5L Kit',
   '1kg', '3kg', 'Box/50', 'Box/100', 'Single Panel Kit', 'Full Car Kit',
   'Standard Bundle', 'Starter (1.5L + 1L)',
 ]
-
-export type SortKey = 'recommended' | 'price-asc' | 'price-desc' | 'newest'
-
-export interface FilterState {
-  categories: CategoryId[]
-  inStockOnly: boolean
-  sizes: string[]
-  search: string
-  sort: SortKey
-  page: number
-}
 
 export function applyFilters(all: Product[], filters: FilterState): Product[] {
   let result = [...all]

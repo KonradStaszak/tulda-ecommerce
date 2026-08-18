@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { products, applyFilters, categories } from '../data/products'
-import type { FilterState, CartItem, CategoryId, SortKey } from '../data/products'
+import type { FilterState, CartItem, CategoryId, SortKey } from '../types/catalog'
 import ProductCard from '../components/ProductCard'
 import FilterSidebar from '../components/FilterSidebar'
 import MobileFilterDrawer from '../components/MobileFilterDrawer'
@@ -101,13 +101,13 @@ export default function ShopPage({ onNavigateHome, onAddToCart, wishlist, onTogg
                 All
               </button>
               {categories.map(cat => {
-                const active = filters.categories.includes(cat.id as CategoryId)
+                const active = filters.categories.includes(cat.id)
                 return (
                   <button key={cat.id}
                     onClick={() => {
                       setFilters(f => ({
                         ...f,
-                        categories: active ? f.categories.filter(c => c !== cat.id) : [cat.id as CategoryId],
+                        categories: active ? f.categories.filter(c => c !== cat.id) : [cat.id],
                         page: 1,
                       }))
                     }}

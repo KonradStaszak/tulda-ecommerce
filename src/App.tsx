@@ -11,7 +11,7 @@ import TechnicalResources from './components/TechnicalResources'
 import ContactCTA from './components/ContactCTA'
 import Footer from './components/Footer'
 import ShopPage from './pages/ShopPage'
-import type { CartItem, CategoryId } from './data/products'
+import type { CartItem, CategoryId } from './types/catalog'
 
 type Page = 'home' | 'shop'
 
@@ -79,7 +79,7 @@ export default function App() {
         <main>
           <Hero onShopNow={() => navigateToShop()} />
           <TrustBar />
-          <ShopByCategory onCategoryClick={id => navigateToShop(id as CategoryId)} />
+          <ShopByCategory onCategoryClick={navigateToShop} />
           <PopularProducts
             onAddToCart={addToCart}
             wishlist={wishlist}

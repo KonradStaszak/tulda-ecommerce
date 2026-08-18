@@ -1,5 +1,5 @@
 import { categories } from '../data/products'
-import type { CategoryId } from '../data/products'
+import type { CategoryId } from '../types/catalog'
 
 interface ShopByCategoryProps {
   onCategoryClick?: (id: CategoryId) => void
@@ -45,7 +45,7 @@ export default function ShopByCategory({ onCategoryClick }: ShopByCategoryProps)
             <a
               key={cat.id}
               href="#"
-              onClick={e => { e.preventDefault(); onCategoryClick?.(cat.id as CategoryId) }}
+              onClick={e => { e.preventDefault(); onCategoryClick?.(cat.id) }}
               className={`group relative overflow-hidden rounded-sm cursor-pointer ${
                 i === 0 ? 'col-span-2 row-span-2 md:col-span-2' : ''
               }`}
