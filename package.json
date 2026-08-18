@@ -11,7 +11,7 @@
     "db:types": "supabase gen types --lang typescript --linked --schema public > src/types/database.ts",
     "assets:tulda": "node scripts/import/download-tulda-images.mjs",
     "assets:tulda:optimize": "node scripts/import/optimize-tulda-images.mjs",
-    "import:tulda": "node scripts/import/tulda.mjs"
+    "import:tulda": "node --env-file=.env.local scripts/import/tulda.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

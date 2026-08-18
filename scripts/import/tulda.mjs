@@ -4,6 +4,8 @@ import path from 'node:path'
 import { buildImportPlan, loadTuldaManifests, sanitizeLegacyHtml } from './tulda-common.mjs'
 
 const dryRun = process.argv.includes('--dry-run')
+const preflight = process.argv.includes('--preflight')
+const validateRemote = process.argv.includes('--validate-remote')
 const { catalogue, imageManifest } = await loadTuldaManifests()
 const plan = buildImportPlan(catalogue, imageManifest)
 const missingOptimizedAssets = (await Promise.all(plan.imagePlan.uniqueFiles.map(async (image) => {
@@ -31,6 +33,11 @@ const report = {
   missingData: plan.missingData,
   totalDiscrepancies: plan.totalDiscrepancies,
   databaseOperationsPlanned: plan.databaseOperations,
+  sanitization: {
+    categoryDescriptionsChanged: plan.categories.filter((category) => sanitizeLegacyHtml(category.descriptionHtml) !== (category.descriptionHtml || null)).length,
+    productShortDescriptionsChanged: plan.products.filter((product) => sanitizeLegacyHtml(product.shortDescriptionHtml) !== (product.shortDescriptionHtml || null)).length,
+    productDescriptionsChanged: plan.products.filter((product) => sanitizeLegacyHtml(product.descriptionHtml) !== (product.descriptionHtml || null)).length,
+  },
 }
 
 if (dryRun) {
@@ -56,6 +63,127 @@ const supabase = createClient(supabaseUrl, supabaseSecretKey, {
 function requireData(result) {
   if (result.error) throw result.error
   return result.data
+}
+
+function expect(condition, message) {
+  if (!condition) throw new Error(`Remote catalogue validation failed: ${message}`)
+}
+
+async function getRemoteCounts() {
+  const tables = ['categories', 'products', 'product_categories', 'product_variants', 'product_images']
+  const counts = await Promise.all(tables.map(async (table) => {
+    const result = await supabase.from(table).select('*', { count: 'exact', head: true })
+    if (result.error) throw result.error
+    return [table, result.count ?? 0]
+  }))
+  return Object.fromEntries(counts)
+}
+
+async function assertRequiredSchema() {
+  for (const table of ['categories', 'products', 'product_variants']) {
+    const result = await supabase.from(table).select('woocommerce_id').limit(1)
+    if (result.error) {
+      throw new Error(`Required remote schema field ${table}.woocommerce_id is unavailable: ${result.error.message}`)
+    }
+  }
+}
+
+function rowsByWooId(rows) {
+  return new Map(rows.map((row) => [row.woocommerce_id, row]))
+}
+
+async function validateRemoteCatalogue() {
+  const [counts, categoryRows, productRows, variantRows, productCategoryRows, imageRows] = await Promise.all([
+    getRemoteCounts(),
+    supabase.from('categories').select('id, woocommerce_id, parent_id'),
+    supabase.from('products').select('id, woocommerce_id'),
+    supabase.from('product_variants').select('id, woocommerce_id, product_id, sku, price_minor, currency, stock_quantity, is_in_stock'),
+    supabase.from('product_categories').select('product_id, category_id'),
+    supabase.from('product_images').select('product_id, variant_id, storage_path, alt_text, sort_order, is_primary'),
+  ])
+
+  const categories = requireData(categoryRows)
+  const products = requireData(productRows)
+  const variants = requireData(variantRows)
+  const productCategories = requireData(productCategoryRows)
+  const images = requireData(imageRows)
+  const expectedCounts = {
+    categories: plan.categories.length,
+    products: plan.products.length,
+    product_categories: plan.productCategories.length,
+    product_variants: plan.variants.length,
+    product_images: plan.images.length,
+  }
+  for (const [table, expected] of Object.entries(expectedCounts)) {
+    expect(counts[table] === expected, `${table} count is ${counts[table]}, expected ${expected}`)
+  }
+
+  const categoriesByWooId = rowsByWooId(categories)
+  const productsByWooId = rowsByWooId(products)
+  const variantsByWooId = rowsByWooId(variants)
+  const expectedCategoryIds = new Set(plan.categories.map((category) => category.sourceWooId))
+  const expectedProductIds = new Set(plan.products.map((product) => product.sourceWooId))
+  const expectedVariantIds = new Set(plan.variants.map((variant) => variant.sourceWooId))
+  expect(categoriesByWooId.size === expectedCategoryIds.size && [...expectedCategoryIds].every((id) => categoriesByWooId.has(id)), 'categories do not match the source WooCommerce IDs')
+  expect(productsByWooId.size === expectedProductIds.size && [...expectedProductIds].every((id) => productsByWooId.has(id)), 'products do not match the source WooCommerce IDs')
+  expect(variantsByWooId.size === expectedVariantIds.size && [...expectedVariantIds].every((id) => variantsByWooId.has(id)), 'variants do not match the planned stable WooCommerce IDs')
+
+  for (const category of plan.categories) {
+    const actual = categoriesByWooId.get(category.sourceWooId)
+    const expectedParentId = category.parentWooId === null ? null : categoriesByWooId.get(category.parentWooId)?.id
+    expect(actual.parent_id === expectedParentId, `category ${category.sourceWooId} has an incorrect parent relationship`)
+  }
+
+  for (const variant of plan.variants) {
+    const actual = variantsByWooId.get(variant.sourceWooId)
+    const expectedProductId = productsByWooId.get(variant.parentWooId)?.id
+    expect(actual.product_id === expectedProductId, `variant ${variant.sourceWooId} is linked to the wrong product`)
+    expect(actual.sku === variant.sku, `variant ${variant.sourceWooId} has an unexpected SKU`)
+    expect(Number(actual.price_minor) === Number(variant.prices.priceMinor) && actual.currency === 'GBP', `variant ${variant.sourceWooId} has an invalid GBP minor-unit price`)
+    expect(actual.stock_quantity === null && actual.is_in_stock === variant.isInStock, `variant ${variant.sourceWooId} has inconsistent stock data`)
+  }
+
+  const expectedRelationships = new Set(plan.productCategories.map((relationship) => `${productsByWooId.get(relationship.productWooId)?.id}:${categoriesByWooId.get(relationship.categoryWooId)?.id}`))
+  const actualRelationships = new Set(productCategories.map((relationship) => `${relationship.product_id}:${relationship.category_id}`))
+  expect(actualRelationships.size === expectedRelationships.size && [...expectedRelationships].every((relationship) => actualRelationships.has(relationship)), 'product/category relationships do not match the import plan')
+
+  const expectedImages = new Map(plan.images.map((image) => {
+    const productId = productsByWooId.get(image.sourceProductWooId)?.id
+    const variantId = image.sourceVariantWooId === null ? null : variantsByWooId.get(image.sourceVariantWooId)?.id
+    return [`${productId}:${variantId ?? 'null'}:${image.localPublicPath}`, image]
+  }))
+  expect(images.every((image) => image.storage_path.startsWith('/assets/products/') && !image.storage_path.includes('tulda.co')), 'an image storage path is not a local optimized asset')
+  expect(images.every((image) => expectedImages.has(`${image.product_id}:${image.variant_id ?? 'null'}:${image.storage_path}`)), 'product images do not match the import plan')
+  const productsWithImages = new Set(images.map((image) => image.product_id))
+  expect(products.every((product) => productsWithImages.has(product.id)), 'a product has no image association')
+
+  const realVariationIds = new Set(plan.sourceVariations.map((variation) => variation.sourceWooId))
+  const syntheticVariationIds = new Set(plan.variants.filter((variant) => variant.sourceKind === 'simple_product').map((variant) => variant.sourceWooId))
+  expect([...realVariationIds].every((id) => variantsByWooId.has(id)) && realVariationIds.size === 48, 'not all 48 real WooCommerce variations were imported')
+  expect([...syntheticVariationIds].every((id) => variantsByWooId.has(id)) && syntheticVariationIds.size === 5, 'the five simple-product purchase variants are not uniquely present')
+
+  return { counts, realWooCommerceVariations: realVariationIds.size, simpleProductPurchaseVariants: syntheticVariationIds.size }
+}
+
+await assertRequiredSchema()
+const preImportCounts = await getRemoteCounts()
+
+if (preflight) {
+  const populatedTables = Object.entries(preImportCounts).filter(([, count]) => count > 0)
+  if (populatedTables.length > 0) {
+    throw new Error(`Refusing first import: catalogue tables already contain data: ${JSON.stringify(Object.fromEntries(populatedTables))}`)
+  }
+  console.log(JSON.stringify({ preflight: true, ...report, preImportCounts }, null, 2))
+  process.exit(0)
+}
+
+if (validateRemote) {
+  console.log(JSON.stringify({ validateRemote: true, ...report, validation: await validateRemoteCatalogue() }, null, 2))
+  process.exit(0)
+}
+
+if (Object.values(preImportCounts).some((count) => count > 0)) {
+  await validateRemoteCatalogue()
 }
 
 const categoryRows = plan.categories.map((category) => ({
@@ -143,4 +271,5 @@ for (const image of plan.images) {
   }
 }
 
-console.log(JSON.stringify({ dryRun: false, imported: report }, null, 2))
+const postImportValidation = await validateRemoteCatalogue()
+console.log(JSON.stringify({ dryRun: false, imported: report, preImportCounts, postImportValidation }, null, 2))
