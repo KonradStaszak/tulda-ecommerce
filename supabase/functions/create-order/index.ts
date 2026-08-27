@@ -127,6 +127,9 @@ export default {
   fetch: withSupabase({ auth: 'publishable' }, async (request, ctx) => {
     if (request.method !== 'POST') return errorResponse('Method not allowed.', 405)
 
+    const token = request.headers.get('Authorization')?.replace(/^Bearer\s+/i, '')
+    const { data: userData } = token ? await ctx.supabaseAdmin.auth.getUser(token) : { data: { user: null } }
+
     let body: unknown
     try {
       body = await request.json()
@@ -146,6 +149,11 @@ export default {
 
     const order = data?.[0]
     if (!order) return errorResponse('Unable to create a draft order right now. Please try again.', 500)
+
+    if (userData.user) {
+      const { error: ownershipError } = await ctx.supabaseAdmin.from('orders').update({ user_id: userData.user.id }).eq('id', order.order_id)
+      if (ownershipError) return errorResponse('Unable to create a draft order right now. Please try again.', 500)
+    }
 
     return Response.json(order, { status: order.reused_existing_order ? 200 : 201 })
   }),

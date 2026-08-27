@@ -55,12 +55,6 @@ export default function FindProduct() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: selector */}
           <div>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-3"
-              style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.18em' }}
-            >
-              Product Selector
-            </p>
             <h2
               className="text-4xl md:text-5xl font-black leading-none mb-4"
               style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--foreground)' }}

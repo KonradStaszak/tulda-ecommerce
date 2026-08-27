@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { filterProducts } from '../services/catalogue/repository'
+import { getCategoryAncestors, getCategoryTree } from '../services/catalogue/categoryHierarchy'
 import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct, FilterState, SortKey } from '../types/catalog'
 import ProductCard from '../components/ProductCard'
 import FilterSidebar from '../components/FilterSidebar'
@@ -37,7 +38,10 @@ interface ShopPageProps {
 export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, products, categories, loading, error }: ShopPageProps) {
   const { categorySlug } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const routeCategory = categories.find((category) => category.slug === categorySlug)
+  const categoryTree = useMemo(() => getCategoryTree(categories), [categories])
+  const categoryBreadcrumbs = routeCategory ? [...getCategoryAncestors(routeCategory, categories), routeCategory] : []
   const invalidCategory = Boolean(categorySlug) && !loading && !routeCategory
   const [filters, setFilters] = useState<FilterState>(defaultFilters)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -45,6 +49,11 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
   useEffect(() => {
     setFilters((current) => ({ ...current, categories: routeCategory ? [routeCategory.id] : [], page: 1 }))
   }, [routeCategory?.id, categorySlug])
+
+  useEffect(() => {
+    const routeSearch = searchParams.get('search') ?? ''
+    setFilters((current) => current.search === routeSearch ? current : { ...current, search: routeSearch, page: 1 })
+  }, [searchParams])
 
   const filtered = useMemo(() => filterProducts(products, filters), [products, filters])
   const paginated = filtered.slice(0, filters.page * PAGE_SIZE)
@@ -89,47 +98,58 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 4l4 4-4 4" />
             </svg>
             <span className="text-[12px] font-medium" style={{ color: 'var(--foreground)', fontFamily: 'Inter, sans-serif' }}>
-              Products
+              <Link to="/products" className="transition-colors hover:text-[var(--primary)]">Products</Link>
             </span>
+            {categoryBreadcrumbs.map((category) => (
+              <span key={category.id} className="contents">
+                <svg className="w-3 h-3" style={{ color: 'var(--muted-foreground)' }} fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 4l4 4-4 4" />
+                </svg>
+                <Link to={`/products/${category.slug}`} className="text-[12px] font-medium transition-colors hover:text-[var(--primary)]" style={{ color: category.id === routeCategory?.id ? 'var(--foreground)' : 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
+                  {category.name}
+                </Link>
+              </span>
+            ))}
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h1 className="font-black leading-none mb-1.5"
                 style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: '2.4rem', color: 'var(--foreground)', letterSpacing: '-0.01em' }}>
-                Products
+                {routeCategory?.name ?? 'Products'}
               </h1>
               <p className="text-[13px]" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
-                Professional automotive refinishing — clearcoats, primers, abrasives, fillers &amp; more.
+                Professional automotive refinishing — clearcoats, primers, abrasives, fillers & more.
               </p>
             </div>
 
             {/* Category nav pills — horizontal scroll */}
-            <div className="flex gap-2 overflow-x-auto pb-1 shrink-0" style={{ scrollbarWidth: 'none' }}>
+            <div className="flex max-w-full flex-wrap gap-2 pb-1 shrink-0">
               <button
                 onClick={() => navigate('/products')}
                 className="shrink-0 px-3.5 py-1.5 text-[12px] font-semibold rounded-sm border transition-all"
                 style={{
                   borderColor: filters.categories.length === 0 ? 'var(--primary)' : 'var(--border)',
                   backgroundColor: filters.categories.length === 0 ? 'var(--primary)' : 'var(--background)',
-                  color: filters.categories.length === 0 ? '#fff' : 'var(--foreground)',
+                  color: filters.categories.length === 0 ? 'var(--primary-foreground)' : 'var(--foreground)',
                   fontFamily: 'Inter, sans-serif',
                 }}>
                 All
               </button>
-              {categories.map(cat => {
-                const active = filters.categories.includes(cat.id)
+              {categoryTree.flatMap((node) => [node.category, ...node.children.map((child) => child.category)]).map((category) => {
+                const active = filters.categories.includes(category.id)
+                const isChild = category.parentId !== null
                 return (
-                  <button key={cat.id}
-                    onClick={() => navigate(active ? '/products' : `/products/${cat.slug}`)}
+                  <button key={category.id}
+                    onClick={() => navigate(active ? '/products' : `/products/${category.slug}`)}
                     className="shrink-0 px-3.5 py-1.5 text-[12px] font-semibold rounded-sm border transition-all"
                     style={{
                       borderColor: active ? 'var(--primary)' : 'var(--border)',
                       backgroundColor: active ? 'var(--primary)' : 'var(--background)',
-                      color: active ? '#fff' : 'var(--foreground)',
+                      color: active ? 'var(--primary-foreground)' : 'var(--foreground)',
                       fontFamily: 'Inter, sans-serif',
                     }}>
-                    {cat.name}
+                    {isChild ? '↳ ' : ''}{category.name}
                   </button>
                 )
               })}
@@ -140,12 +160,12 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
 
       <div className="max-w-[1400px] mx-auto px-6 py-8">
         {/* Toolbar row */}
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             {/* Mobile filter button */}
             <button
               onClick={() => setMobileFiltersOpen(true)}
-              className="lg:hidden flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-medium rounded-sm border transition-colors hover:border-[var(--foreground)]"
+              className="lg:hidden flex items-center gap-1.5 min-h-11 px-3.5 text-[12px] font-medium rounded-sm border transition-colors hover:border-[var(--foreground)]"
               style={{ borderColor: 'var(--border)', color: 'var(--foreground)', fontFamily: 'Inter, sans-serif' }}
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -161,7 +181,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
             </button>
 
             {/* Search */}
-            <div className="relative flex items-center">
+            <div className="relative flex items-center flex-1 sm:flex-none min-w-0">
               <svg className="absolute left-3 w-3.5 h-3.5 pointer-events-none" style={{ color: 'var(--muted-foreground)' }}
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                 <circle cx="11" cy="11" r="7" /><path strokeLinecap="round" d="M20 20l-3.5-3.5" />
@@ -170,13 +190,12 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
                 value={filters.search}
                 onChange={e => setFilters(f => ({ ...f, search: e.target.value, page: 1 }))}
                 placeholder="Search products…"
-                className="pl-8 pr-8 py-2 text-[12px] rounded-sm border outline-none transition-colors focus:border-[var(--primary)]"
+                className="tulda-field w-full sm:w-[220px] pl-8 pr-8 py-2 text-[12px]"
                 style={{
                   borderColor: 'var(--border)',
                   backgroundColor: 'var(--background)',
                   color: 'var(--foreground)',
                   fontFamily: 'Inter, sans-serif',
-                  width: '220px',
                 }}
               />
               {filters.search && (
@@ -197,7 +216,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
           </div>
 
           {/* Sort */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-between sm:justify-end">
             <label className="text-[12px] hidden sm:inline whitespace-nowrap" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
               Sort by
             </label>
@@ -205,7 +224,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
               <select
                 value={filters.sort}
                 onChange={e => setFilters(f => ({ ...f, sort: e.target.value as SortKey, page: 1 }))}
-                className="appearance-none pl-3 pr-8 py-2 text-[12px] rounded-sm border outline-none cursor-pointer transition-colors focus:border-[var(--primary)]"
+                className="tulda-field appearance-none min-h-11 pl-3 pr-8 py-2 text-[12px] cursor-pointer"
                 style={{
                   borderColor: 'var(--border)',
                   backgroundColor: 'var(--background)',
@@ -263,8 +282,8 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
           {/* Product grid */}
           <div className="flex-1 min-w-0">
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[370px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }} />)}
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-[410px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }} />)}
               </div>
             ) : invalidCategory ? (
               <InvalidCategory categorySlug={categorySlug} />
@@ -276,7 +295,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
               <EmptyState onClear={() => updateFilters(defaultFilters)} />
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                   {paginated.map(product => (
                     <ProductCard
                       key={product.id}
@@ -342,8 +361,8 @@ function EmptyState({ onClear }: { onClear: () => void }) {
         Try adjusting your filters or search term to find what you're looking for.
       </p>
       <button onClick={onClear}
-        className="px-6 py-2.5 text-[13px] font-semibold rounded-sm transition-colors"
-        style={{ backgroundColor: 'var(--primary)', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
+        className="tulda-button"
+        >
         Clear Filters
       </button>
     </div>
@@ -373,7 +392,7 @@ function InvalidCategory({ categorySlug }: { categorySlug?: string }) {
     <div className="flex flex-col items-center justify-center py-24 text-center">
       <p className="text-base font-semibold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Category not found</p>
       <p className="text-[13px] max-w-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>“{categorySlug}” is not a catalogue category.</p>
-      <Link to="/products" className="mt-6 px-6 py-2.5 text-[13px] font-semibold rounded-sm" style={{ backgroundColor: 'var(--primary)', color: '#fff', fontFamily: 'Inter, sans-serif' }}>View all products</Link>
+      <Link to="/products" className="tulda-button mt-6">View all products</Link>
     </div>
   )
 }

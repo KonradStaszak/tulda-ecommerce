@@ -32,7 +32,7 @@ export default function MobileFilterDrawer({ open, onClose, filters, onChange, t
         onClick={onClose}
       />
       <div
-        className="fixed inset-y-0 left-0 z-50 w-[300px] flex flex-col"
+        className="fixed inset-y-0 left-0 z-50 flex w-full max-w-[300px] min-w-0 flex-col overflow-x-hidden"
         style={{
           backgroundColor: 'var(--background)',
           boxShadow: '4px 0 24px rgba(0,0,0,0.12)',
@@ -68,7 +68,7 @@ export default function MobileFilterDrawer({ open, onClose, filters, onChange, t
           <button
             onClick={onClose}
             className="w-full py-3 text-sm font-semibold rounded-sm"
-            style={{ backgroundColor: 'var(--primary)', color: '#fff', fontFamily: 'Inter, sans-serif', letterSpacing: '0.04em' }}
+            style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)', fontFamily: 'Inter, sans-serif', letterSpacing: '0.04em' }}
           >
             View {filteredCount} Products
           </button>

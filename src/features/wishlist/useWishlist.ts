@@ -1,27 +1,32 @@
 import { useEffect, useState } from 'react'
-
-const WISHLIST_STORAGE_KEY = 'tulda.wishlist'
-const WISHLIST_STORAGE_VERSION = 1
-
-function readWishlist() {
-  try {
-    const raw = window.localStorage.getItem(WISHLIST_STORAGE_KEY)
-    const payload = raw ? JSON.parse(raw) : null
-    return payload?.version === WISHLIST_STORAGE_VERSION && Array.isArray(payload.productIds)
-      ? payload.productIds.filter((id: unknown): id is string => typeof id === 'string')
-      : []
-  } catch {
-    return []
-  }
-}
+import { supabase } from '../../lib/supabase'
 
 export function useWishlist() {
-  const [productIds, setProductIds] = useState<string[]>(readWishlist)
+  const [productIds, setProductIds] = useState<string[]>([])
+  const [userId, setUserId] = useState<string | null>(null)
 
   useEffect(() => {
-    try { window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify({ version: WISHLIST_STORAGE_VERSION, productIds })) } catch { /* Keep the in-memory wishlist available. */ }
-  }, [productIds])
+    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null))
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setUserId(session?.user.id ?? null))
+    return () => listener.subscription.unsubscribe()
+  }, [])
 
-  const toggle = (productId: string) => setProductIds((current) => current.includes(productId) ? current.filter((id) => id !== productId) : [...current, productId])
-  return { productIds, toggle }
+  useEffect(() => {
+    if (!userId) return
+    const customerDb = supabase as unknown as { from: (table: string) => any }
+    customerDb.from('customer_favorites').select('product_id').eq('user_id', userId)
+      .then(({ data }: { data: Array<{ product_id: string }> | null }) => {
+        if (data) setProductIds(data.map((favorite) => favorite.product_id))
+      })
+  }, [userId])
+
+  const toggle = (productId: string) => setProductIds((current) => {
+    const isFavorite = current.includes(productId)
+    if (!userId) return current
+    const customerDb = supabase as unknown as { from: (table: string) => any }
+    if (isFavorite) void customerDb.from('customer_favorites').delete().eq('user_id', userId).eq('product_id', productId)
+    else void customerDb.from('customer_favorites').insert({ user_id: userId, product_id: productId })
+    return isFavorite ? current.filter((id) => id !== productId) : [...current, productId]
+  })
+  return { productIds, toggle, isAuthenticated: Boolean(userId) }
 }

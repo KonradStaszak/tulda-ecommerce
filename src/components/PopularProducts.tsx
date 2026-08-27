@@ -14,11 +14,13 @@ interface PopularProductsProps {
 }
 
 export default function PopularProducts({ products, categories, loading, error, onAddToCart, wishlist, onToggleWishlist }: PopularProductsProps) {
-  const [activeFilter, setActiveFilter] = useState('All')
+  const [activeFilter, setActiveFilter] = useState('all')
+  const mainCategories = categories.filter((category) => category.parentId === null)
 
-  const filtered = activeFilter === 'All'
+  const filtered = activeFilter === 'all'
     ? products
-    : products.filter((product) => product.categories.some((category) => category.name === activeFilter))
+    : products.filter((product) => product.categories.some((category) => category.id === activeFilter))
+  const featuredProducts = filtered.slice(0, 4)
 
   return (
     <section
@@ -30,12 +32,6 @@ export default function PopularProducts({ products, categories, loading, error, 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-3"
-              style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.18em' }}
-            >
-              Our Range
-            </p>
             <h2
               className="text-4xl md:text-5xl font-black leading-none"
               style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--foreground)' }}
@@ -48,20 +44,20 @@ export default function PopularProducts({ products, categories, loading, error, 
 
           {/* Filter tabs */}
           <div className="flex flex-wrap gap-2">
-            {['All', ...categories.map((category) => category.name)].map(f => (
+            {[{ id: 'all', name: 'All' }, ...mainCategories].map((category) => (
               <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
+                key={category.id}
+                onClick={() => setActiveFilter(category.id)}
                 className="px-4 py-2 text-xs font-semibold rounded-sm border transition-all"
                 style={{
-                  borderColor: activeFilter === f ? 'var(--primary)' : 'var(--border)',
-                  backgroundColor: activeFilter === f ? 'var(--primary)' : 'var(--background)',
-                  color: activeFilter === f ? 'var(--primary-foreground)' : 'var(--foreground)',
+                  borderColor: activeFilter === category.id ? 'var(--primary)' : 'var(--border)',
+                  backgroundColor: activeFilter === category.id ? 'var(--primary)' : 'var(--background)',
+                  color: activeFilter === category.id ? 'var(--primary-foreground)' : 'var(--foreground)',
                   fontFamily: 'Inter, sans-serif',
                   letterSpacing: '0.04em',
                 }}
               >
-                {f.toUpperCase()}
+                {category.name.toUpperCase()}
               </button>
             ))}
           </div>
@@ -70,7 +66,7 @@ export default function PopularProducts({ products, categories, loading, error, 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {loading && Array.from({ length: 4 }).map((_, index) => <div key={index} className="h-[370px] animate-pulse rounded-sm border" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--background)' }} />)}
-          {!loading && filtered.map(product => (
+          {!loading && featuredProducts.map(product => (
             <ProductCard
               key={product.id}
               product={product}
@@ -94,7 +90,7 @@ export default function PopularProducts({ products, categories, loading, error, 
               letterSpacing: '0.04em',
             }}
           >
-            VIEW FULL CATALOGUE
+            VIEW ALL PRODUCTS
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
             </svg>

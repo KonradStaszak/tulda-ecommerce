@@ -6,11 +6,34 @@ import { formatMoney } from '../services/catalogue/money'
 
 export default function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { lines, itemCount, subtotalMinor, hasUnavailableItems } = useCart()
-  useEffect(() => { const key = (event: KeyboardEvent) => event.key === 'Escape' && onClose(); window.addEventListener('keydown', key); return () => window.removeEventListener('keydown', key) }, [onClose])
-  useEffect(() => { document.body.style.overflow = open ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [open])
-  return <><div className="fixed inset-0 z-50" style={{ backgroundColor: 'rgba(0,0,0,.4)', opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none' }} onClick={onClose} aria-hidden="true" /><aside aria-label="Shopping cart" className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[420px] flex-col transition-transform" style={{ backgroundColor: 'var(--background)', transform: open ? 'translateX(0)' : 'translateX(100%)' }}>
-    <header className="flex justify-between p-6 border-b" style={{ borderColor: 'var(--border)' }}><div><h2 className="text-xl font-bold" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>YOUR CART</h2><p className="text-xs">{itemCount} items</p></div><button onClick={onClose} aria-label="Close cart">×</button></header>
-    <div className="flex-1 overflow-y-auto p-6 space-y-4" aria-live="polite">{lines.length ? lines.map((line) => <CartLineItem key={line.variantId} line={line} compact />) : <div className="text-center py-20"><p>Your cart is empty</p><Link to="/products" onClick={onClose} className="inline-block mt-4 px-4 py-2 rounded-sm" style={{ backgroundColor: 'var(--primary)', color: '#fff' }}>SHOP PRODUCTS</Link></div>}</div>
-    {lines.length > 0 && <footer className="p-6 border-t" style={{ borderColor: 'var(--border)' }}>{hasUnavailableItems && <p className="text-xs mb-3" style={{ color: '#b45309' }}>Unavailable variants need attention.</p>}<div className="flex justify-between mb-4"><span>Subtotal</span><strong>{formatMoney(subtotalMinor)}</strong></div><Link to="/cart" onClick={onClose} className="block text-center py-3 rounded-sm" style={{ backgroundColor: 'var(--primary)', color: '#fff' }}>VIEW CART</Link></footer>}
-  </aside></>
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
+  return <>
+    <div className="fixed inset-0 z-50 transition-opacity duration-200" style={{ backgroundColor: 'rgba(0,0,0,.42)', opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none' }} onClick={onClose} aria-hidden="true" />
+    <aside aria-label="Shopping cart" aria-hidden={!open} className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[440px] min-w-0 flex-col overflow-x-hidden transition-transform duration-200" style={{ backgroundColor: 'var(--background)', transform: open ? 'translateX(0)' : 'translateX(100%)', boxShadow: '-12px 0 32px rgba(0,0,0,.12)' }}>
+      <header className="flex justify-between p-5 sm:p-6 border-b" style={{ borderColor: 'var(--border)' }}>
+        <div><h2 className="text-2xl font-bold" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>YOUR CART</h2><p className="mt-0.5 text-xs" style={{ color: 'var(--muted-foreground)' }}>{itemCount} items</p></div>
+        <button onClick={onClose} className="min-w-11 min-h-11 -mr-2 flex items-center justify-center text-xl" aria-label="Close cart">×</button>
+      </header>
+      <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5" aria-live="polite">
+        {lines.length ? lines.map((line) => <CartLineItem key={line.variantId} line={line} compact />) : <div className="text-center py-20"><p className="font-semibold">Your cart is empty</p><Link to="/products" onClick={onClose} className="tulda-button mt-5">SHOP PRODUCTS</Link></div>}
+      </div>
+      {lines.length > 0 && <footer className="p-5 sm:p-6 border-t" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }}>
+        {hasUnavailableItems && <p className="text-xs mb-3" style={{ color: '#b45309' }}>Unavailable variants need attention.</p>}
+        <div className="flex justify-between mb-4 text-sm"><span>Subtotal</span><strong className="text-lg" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>{formatMoney(subtotalMinor)}</strong></div>
+        <Link to="/cart" onClick={onClose} className="tulda-button w-full">VIEW CART</Link>
+        <button type="button" onClick={onClose} className="tulda-button-secondary mt-3 w-full">CONTINUE SHOPPING</button>
+      </footer>}
+    </aside>
+  </>
 }

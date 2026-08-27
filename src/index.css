@@ -22,20 +22,29 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #1c1c1e;
+  --color-brand: #18AEE5;
+  --color-brand-hover: #0B7FAD;
+  --color-brand-soft: #E8F7FD;
+  --color-text: #1C1C1E;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F5F5F5;
+  --color-danger: #C8161D;
+  --color-danger-soft: #FDEBEC;
+
+  --background: var(--color-surface);
+  --foreground: var(--color-text);
   --card: #f8f8f8;
-  --card-foreground: #1c1c1e;
-  --primary: #C8161D;
-  --primary-foreground: #ffffff;
+  --card-foreground: var(--color-text);
+  --primary: var(--color-brand);
+  --primary-foreground: #fff;
   --secondary: #f0f0f0;
-  --secondary-foreground: #1c1c1e;
-  --muted: #f5f5f5;
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-surface-muted);
   --muted-foreground: #737373;
-  --accent: #C8161D;
-  --accent-foreground: #ffffff;
+  --accent: var(--color-brand);
+  --accent-foreground: var(--primary-foreground);
   --border: #e5e5e5;
-  --ring: #C8161D;
+  --ring: var(--color-brand-hover);
   --radius: 2px;
 
   /* Extended palette */
@@ -45,18 +54,25 @@
   --surface-dark-muted: #999999;
   --graphite: #2d2d2d;
   --graphite-light: #4a4a4a;
-  --tulda-red: #C8161D;
-  --tulda-red-dark: #a01218;
+  --tulda-blue: var(--color-brand);
+  --tulda-blue-dark: var(--color-brand-hover);
+  --shadow-subtle: 0 8px 24px rgba(20, 20, 20, 0.06);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
 }
 
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: #d4d4d4 transparent;
+  overflow-x: clip;
 }
 
 body {
@@ -65,10 +81,163 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+#root {
+  overflow-x: clip;
+}
+
+img, svg, video {
+  max-width: 100%;
+}
+
+img, video {
+  height: auto;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  max-width: 100%;
+  min-width: 0;
+}
+
+button, a, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a[href],
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:not(:disabled), select:not(:disabled), input:not(:disabled), textarea:not(:disabled) {
+  touch-action: manipulation;
+}
+
+.tulda-button,
+.tulda-button-secondary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.25rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.tulda-button {
+  background: var(--primary);
+  color: #fff;
+}
+
+.tulda-button:hover:not(:disabled) {
+  background: var(--color-brand-hover);
+  color: #fff;
+}
+
+.tulda-button-secondary {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--foreground);
+}
+
+.tulda-button-secondary:hover:not(:disabled) {
+  border-color: var(--foreground);
+}
+
+.tulda-button:disabled,
+.tulda-button-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.tulda-field {
+  min-height: 46px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--foreground);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.tulda-field:focus {
+  border-color: var(--color-brand-hover);
+  box-shadow: 0 0 0 3px rgba(24, 174, 229, 0.18);
+  outline: none;
+}
+
+.tulda-header-search {
+  border-color: #dfe8ec;
+  background: #f7fafb;
+  color: var(--foreground);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.tulda-header-search::placeholder {
+  color: var(--muted-foreground);
+}
+
+.tulda-header-search:hover,
+.tulda-header-search:focus {
+  border-color: var(--color-brand);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(24, 174, 229, 0.12), 0 8px 20px rgba(15, 26, 32, 0.06);
+}
+
+.tulda-card-description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.tulda-card-description-brief {
+  -webkit-line-clamp: 2;
+}
+
+@media (hover: none) {
+  .product-card-wishlist {
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+}
+
+.hero-desktop-product {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-desktop-product {
+    display: block;
+  }
 }
 
 /* Scrollbar on hover only */
@@ -82,6 +251,19 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb {
   background-color: #d4d4d4;
   border-radius: 2px;
+}
+
+@media (max-width: 767px) {
+  html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 }
 
 /* Focus ring */

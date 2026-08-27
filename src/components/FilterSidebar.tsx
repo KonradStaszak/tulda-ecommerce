@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { CatalogueCategory, FilterState } from '../types/catalog'
+import { getCategoryTree } from '../services/catalogue/categoryHierarchy'
 
 interface FilterSidebarProps {
   filters: FilterState
@@ -38,9 +39,9 @@ function AccordionSection({ title, children, defaultOpen = true }: { title: stri
   )
 }
 
-function Checkbox({ checked, onChange, label, count }: { checked: boolean; onChange: () => void; label: string; count?: number }) {
+function Checkbox({ checked, onChange, label, count, indent = false }: { checked: boolean; onChange: () => void; label: string; count?: number; indent?: boolean }) {
   return (
-    <label className="flex items-center gap-2.5 cursor-pointer group py-1">
+    <label className={'flex items-center gap-2.5 cursor-pointer group py-1 ' + (indent ? 'pl-5' : '')}>
       <div
         className="w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 transition-colors"
         style={{
@@ -68,6 +69,7 @@ function Checkbox({ checked, onChange, label, count }: { checked: boolean; onCha
 }
 
 export default function FilterSidebar({ filters, onChange, totalCount, filteredCount, categories }: FilterSidebarProps) {
+  const categoryTree = getCategoryTree(categories)
   const toggleCategory = (id: string) => {
     const next = filters.categories.includes(id)
       ? filters.categories.filter(c => c !== id)
@@ -111,15 +113,25 @@ export default function FilterSidebar({ filters, onChange, totalCount, filteredC
       {/* Category */}
       <AccordionSection title="Category">
         <div className="space-y-0.5">
-          {categories.map(cat => (
+          {categoryTree.flatMap((node) => [
             <Checkbox
-              key={cat.id}
-              checked={filters.categories.includes(cat.id)}
-              onChange={() => toggleCategory(cat.id)}
-              label={cat.name}
-              count={cat.productCount}
-            />
-          ))}
+              key={node.category.id}
+              checked={filters.categories.includes(node.category.id)}
+              onChange={() => toggleCategory(node.category.id)}
+              label={node.category.name}
+              count={node.category.productCount}
+            />,
+            ...node.children.map((child) => (
+              <Checkbox
+                key={child.category.id}
+                checked={filters.categories.includes(child.category.id)}
+                onChange={() => toggleCategory(child.category.id)}
+                label={'↳ ' + child.category.name}
+                count={child.category.productCount}
+                indent
+              />
+            )),
+          ])}
         </div>
       </AccordionSection>
 

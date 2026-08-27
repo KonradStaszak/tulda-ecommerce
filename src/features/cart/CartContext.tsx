@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import type { PropsWithChildren } from 'react'
 import type { CatalogueProduct } from '../../types/catalog'
+import { getProductCardImage } from '../../lib/productImages'
 import type { AddCartItemInput, CartLine, PersistedCartPayload } from './types'
 
 const CART_STORAGE_KEY = 'tulda.cart'
@@ -61,7 +62,7 @@ function toCartLine({ product, variant, quantity }: AddCartItemInput): CartLine 
     priceMinor: variant.priceMinor,
     currency: variant.currency,
     quantity: Math.max(1, Math.floor(quantity)),
-    imagePath: product.primaryImage?.path ?? null,
+    imagePath: getProductCardImage(product)?.path ?? null,
     isInStock: variant.isInStock,
     unavailableReason: variant.isInStock ? null : 'out_of_stock',
   }
@@ -97,7 +98,7 @@ export function CartProvider({ children, products, catalogueReady }: CartProvide
         variantLabel: variant.label,
         priceMinor: variant.priceMinor,
         currency: variant.currency,
-        imagePath: product.primaryImage?.path ?? null,
+        imagePath: getProductCardImage(product)?.path ?? null,
         isInStock: variant.isInStock,
         unavailableReason: variant.isInStock ? null : 'out_of_stock',
       }

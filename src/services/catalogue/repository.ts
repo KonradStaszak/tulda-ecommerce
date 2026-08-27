@@ -15,6 +15,9 @@ export interface CatalogueData {
 
 export interface CatalogueTechnicalDocument {
   id: string
+  productId: string
+  productName: string
+  productSlug: string
   title: string
   documentType: string
   externalUrl: string | null
@@ -46,13 +49,45 @@ function toCurrency(value: string): GbpCurrencyCode {
   return value
 }
 
+const namedHtmlEntities: Record<string, string> = {
+  amp: '&',
+  apos: "'",
+  gt: '>',
+  hellip: '…',
+  lt: '<',
+  nbsp: ' ',
+  ndash: '–',
+  quot: '"',
+  rsquo: '’',
+}
+
+function decodeHtmlEntities(value: string) {
+  return value.replace(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (entity, token: string) => {
+    const normalized = token.toLowerCase()
+    if (normalized.startsWith('#x')) {
+      const codePoint = Number.parseInt(normalized.slice(2), 16)
+      return Number.isNaN(codePoint) ? entity : String.fromCodePoint(codePoint)
+    }
+    if (normalized.startsWith('#')) {
+      const codePoint = Number.parseInt(normalized.slice(1), 10)
+      return Number.isNaN(codePoint) ? entity : String.fromCodePoint(codePoint)
+    }
+    return namedHtmlEntities[normalized] ?? entity
+  })
+}
+
 function plainText(value: string | null) {
-  return value?.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() || null
+  const stripped = value?.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+  return stripped ? decodeHtmlEntities(stripped) : null
 }
 
 function categoryColor(slug: string) {
   const palette = ['#1c3a5e', '#2d4a22', '#3d2020', '#3d2a18', '#1a2d3d', '#1c1c1e']
   return palette[[...slug].reduce((total, character) => total + character.charCodeAt(0), 0) % palette.length]
+}
+
+function displayCategoryName(name: string, slug: string) {
+  return slug === 'thinner' ? 'Thinner' : decodeHtmlEntities(name)
 }
 
 function mapCatalogue(
@@ -79,7 +114,7 @@ function mapCatalogue(
       id: variant.id,
       woocommerceId: variant.woocommerce_id,
       sku: variant.sku,
-      label: variant.label,
+      label: decodeHtmlEntities(variant.label),
       priceMinor: variant.price_minor,
       currency: toCurrency(variant.currency),
       stockQuantity: variant.stock_quantity,
@@ -92,9 +127,6 @@ function mapCatalogue(
   }
   const imagesByProductId = new Map<string, CatalogueImage[]>()
   for (const image of imageRows) {
-    if (!image.storage_path.startsWith('/assets/products/')) {
-      throw new Error(`Catalogue image is not a local product asset: ${image.storage_path}`)
-    }
     const images = imagesByProductId.get(image.product_id) ?? []
     images.push({ id: image.id, path: image.storage_path, altText: image.alt_text, sortOrder: image.sort_order, isPrimary: image.is_primary })
     imagesByProductId.set(image.product_id, images)
@@ -112,7 +144,7 @@ function mapCatalogue(
         id: category.id,
         woocommerceId: category.woocommerce_id,
         slug: category.slug,
-        name: category.name,
+        name: displayCategoryName(category.name, category.slug),
         description: plainText(category.description),
         parentId: category.parent_id,
         productCount: productCounts.get(category.id) ?? 0,
@@ -124,7 +156,7 @@ function mapCatalogue(
       woocommerceId: product.woocommerce_id,
       slug: product.slug,
       code: product.code ?? variants.find((variant) => variant.sku)?.sku ?? null,
-      name: product.name,
+      name: decodeHtmlEntities(product.name),
       shortDescription: plainText(product.short_description),
       description: plainText(product.description),
       categories: categoryList,
@@ -150,7 +182,7 @@ function mapCatalogue(
     id: category.id,
     woocommerceId: category.woocommerce_id,
     slug: category.slug,
-    name: category.name,
+    name: displayCategoryName(category.name, category.slug),
     description: plainText(category.description),
     parentId: category.parent_id,
     productCount: productCounts.get(category.id) ?? 0,
@@ -200,8 +232,12 @@ export async function getProductBySlug(slug: string) {
 
 export async function getTechnicalDocumentsByProductId(productId: string): Promise<CatalogueTechnicalDocument[]> {
   const result = await supabase.from('technical_documents').select('*').eq('product_id', productId).order('published_at', { ascending: false })
+  const product = (await getCatalogue()).products.find((candidate) => candidate.id === productId)
   return requireData(result.data, result.error).map((document: TechnicalDocumentRow) => ({
     id: document.id,
+    productId: document.product_id ?? productId,
+    productName: product?.name ?? 'Tulda product',
+    productSlug: product?.slug ?? '',
     title: document.title,
     documentType: document.document_type,
     externalUrl: document.external_url,
@@ -209,6 +245,27 @@ export async function getTechnicalDocumentsByProductId(productId: string): Promi
     version: document.version,
     publishedAt: document.published_at,
   }))
+}
+
+export async function getTechnicalDocuments(): Promise<CatalogueTechnicalDocument[]> {
+  const [catalogue, result] = await Promise.all([getCatalogue(), supabase.from('technical_documents').select('*').order('title')])
+  const productsById = new Map(catalogue.products.map((product) => [product.id, product]))
+  return requireData(result.data, result.error).flatMap((document: TechnicalDocumentRow) => {
+    const product = document.product_id ? productsById.get(document.product_id) : undefined
+    if (!product) return []
+    return [{
+      id: document.id,
+      productId: product.id,
+      productName: product.name,
+      productSlug: product.slug,
+      title: document.title,
+      documentType: document.document_type,
+      externalUrl: document.external_url,
+      storagePath: document.storage_path,
+      version: document.version,
+      publishedAt: document.published_at,
+    }]
+  })
 }
 
 export async function getProductsByCategory(slug: string) {

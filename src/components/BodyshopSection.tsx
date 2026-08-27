@@ -33,15 +33,16 @@ export default function BodyshopSection() {
           {/* Left: image */}
           <div className="relative">
             <div
-              className="aspect-[4/5] overflow-hidden rounded-sm"
+              className="aspect-[3/2] overflow-hidden rounded-sm"
               style={{ backgroundColor: '#1a1a1a' }}
             >
-              <img
-                src="https://images.unsplash.com/photo-1786489785813-8057d678d91e?w=800&h=1000&fit=crop&auto=format"
-                alt="Professional bodyshop technician sanding car panel"
-                className="w-full h-full object-cover"
-                style={{ opacity: 0.85 }}
-              />
+            <img
+          src="/assets/campaign/tulda-abrasives-in-use.jpg"
+          alt="Tulda abrasives prepared for professional bodyshop work"
+              loading="lazy"
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.85 }}
+            />
             </div>
 
             {/* Floating stat card */}
@@ -72,12 +73,6 @@ export default function BodyshopSection() {
 
           {/* Right: content */}
           <div>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-4"
-              style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.18em' }}
-            >
-              Built for Professionals
-            </p>
             <h2
               className="text-4xl md:text-5xl font-black leading-none mb-6"
               style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--surface-dark-foreground)' }}

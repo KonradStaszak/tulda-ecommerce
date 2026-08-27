@@ -1,207 +1,186 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const packshots = [
-  { code: 'CT90', label: 'VHS Clearcoat', color: '#1c3a5e', height: 'h-52' },
-  { code: 'CT60', label: 'Multi-Clear', color: '#243352', height: 'h-44' },
-  { code: 'PT30', label: 'Multiprimer', color: '#2d4a22', height: 'h-48' },
-  { code: 'ST10', label: 'Thinner', color: '#3a3a3a', height: 'h-36' },
+interface HeroSlide {
+  id: string
+  eyebrow: string
+  title: string
+  description: string
+  href: string
+  cta: string
+  src: string
+  alt: string
+}
+
+const heroSlides: HeroSlide[] = [
+  {
+    id: 'professional-range',
+    eyebrow: 'Professional refinishing range',
+    title: 'Everything for a better finish',
+    description:
+      'A complete professional range for preparation, repair and a consistent final finish.',
+    href: '/products',
+    cta: 'Explore the range',
+    src: '/assets/campaign/tulda-workshop-range.jpg',
+    alt: 'Tulda professional refinishing range in front of a vehicle',
+  },
+  {
+    id: 'clearcoat-systems',
+    eyebrow: 'Clearcoat systems',
+    title: 'Clearcoats & hardeners',
+    description:
+      'Professional 2K systems designed for durable, consistent high-gloss finishes.',
+    href: '/products/clearcoat',
+    cta: 'Explore clearcoats',
+    src: '/assets/campaign/tulda-ct60-application.jpg',
+    alt: 'Tulda clearcoat system in a professional automotive refinishing workshop',
+  },
+  {
+    id: 'surface-preparation',
+    eyebrow: 'Surface preparation',
+    title: 'Abrasives for every stage',
+    description:
+      'Professional discs and strips for efficient shaping, sanding and surface preparation.',
+    href: '/products/abrasives',
+    cta: 'Explore abrasives',
+    src: '/assets/campaign/tulda-abrasives-range.jpg',
+    alt: 'Tulda professional abrasives range',
+  },
 ]
 
 export default function Hero() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeSlide = heroSlides[activeIndex]
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % heroSlides.length)
+    }, 6000)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const showPrevious = () => {
+    setActiveIndex(
+      (currentIndex) => (currentIndex - 1 + heroSlides.length) % heroSlides.length,
+    )
+  }
+
+  const showNext = () => {
+    setActiveIndex((currentIndex) => (currentIndex + 1) % heroSlides.length)
+  }
+
+  const navigationButtonClassName =
+    'relative flex h-9 w-9 items-center justify-center overflow-hidden border border-white/70 bg-black/15 text-[0px] text-transparent transition-colors hover:border-[var(--color-brand)] hover:bg-[var(--color-brand)]'
+
   return (
-    <section
-      style={{
-        backgroundColor: '#f7f7f7',
-        borderBottom: '1px solid var(--border)',
-      }}
-    >
-      <div className="max-w-[1400px] mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center" style={{ minHeight: '460px' }}>
-
-          {/* Left: copy */}
-          <div className="py-12 lg:py-16 pr-0 lg:pr-16">
-            {/* Eyebrow */}
-            <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-5 h-px" style={{ backgroundColor: 'var(--primary)' }} />
-              <span
-                className="text-[11px] font-semibold uppercase tracking-widest"
-                style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.2em' }}
-              >
-                Professional Automotive Refinishing
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h1
-              className="font-black leading-none mb-5"
-              style={{
-                fontFamily: 'Barlow Condensed, sans-serif',
-                fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)',
-                color: 'var(--foreground)',
-                letterSpacing: '-0.01em',
-                lineHeight: 0.97,
-              }}
-            >
+    <section className="bg-[var(--color-surface)]">
+      <div className="mx-auto grid w-full max-w-[1400px] items-center gap-10 px-6 py-14 md:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div className="flex min-h-[340px] items-center lg:min-h-[430px]">
+          <div className="max-w-xl">
+            <h1 className="text-5xl font-black leading-[0.92] tracking-tight text-[var(--foreground)] md:text-7xl">
               Professional Products.
               <br />
-              <span style={{ color: 'var(--primary)' }}>Built for Better</span>
+              <span className="text-[var(--color-brand)]">Built for Better</span>
               <br />
               Finishes.
             </h1>
 
-            {/* Sub */}
-            <p
-              className="text-sm leading-relaxed mb-8 max-w-[400px]"
-              style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}
-            >
-              Clearcoats, primers, abrasives and fillers for professional bodyshops. 2K technology, consistent results, free UK delivery over £50.
+            <p className="mt-7 max-w-xl text-base leading-relaxed md:text-lg" style={{ color: 'var(--muted-foreground)' }}>
+              Clearcoats, primers, abrasives and fillers for professional bodyshops.
+              2K technology, consistent results, free UK delivery over £50.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/products"
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm transition-opacity hover:opacity-90"
-                style={{
-                  backgroundColor: 'var(--primary)',
-                  color: '#ffffff',
-                  fontFamily: 'Inter, sans-serif',
-                  letterSpacing: '0.03em',
-                }}
+                className="tulda-button"
               >
-                Shop Products
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                Shop Products <span aria-hidden="true">→</span>
               </Link>
-              <a
-                href="#categories"
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm border transition-colors hover:border-[var(--foreground)]"
-                style={{
-                  borderColor: 'var(--border)',
-                  color: 'var(--foreground)',
-                  fontFamily: 'Inter, sans-serif',
-                  backgroundColor: 'var(--background)',
-                  letterSpacing: '0.03em',
-                }}
+              <Link
+                to="/products"
+                className="tulda-button-secondary"
               >
                 Explore Categories
-              </a>
-            </div>
-
-            {/* Trust micro-bar */}
-            <div className="flex flex-wrap gap-5 mt-8 pt-7 border-t" style={{ borderColor: 'var(--border)' }}>
-              {[
-                { icon: '✓', text: 'Free delivery over £50' },
-                { icon: '✓', text: '2K professional grade' },
-                { icon: '✓', text: 'Technical support' },
-              ].map(t => (
-                <span key={t.text} className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
-                  <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{t.icon}</span>
-                  {t.text}
-                </span>
-              ))}
+              </Link>
             </div>
           </div>
+        </div>
 
-          {/* Right: product visual */}
-          <div className="hidden lg:flex items-end justify-center gap-4 pb-0 pt-10 relative overflow-hidden" style={{ minHeight: '460px' }}>
-            {/* Faint background image — bodyshop context */}
-            <div className="absolute inset-0">
-              <img
-                src="https://images.unsplash.com/photo-1786489785813-8057d678d91e?w=800&h=600&fit=crop&auto=format"
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-cover object-center"
-                style={{ opacity: 0.07 }}
-              />
-            </div>
-
-            {/* Packshot group */}
-            <div className="relative z-10 flex items-end gap-3 pb-8">
-              {packshots.map((p, i) => (
-                <div
-                  key={p.code}
-                  className="flex flex-col items-center gap-0 group cursor-pointer"
-                  style={{
-                    transform: i === 0 ? 'translateY(0)' : i === 1 ? 'translateY(12px)' : i === 2 ? 'translateY(4px)' : 'translateY(20px)',
-                  }}
-                >
-                  {/* Bottle shape */}
-                  <div
-                    className={`relative w-16 ${p.height} rounded-t-full rounded-b-sm flex flex-col items-center justify-end pb-4 shadow-lg transition-transform duration-200 group-hover:-translate-y-1`}
-                    style={{ backgroundColor: p.color }}
-                  >
-                    {/* Cap */}
-                    <div
-                      className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full"
-                      style={{ backgroundColor: 'var(--primary)' }}
-                    />
-                    {/* Label area */}
-                    <div className="w-full px-2 text-center">
-                      <p
-                        className="text-white font-black text-xs leading-tight"
-                        style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: '0.65rem', letterSpacing: '0.04em' }}
-                      >
-                        {p.code}
-                      </p>
-                      <p
-                        className="text-white/50 leading-tight mt-0.5"
-                        style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.5rem' }}
-                      >
-                        {p.label}
-                      </p>
-                    </div>
-                    {/* Tulda brand stripe */}
-                    <div
-                      className="absolute left-0 right-0 h-0.5"
-                      style={{ top: '55%', backgroundColor: 'rgba(255,255,255,0.15)' }}
-                    />
-                  </div>
-
-                  {/* Shadow under bottle */}
-                  <div
-                    className="w-12 h-1.5 rounded-full mt-1"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Floating product badge */}
-            <div
-              className="absolute top-12 right-10 p-3 rounded-sm shadow-md"
-              style={{
-                backgroundColor: 'var(--background)',
-                border: '1px solid var(--border)',
-              }}
-            >
-              <p
-                className="text-[10px] font-semibold uppercase tracking-widest mb-0.5"
-                style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.12em' }}
-              >
-                New in
-              </p>
-              <p
-                className="text-sm font-bold"
-                style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--foreground)', lineHeight: 1.2 }}
-              >
-                CT90 VHS
-                <br />Speedline
-              </p>
-              <p
-                className="text-xs mt-1"
-                style={{ color: 'var(--primary)', fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-              >
-                From £35.34
-              </p>
-            </div>
-
-            {/* Accent rule left edge */}
-            <div
-              className="absolute left-0 top-12 bottom-8 w-px"
-              style={{ backgroundColor: 'var(--border)' }}
+        <div
+          className="relative min-h-[320px] overflow-hidden bg-[#071218] md:min-h-[430px]"
+          aria-label="Tulda product range"
+        >
+          <div className="absolute inset-0" key={activeSlide.id}>
+            <img
+              src={activeSlide.src}
+              alt={activeSlide.alt}
+              className="h-full w-full object-cover object-center"
             />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,13,22,0.92)_0%,rgba(2,13,22,0.62)_50%,rgba(2,13,22,0.1)_100%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[linear-gradient(0deg,rgba(2,13,22,0.95)_0%,rgba(2,13,22,0.48)_52%,transparent_100%)]" />
+          </div>
+
+          <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8 lg:p-10">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-brand)]">
+              {activeSlide.eyebrow}
+            </p>
+            <h2 className="mt-3 max-w-[430px] text-4xl font-black leading-[0.92] tracking-tight text-white md:text-6xl">
+              {activeSlide.title}
+            </h2>
+            <p className="mt-3 max-w-[430px] text-sm leading-6 text-slate-200">
+              {activeSlide.description}
+            </p>
+            <Link
+              to={activeSlide.href}
+              className="mt-5 inline-flex items-center gap-2 border-b border-[var(--color-brand)] pb-1 text-sm font-bold uppercase tracking-[0.08em] text-white transition-colors hover:text-[var(--color-brand)]"
+            >
+              {activeSlide.cta} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="absolute right-5 top-5 z-10 flex gap-2 sm:right-6 sm:top-6">
+            <button
+              type="button"
+              onClick={showPrevious}
+              aria-label="Show previous range"
+              className={navigationButtonClassName}
+            >
+              <svg aria-hidden="true" className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+                <path d="M19 12H5M11 18l-6-6 6-6" />
+              </svg>
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={showNext}
+              aria-label="Show next range"
+              className={navigationButtonClassName}
+            >
+              <svg aria-hidden="true" className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+              →
+            </button>
+          </div>
+
+          <div className="absolute bottom-6 right-6 z-10 flex gap-2 sm:bottom-8 sm:right-8 lg:bottom-10 lg:right-10">
+            {heroSlides.map((slide, index) => (
+              <button
+                key={slide.id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                aria-label={'Show ' + slide.title}
+                aria-current={index === activeIndex ? 'true' : undefined}
+                className={
+                  'h-1.5 w-5 transition-colors ' +
+                  (index === activeIndex
+                    ? 'bg-[var(--color-brand)]'
+                    : 'bg-white/55 hover:bg-white')
+                }
+              />
+            ))}
           </div>
         </div>
       </div>

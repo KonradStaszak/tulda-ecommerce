@@ -45,7 +45,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: 'var(--surface-dark)' }}>
       {/* Main footer */}
-      <div className="max-w-[1400px] mx-auto px-6 py-16">
+      <div className="max-w-[1400px] mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
           {/* Brand column */}
           <div className="lg:col-span-2">
@@ -112,7 +112,7 @@ export default function Footer() {
                 {links.map(link => (
                   <li key={link}>
                     <Link
-                      to={productSlugs[link] ? `/products/${productSlugs[link]}` : link === 'Contact Us' || link === 'Book a Demo' ? '/contact' : link.includes('Data') || link.includes('Guides') ? '/technical-documents' : '/'}
+                      to={productSlugs[link] ? `/products/${productSlugs[link]}` : link === 'About Tulda' ? '/about' : link === 'Contact Us' || link === 'Book a Demo' ? '/contact' : link.includes('Data') || link.includes('Guides') ? '/technical-documents' : '/'}
                       className="text-xs transition-colors hover:text-[var(--primary)]"
                       style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif' }}
                     >
