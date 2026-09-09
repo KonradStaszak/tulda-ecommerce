@@ -13,7 +13,6 @@ export default function AccountPage() {
   const navigate = useNavigate()
   const [mode, setMode] = useState<Mode>('login')
   const [session, setSession] = useState<Session | null>(null)
-  const [adminAccess, setAdminAccess] = useState<boolean | null>(null)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,33 +23,11 @@ export default function AccountPage() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setAdminAccess(null)
       setSession(nextSession)
     })
 
     return () => listener.subscription.unsubscribe()
   }, [])
-
-  useEffect(() => {
-    if (!session) {
-      setAdminAccess(false)
-      return
-    }
-
-    let cancelled = false
-    const checkAdminAccess = async () => {
-      const { data: membership } = await customerDb.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle()
-      if (cancelled) return
-      if (membership) {
-        navigate('/admin', { replace: true })
-        return
-      }
-      setAdminAccess(false)
-    }
-    void checkAdminAccess()
-
-    return () => { cancelled = true }
-  }, [navigate, session])
 
   const switchMode = (nextMode: Mode) => {
     setMode(nextMode)
@@ -86,6 +63,16 @@ export default function AccountPage() {
       return
     }
 
+    // Administrators open their panel after signing in, but the account icon
+    // always remains a route to this page for profile management and sign-out.
+    if (mode === 'login' && result.data.user) {
+      const { data: membership } = await customerDb.from('admin_users').select('user_id').eq('user_id', result.data.user.id).maybeSingle()
+      if (membership) {
+        navigate('/admin', { replace: true })
+        return
+      }
+    }
+
     if (mode === 'register' && !result.data.session) {
       setMessage('Check your inbox to confirm your email address, then return here to sign in.')
       setPassword('')
@@ -96,10 +83,6 @@ export default function AccountPage() {
     setError('')
     const { error: signOutError } = await supabase.auth.signOut()
     if (signOutError) setError(signOutError.message)
-  }
-
-  if (session && adminAccess === null) {
-    return <main className="mx-auto max-w-[1400px] px-6 py-16 text-sm" style={{ color: 'var(--muted-foreground)' }}>Loading your account…</main>
   }
 
   if (session) {

@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import TrustBar from './TrustBar'
 
 export default function Hero() {
+  const [isVideoReady, setIsVideoReady] = useState(false)
+
   return (
     <section className="relative isolate flex h-[640px] flex-col overflow-hidden bg-[#071218] text-white md:block md:h-auto">
       <video
@@ -9,10 +12,10 @@ export default function Hero() {
         muted
         loop
         playsInline
-        preload="metadata"
-        poster="/assets/campaign/tulda-workshop-range-black-coupe.png"
+        preload="auto"
         aria-hidden="true"
-        className="absolute inset-0 z-0"
+        onCanPlay={() => setIsVideoReady(true)}
+        className={`absolute inset-0 z-0 transition-opacity duration-300 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 50%' }}
       >
         <source src="/assets/campaign/hero-workshop.mp4" type="video/mp4" />
