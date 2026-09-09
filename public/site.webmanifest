@@ -1,0 +1,17 @@
+{
+  "name": "Tulda Professional Refinishing Products",
+  "short_name": "Tulda",
+  "description": "Professional automotive refinishing supplies for UK bodyshops.",
+  "lang": "en-GB",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#071218",
+  "theme_color": "#071218",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

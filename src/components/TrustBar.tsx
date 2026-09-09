@@ -21,17 +21,21 @@ const trustItems = [
   },
 ]
 
-export default function TrustBar() {
+interface TrustBarProps {
+  overlay?: boolean
+}
+
+export default function TrustBar({ overlay = false }: TrustBarProps) {
   return (
-    <section className="bg-white">
+    <section className={overlay ? 'border-t border-white/15 bg-black/25 backdrop-blur-sm' : 'bg-white'}>
       <div className="mx-auto max-w-[1400px] px-6 py-4 sm:py-5">
         <div className="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4 lg:gap-x-10">
           {trustItems.map((item) => (
             <div key={item.title} className="flex min-w-0 items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eaf8fd] text-[#18aee5]">{item.icon}</div>
               <div className="min-w-0">
-                <p className="truncate text-[13px] font-semibold leading-tight text-[var(--foreground)]" style={{ fontFamily: 'Inter, sans-serif' }}>{item.title}</p>
-                <p className="mt-0.5 truncate text-xs text-[var(--muted-foreground)]" style={{ fontFamily: 'Inter, sans-serif' }}>{item.subtitle}</p>
+                <p className={'truncate text-[13px] font-semibold leading-tight ' + (overlay ? 'text-white' : 'text-[var(--foreground)]')} style={{ fontFamily: 'Inter, sans-serif' }}>{item.title}</p>
+                <p className={'mt-0.5 truncate text-xs ' + (overlay ? 'text-white/70' : 'text-[var(--muted-foreground)]')} style={{ fontFamily: 'Inter, sans-serif' }}>{item.subtitle}</p>
               </div>
             </div>
           ))}

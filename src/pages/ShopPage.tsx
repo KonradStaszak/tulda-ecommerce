@@ -6,6 +6,7 @@ import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct, FilterStat
 import ProductCard from '../components/ProductCard'
 import FilterSidebar from '../components/FilterSidebar'
 import MobileFilterDrawer from '../components/MobileFilterDrawer'
+import Seo from '../components/Seo'
 
 const PAGE_SIZE = 12
 
@@ -81,9 +82,16 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
   ]
 
   const hasActiveFilters = activeFilterChips.length > 0
+  const pageTitle = routeCategory
+    ? `${routeCategory.name} for Professional Bodyshops UK | Tulda`
+    : 'Professional Automotive Refinishing Products UK | Tulda'
+  const pageDescription = routeCategory?.description
+    ? `${routeCategory.description} Shop professional automotive refinishing supplies with UK delivery from Tulda.`
+    : 'Shop professional automotive refinishing products for UK bodyshops, including clearcoats, primers, abrasives, fillers and hardeners.'
 
   return (
     <div style={{ backgroundColor: 'var(--background)', minHeight: '100vh' }}>
+      <Seo title={pageTitle} description={pageDescription} noIndex={Boolean(searchParams.get('search')) || invalidCategory} />
       {/* Page header bar */}
       <div style={{ backgroundColor: 'var(--muted)', borderBottom: '1px solid var(--border)' }}>
         <div className="max-w-[1400px] mx-auto px-6 py-5">

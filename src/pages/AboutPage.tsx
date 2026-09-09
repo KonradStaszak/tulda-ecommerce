@@ -61,7 +61,7 @@ export default function AboutPage() {
 
           <figure className="relative min-h-[320px] overflow-hidden bg-[#071519] md:min-h-[430px]">
             <img
-              src="/assets/campaign/tulda-workshop-range.jpg"
+              src="/assets/campaign/tulda-workshop-range-black-coupe.png"
               alt="Tulda professional refinishing products in a working bodyshop"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
@@ -119,7 +119,7 @@ export default function AboutPage() {
 
             <figure className="aspect-[3/2] overflow-hidden bg-[#071519]">
               <img
-                src="/assets/campaign/tulda-ct60-application.jpg"
+                src="/assets/campaign/tulda-ct60-application-black-coupe.png"
                 alt="Tulda CT60 HS being used in a professional refinishing environment"
                 className="h-full w-full object-cover"
                 loading="lazy"
@@ -143,7 +143,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.25fr_0.75fr]">
           <figure className="relative min-h-[300px] overflow-hidden md:min-h-[430px]">
             <img
-              src="/assets/campaign/tulda-abrasives-range.jpg"
+              src="/assets/campaign/tulda-abrasives-range-blue.png"
               alt="Tulda abrasives and sanding products prepared for professional use"
               className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"

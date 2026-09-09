@@ -2,10 +2,12 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import tuldaLogo from '../assets/brand/tulda-logo.png'
 import type { CatalogueCategory, CatalogueProduct } from '../types/catalog'
-import { formatMoney } from '../services/catalogue/money'
 import { getCategoryTree } from '../services/catalogue/categoryHierarchy'
 import type { CategoryTreeNode } from '../services/catalogue/categoryHierarchy'
 import { getProductCardImage } from '../lib/productImages'
+import { supabase } from '../lib/supabase'
+
+const adminDb = supabase as unknown as { from: (table: string) => any }
 
 interface HeaderProps {
   cartCount: number
@@ -32,6 +34,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
   const [searchFocused, setSearchFocused] = useState(false)
   const [activeSuggestion, setActiveSuggestion] = useState(-1)
   const [scrolled, setScrolled] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
   const mobileMenuRef = useRef<HTMLElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -43,6 +46,22 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setIsAdmin(false)
+      return
+    }
+    let cancelled = false
+    const checkAdminAccess = async () => {
+      const { data: userData } = await supabase.auth.getUser()
+      if (!userData.user) return
+      const { data: membership } = await adminDb.from('admin_users').select('user_id').eq('user_id', userData.user.id).maybeSingle()
+      if (!cancelled) setIsAdmin(Boolean(membership))
+    }
+    void checkAdminAccess()
+    return () => { cancelled = true }
+  }, [isAuthenticated])
 
   useEffect(() => {
     if (searchOpen) searchRef.current?.focus({ preventScroll: true })
@@ -121,6 +140,9 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase()
   const categoryTree = useMemo(() => getCategoryTree(categories), [categories])
   const productsActive = location.pathname.startsWith('/products') || location.pathname.startsWith('/product/')
+  const isHome = location.pathname === '/'
+  const transparentHeader = isHome && !scrolled && !searchOpen && !mobileOpen
+  const headerTextColor = transparentHeader ? '#ffffff' : 'var(--foreground)'
   const suggestions = useMemo(() => {
     if (normalizedQuery.length < 2) return []
     return products.filter((product) => [
@@ -169,8 +191,9 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
 
   return (
     <>
+      <div className="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
       {/* Utility bar */}
-      <div style={{ backgroundColor: 'var(--surface-dark)', color: 'rgba(255,255,255,0.5)' }} className="hidden md:block">
+      <div style={{ backgroundColor: transparentHeader ? 'rgba(2,11,16,0.38)' : 'rgba(17,17,17,0.92)', color: 'rgba(255,255,255,0.65)', transition: 'background-color 300ms ease' }} className="hidden backdrop-blur-md md:block">
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center h-8">
           <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px' }}>
             Free UK delivery on orders over £50
@@ -184,11 +207,11 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
 
       {/* Main header */}
       <header
-        className="sticky top-0 z-50 max-md:fixed max-md:inset-x-0 max-md:top-0"
+        className="backdrop-blur-md transition-[background-color,border-color,box-shadow,color] duration-300"
         style={{
-          backgroundColor: 'var(--background)',
-          borderBottom: '1px solid var(--border)',
-          transition: 'box-shadow 0.2s',
+          backgroundColor: transparentHeader ? 'rgba(3,13,19,0.24)' : 'rgba(255,255,255,0.92)',
+          borderBottom: transparentHeader ? '1px solid rgba(255,255,255,0.16)' : '1px solid var(--border)',
+          color: headerTextColor,
           boxShadow: scrolled ? '0 1px 16px rgba(0,0,0,0.07)' : 'none',
         }}
       >
@@ -196,7 +219,16 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
           <div className="flex min-w-0 items-center justify-between h-[62px]">
 
             {/* Logo */}
-            <Link to="/" className="mr-2 flex shrink-0 items-center gap-2.5 sm:mr-4 lg:mr-8">
+            <Link
+              to="/"
+              onClick={(event) => {
+                if (isHome) {
+                  event.preventDefault()
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+              }}
+              className="mr-2 flex shrink-0 items-center gap-2.5 sm:mr-4 lg:mr-8"
+            >
               <img src={tuldaLogo} alt="Tulda" className="h-auto w-[clamp(120px,36vw,145px)] object-contain md:h-7 md:w-auto" />
             </Link>
 
@@ -210,8 +242,8 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                   onMouseLeave={link.hasMega ? closeMega : undefined}
                 >
                   {link.hasMega ? (
-                    <Link to="/products" className={'flex items-center gap-1 rounded-sm px-3.5 py-1.5 text-[13px] transition-colors hover:text-[var(--primary)] ' + (productsActive ? 'font-semibold text-[var(--primary)]' : 'font-medium')}
-                      style={{ fontFamily: 'Inter, sans-serif', color: productsActive || megaOpen ? 'var(--primary)' : 'var(--foreground)', letterSpacing: '0.005em' }}>
+                    <Link to="/products" className={'flex items-center gap-1 rounded-sm px-3.5 py-1.5 text-[13px] transition-colors duration-200 hover:text-[var(--primary)] ' + (megaOpen || productsActive ? 'font-semibold text-[var(--primary)]' : 'font-medium ' + (transparentHeader ? 'text-white' : 'text-[var(--foreground)]'))}
+                      style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.005em' }}>
                       {link.label}
                       <svg
                         className="w-3 h-3"
@@ -222,13 +254,13 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                       </svg>
                     </Link>
                   ) : link.to ? (
-                    <NavLink to={link.to} className={({ isActive }) => 'flex items-center gap-1 rounded-sm px-3.5 py-1.5 text-[13px] transition-colors hover:text-[var(--primary)] ' + (isActive ? 'font-semibold text-[var(--primary)]' : 'font-medium')}
-                      style={({ isActive }) => ({ fontFamily: 'Inter, sans-serif', color: isActive ? 'var(--primary)' : 'var(--foreground)', letterSpacing: '0.005em' })}>
+                    <NavLink to={link.to} className={({ isActive }) => 'flex items-center gap-1 rounded-sm px-3.5 py-1.5 text-[13px] transition-colors duration-200 hover:text-[var(--primary)] ' + (isActive ? 'font-semibold text-[var(--primary)]' : 'font-medium ' + (transparentHeader ? 'text-white' : 'text-[var(--foreground)]'))}
+                      style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.005em' }}>
                       {link.label}
                     </NavLink>
                   ) : (
-                    <Link to="/products" className="flex items-center gap-1 px-3.5 py-1.5 text-[13px] font-medium rounded-sm transition-colors hover:text-[var(--primary)]"
-                      style={{ fontFamily: 'Inter, sans-serif', color: 'var(--foreground)', letterSpacing: '0.005em' }}>
+                    <Link to="/products" className={'flex items-center gap-1 rounded-sm px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-200 hover:text-[var(--primary)] ' + (transparentHeader ? 'text-white' : 'text-[var(--foreground)]')}
+                      style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.005em' }}>
                       {link.label}
                     </Link>
                   )}
@@ -254,6 +286,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                     aria-controls="desktop-search-results"
                     aria-activedescendant={activeSuggestion >= 0 ? 'desktop-search-result-' + activeSuggestion : undefined}
                     className="tulda-header-search h-11 w-full rounded-none border pl-10 pr-4 text-[13px] outline-none"
+                    style={transparentHeader ? { backgroundColor: 'rgba(255,255,255,0.94)' } : undefined}
                   />
                 </label>
               </form>
@@ -274,19 +307,24 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
             <div className="flex shrink-0 items-center gap-0">
               <button
                 onClick={toggleMobileSearch}
-                className="lg:hidden w-11 h-11 flex items-center justify-center rounded-sm transition-colors hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)]"
+                className="lg:hidden flex h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)]"
                 aria-label="Search"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <circle cx="11" cy="11" r="7" /><path strokeLinecap="round" d="M20 20l-3.5-3.5" />
                 </svg>
               </button>
-              <Link to="/account" className="hidden md:flex w-11 h-11 items-center justify-center rounded-sm transition-colors hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)]" aria-label="Account">
+              <Link to="/account" className="hidden h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)] md:flex" aria-label="Account">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <circle cx="12" cy="8" r="4" /><path strokeLinecap="round" d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                 </svg>
               </Link>
-              <Link to={isAuthenticated ? "/wishlist" : "/account"} className="hidden md:flex w-11 h-11 items-center justify-center rounded-sm transition-colors hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)]" aria-label={isAuthenticated ? "Favourite products" : "Sign in to view favourite products"}>
+              {isAdmin && <Link to="/admin" className="hidden h-11 w-11 items-center justify-center rounded-sm text-[var(--primary)] transition-colors hover:bg-[var(--color-brand-soft)] md:flex" aria-label="Administrator panel" title="Administrator panel">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><rect x="14" y="14" width="6" height="6" rx="1" />
+                </svg>
+              </Link>}
+              <Link to={isAuthenticated ? "/wishlist" : "/account"} className="hidden h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)] md:flex" aria-label={isAuthenticated ? "Favourite products" : "Sign in to view favourite products"}>
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 21C12 21 3 14.5 3 8.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-9 12.5-9 12.5z" />
                 </svg>
@@ -295,7 +333,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
               {/* Cart */}
               <button
                 onClick={() => { closeMobileOverlays(); onCartOpen() }}
-                className="relative flex w-11 h-11 items-center justify-center rounded-sm transition-colors hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] lg:ml-1"
+                className="relative flex h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)] lg:ml-1"
                 aria-label={`Cart — ${cartCount} items`}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -316,7 +354,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
               <button
                 ref={menuButtonRef}
                 onClick={toggleMobileMenu}
-                className="lg:hidden flex w-11 h-11 items-center justify-center rounded-sm transition-colors hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)]"
+                className="lg:hidden flex h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)]"
                 aria-label="Menu"
                 aria-expanded={mobileOpen}
                 aria-controls="mobile-navigation"
@@ -374,21 +412,17 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
         {/* Mega menu */}
         {megaOpen && (
           <div
-            className="absolute left-0 right-0 border-t z-40"
+            className="absolute left-0 right-0 z-40 border-t border-white/10 bg-[rgba(5,18,26,0.94)] text-white shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl"
             style={{
               top: '100%',
-              backgroundColor: 'var(--background)',
-              borderColor: 'var(--border)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
             }}
             onMouseEnter={openMega}
             onMouseLeave={closeMega}
           >
-            <div className="max-w-[1400px] mx-auto px-6 py-7">
-              <div className="grid grid-cols-7 gap-5">
+            <div className="max-w-[1400px] mx-auto px-6 py-6">
+              <div className="grid grid-cols-7 gap-10">
                 {/* Promo column */}
-                <div className="col-span-2 flex flex-col justify-between p-5 rounded-sm"
-                  style={{ backgroundColor: 'var(--surface-dark)' }}>
+                <div className="col-span-2 flex flex-col justify-between border-r border-white/15 pr-8">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-widest mb-2.5"
                       style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.16em' }}>
@@ -412,23 +446,23 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                 </div>
 
                 {/* Categories */}
-                <div className="col-span-5 grid grid-cols-2 gap-8 px-2 py-1">
+                <div className="col-span-5 grid grid-cols-2 gap-10 py-1">
                   <div>
-                    <Link to="/products" className="inline-flex mb-4 text-[13px] font-semibold transition-colors hover:text-[var(--primary)]" style={{ color: 'var(--foreground)', fontFamily: 'Inter, sans-serif' }}>
+                    <Link to="/products" className="mb-4 inline-flex text-[13px] font-semibold text-white transition-colors hover:text-[var(--primary)]" style={{ fontFamily: 'Inter, sans-serif' }}>
                       All Products
                     </Link>
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Bodyshop</p>
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-white/50" style={{ fontFamily: 'Inter, sans-serif' }}>Bodyshop</p>
                     <div className="space-y-0.5">
                       {categoryTree.filter((node) => node.category.slug !== 'industrial').map((node) => (
-                        <CategoryMenuLink key={node.category.id} node={node} onNavigate={() => setMegaOpen(false)} />
+                        <CategoryMenuLink key={node.category.id} node={node} onNavigate={() => setMegaOpen(false)} dark />
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="mb-2 pt-8 text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Industrial</p>
+                    <p className="mb-2 pt-8 text-[10px] font-semibold uppercase tracking-widest text-white/50" style={{ fontFamily: 'Inter, sans-serif' }}>Industrial</p>
                     <div className="space-y-0.5">
                       {categoryTree.filter((node) => node.category.slug === 'industrial').map((node) => (
-                        <CategoryMenuLink key={node.category.id} node={node} onNavigate={() => setMegaOpen(false)} />
+                        <CategoryMenuLink key={node.category.id} node={node} onNavigate={() => setMegaOpen(false)} dark />
                       ))}
                     </div>
                   </div>
@@ -460,7 +494,8 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
             </div>
         </nav>
       </header>
-      <div className="h-[62px] md:hidden" aria-hidden="true" />
+      </div>
+      {!isHome && <div className="h-[62px] md:h-[94px]" aria-hidden="true" />}
     </>
   )
 }
@@ -476,15 +511,15 @@ interface SearchSuggestionsProps {
   onViewAll: () => void
 }
 
-function CategoryMenuLink({ node, onNavigate }: { node: CategoryTreeNode; onNavigate: () => void }) {
+function CategoryMenuLink({ node, onNavigate, dark = false }: { node: CategoryTreeNode; onNavigate: () => void; dark?: boolean }) {
   return (
     <div>
-      <Link to={'/products/' + node.category.slug} onClick={onNavigate} className="flex items-center justify-between rounded-sm px-2 py-1.5 text-[13px] font-medium transition-colors hover:bg-[var(--color-brand-soft)] hover:text-[var(--primary)]" style={{ color: 'var(--foreground)', fontFamily: 'Inter, sans-serif' }}>
+      <Link to={'/products/' + node.category.slug} onClick={onNavigate} className={'flex items-center justify-between rounded-sm px-2 py-1.5 text-[13px] font-medium transition-colors hover:bg-[var(--primary)] hover:text-white ' + (dark ? 'text-white/90' : 'text-[var(--foreground)]')} style={{ fontFamily: 'Inter, sans-serif' }}>
         <span>{node.category.name}</span>
-        <span className="text-[10px]" style={{ color: 'var(--muted-foreground)' }}>{node.category.productCount}</span>
+        <span className={'text-[10px] ' + (dark ? 'text-white/45' : 'text-[var(--muted-foreground)]')}>{node.category.productCount}</span>
       </Link>
       {node.children.map((child) => (
-        <Link key={child.category.id} to={'/products/' + child.category.slug} onClick={onNavigate} className="ml-3 flex items-center gap-1 rounded-sm px-2 py-1.5 text-[12px] transition-colors hover:bg-[var(--color-brand-soft)] hover:text-[var(--primary)]" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
+        <Link key={child.category.id} to={'/products/' + child.category.slug} onClick={onNavigate} className={'ml-3 flex items-center gap-1 rounded-sm px-2 py-1.5 text-[12px] transition-colors hover:bg-[var(--primary)] hover:text-white ' + (dark ? 'text-white/55' : 'text-[var(--muted-foreground)]')} style={{ fontFamily: 'Inter, sans-serif' }}>
           <span aria-hidden="true">↳</span>{child.category.name}
           <span className="ml-auto text-[10px]">{child.category.productCount}</span>
         </Link>
@@ -542,7 +577,7 @@ function SearchSuggestions({
         <div className="py-1.5">
           {results.map((product, index) => {
             const metadata = product.code || product.categories[0]?.name || 'Tulda product'
-            const price = (product.variants.length > 1 ? 'From ' : '') + formatMoney(product.minimumPriceMinor, product.currency)
+            const price = 'Price on request'
             const isActive = activeIndex === index
 
             return (

@@ -41,6 +41,19 @@ const productSlugs: Record<string, string> = {
   Kits: 'kits',
 }
 
+const socialLinks = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/tuldauk/',
+    icon: <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" /></svg>,
+  },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/tulda/',
+    icon: <svg aria-hidden="true" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13.7 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2V10H7.8v3h2.7v8h3.2Z" /></svg>,
+  },
+]
+
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: 'var(--surface-dark)' }}>
@@ -76,20 +89,19 @@ export default function Footer() {
 
             {/* Social icons */}
             <div className="flex gap-3">
-              {['LinkedIn', 'Instagram', 'Facebook'].map(s => (
+              {socialLinks.map((social) => (
                 <a
-                  key={s}
-                  href="#"
-                  className="w-8 h-8 flex items-center justify-center rounded-sm border transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-sm border text-[var(--surface-dark-muted)] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   style={{
                     borderColor: 'rgba(255,255,255,0.12)',
-                    color: 'var(--surface-dark-muted)',
                   }}
-                  aria-label={s}
+                  aria-label={`Visit Tulda on ${social.label}`}
                 >
-                  <span className="text-[10px] font-bold" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-                    {s.slice(0, 2).toUpperCase()}
-                  </span>
+                  {social.icon}
                 </a>
               ))}
             </div>
@@ -113,8 +125,8 @@ export default function Footer() {
                   <li key={link}>
                     <Link
                       to={productSlugs[link] ? `/products/${productSlugs[link]}` : link === 'About Tulda' ? '/about' : link === 'Contact Us' || link === 'Book a Demo' ? '/contact' : link.includes('Data') || link.includes('Guides') ? '/technical-documents' : '/'}
-                      className="text-xs transition-colors hover:text-[var(--primary)]"
-                      style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif' }}
+                      className="text-xs text-[var(--surface-dark-muted)] transition-colors hover:text-[var(--primary)]"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
                     >
                       {link}
                     </Link>
@@ -171,8 +183,8 @@ export default function Footer() {
               <a
                 key={l}
                 href="#"
-                className="text-[11px] transition-colors hover:text-[var(--primary)]"
-                style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif' }}
+                className="text-[11px] text-[var(--surface-dark-muted)] transition-colors hover:text-[var(--primary)]"
+                style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {l}
               </a>

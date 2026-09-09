@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
 import QuantitySelector from '../components/QuantitySelector'
-import { formatMoney } from '../services/catalogue/money'
 import { getProductBySlug, getTechnicalDocumentsByProductId } from '../services/catalogue/repository'
 import type { CatalogueTechnicalDocument } from '../services/catalogue/repository'
 import type { CatalogueCartLine, CatalogueProduct, CatalogueVariant } from '../types/catalog'
 import { productTechnicalContent, type ProductTechnicalContent } from '../data/productTechnicalContent'
 import { getProductGalleryImages, getProductImageFitScale } from '../lib/productImages'
+import Seo from '../components/Seo'
 
 interface ProductDetailPageProps {
   allProducts: CatalogueProduct[]
@@ -16,9 +16,7 @@ interface ProductDetailPageProps {
   onToggleWishlist: (productId: string) => void
 }
 
-function defaultVariant(product: CatalogueProduct): CatalogueVariant {
-  return product.variants.filter((variant) => variant.isInStock).sort((a, b) => a.priceMinor - b.priceMinor || a.sortOrder - b.sortOrder)[0] ?? product.variants[0]
-}
+function defaultVariant(product: CatalogueProduct): CatalogueVariant { return product.variants.sort((a, b) => a.sortOrder - b.sortOrder)[0] }
 
 export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, onToggleWishlist }: ProductDetailPageProps) {
   const { productSlug = '' } = useParams()
@@ -69,7 +67,7 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
   }, [allProducts, product])
 
   const addToCart = () => {
-    if (!product || !selectedVariant || !selectedVariant.isInStock) return
+    if (!product || !selectedVariant) return
     onAddToCart({ product, variant: selectedVariant, size: selectedVariant.label, quantity })
     setAdded(true)
     window.setTimeout(() => setAdded(false), 1200)
@@ -79,8 +77,35 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
   if (error) return <ProductError />
   if (!product) return <ProductNotFound />
 
+  const productDescription = product.shortDescription ?? product.description ?? `${product.name} for professional automotive refinishing.`
+  const productUrl = `https://tulda.co/product/${product.slug}`
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Product',
+        name: product.name,
+        url: productUrl,
+        description: productDescription,
+        sku: product.code ?? product.variants[0]?.sku,
+        ...(galleryImages.length > 0 ? { image: galleryImages.map((image) => new URL(image.path, 'https://tulda.co').toString()) } : {}),
+        brand: { '@type': 'Brand', name: 'Tulda' },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://tulda.co/' },
+          { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://tulda.co/products' },
+          ...(displayCategory ? [{ '@type': 'ListItem', position: 3, name: displayCategory.name, item: `https://tulda.co/products/${displayCategory.slug}` }] : []),
+          { '@type': 'ListItem', position: displayCategory ? 4 : 3, name: product.name, item: productUrl },
+        ],
+      },
+    ],
+  }
+
   return (
     <main>
+      <Seo title={`${product.name} | Tulda UK`} description={productDescription} image={activeImage ? new URL(activeImage.path, 'https://tulda.co').toString() : undefined} structuredData={productSchema} />
       <section className="max-w-[1400px] mx-auto px-4 sm:px-6 py-6 md:py-10">
         <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
           <Link to="/" className="hover:text-[var(--primary)]">Home</Link><span>/</span>
@@ -110,10 +135,7 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
             {product.code && <p className="mt-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Code: {product.code}</p>}
             {(product.shortDescription ?? product.description) && <p className="mt-5 text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>{product.shortDescription ?? product.description}</p>}
 
-            {selectedVariant && <div className="mt-7 border-y py-5" style={{ borderColor: 'var(--border)' }}>
-              <p className="text-3xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>{formatMoney(selectedVariant.priceMinor, selectedVariant.currency)}</p>
-              <p className="mt-2 text-sm font-medium" style={{ color: selectedVariant.isInStock ? '#166534' : '#666', fontFamily: 'Inter, sans-serif' }}>{selectedVariant.isInStock ? 'In stock' : 'Out of stock'}</p>
-            </div>}
+            <div className="mt-7 border-y py-5" style={{ borderColor: 'var(--border)' }}><p className="text-2xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRICE ON REQUEST</p><p className="mt-2 text-sm" style={{ color: 'var(--muted-foreground)' }}>Add products to your enquiry and our team will prepare an offer.</p></div>
 
             <fieldset className="mt-6">
               <legend className="text-xs font-semibold uppercase tracking-wider" style={{ fontFamily: 'Inter, sans-serif' }}>Size / option</legend>
@@ -121,17 +143,17 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
                 {product.variants.map((variant) => <button key={variant.id} type="button" onClick={() => setSelectedVariant(variant)} aria-pressed={selectedVariant?.id === variant.id}
                   className="px-3 py-2 text-xs font-semibold rounded-sm border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]"
                   style={{ borderColor: selectedVariant?.id === variant.id ? 'var(--primary)' : 'var(--border)', backgroundColor: selectedVariant?.id === variant.id ? 'var(--primary)' : 'transparent', color: selectedVariant?.id === variant.id ? 'var(--primary-foreground)' : 'var(--foreground)', fontFamily: 'Inter, sans-serif' }}>
-                  {variant.label}{!variant.isInStock ? ' — Out of stock' : ''}
+                  {variant.label}
                 </button>)}
               </div>
             </fieldset>
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
-              <QuantitySelector value={quantity} onChange={setQuantity} disabled={!selectedVariant?.isInStock} />
-              <button type="button" onClick={addToCart} disabled={!selectedVariant?.isInStock}
+              <QuantitySelector value={quantity} onChange={setQuantity} />
+              <button type="button" onClick={addToCart}
                 className="tulda-button flex-1 px-6 disabled:cursor-not-allowed"
                 style={{ backgroundColor: added ? '#166534' : 'var(--primary)', color: '#fff' }}>
-                {added ? 'ADDED TO CART' : 'ADD TO CART'}
+                {added ? 'ADDED TO ENQUIRY' : 'ADD TO ENQUIRY'}
               </button>
               <button type="button" onClick={() => onToggleWishlist(product.id)} aria-label={wishlist.includes(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                 className="min-h-10 px-4 border rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]"
@@ -139,7 +161,6 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
                 {wishlist.includes(product.id) ? '♥ Saved' : '♡ Wishlist'}
               </button>
             </div>
-            {selectedVariant && !selectedVariant.isInStock && <p className="mt-3 text-xs" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>This selected option is currently out of stock.</p>}
           </section>
         </div>
 
@@ -178,5 +199,5 @@ function Detail({ label, value }: { label: string; value: string }) {
 }
 
 function LoadingProduct() { return <main className="max-w-[1400px] mx-auto px-6 py-16"><div className="h-[560px] animate-pulse rounded-sm" style={{ backgroundColor: 'var(--muted)' }} /></main> }
-function ProductError() { return <main className="max-w-[1400px] mx-auto px-6 py-24 text-center"><h1 className="text-3xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRODUCT UNAVAILABLE</h1><p className="mt-3 text-sm" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>We could not load this product. Please try again.</p></main> }
-function ProductNotFound() { return <main className="max-w-[1400px] mx-auto px-6 py-24 text-center"><h1 className="text-3xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRODUCT NOT FOUND</h1><Link to="/products" className="inline-flex mt-7 px-5 py-2.5 text-sm font-semibold rounded-sm" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)', fontFamily: 'Inter, sans-serif' }}>VIEW PRODUCTS</Link></main> }
+function ProductError() { return <main className="max-w-[1400px] px-6 py-24 text-center"><Seo title="Product Unavailable | Tulda" noIndex /><h1 className="text-3xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRODUCT UNAVAILABLE</h1><p className="mt-3 text-sm" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>We could not load this product. Please try again.</p></main> }
+function ProductNotFound() { return <main className="max-w-[1400px] px-6 py-24 text-center"><Seo title="Product Not Found | Tulda" noIndex /><h1 className="text-3xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRODUCT NOT FOUND</h1><Link to="/products" className="inline-flex mt-7 px-5 py-2.5 text-sm font-semibold rounded-sm" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)', fontFamily: 'Inter, sans-serif' }}>VIEW PRODUCTS</Link></main> }

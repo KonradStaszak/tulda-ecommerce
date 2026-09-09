@@ -37,7 +37,7 @@ export default function BodyshopSection() {
               style={{ backgroundColor: '#1a1a1a' }}
             >
             <img
-          src="/assets/campaign/tulda-abrasives-in-use.jpg"
+          src="/assets/campaign/tulda-abrasives-in-use-blue.png"
           alt="Tulda abrasives prepared for professional bodyshop work"
               loading="lazy"
               className="w-full h-full object-cover"

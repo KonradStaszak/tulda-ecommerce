@@ -59,6 +59,20 @@
   --shadow-subtle: 0 8px 24px rgba(20, 20, 20, 0.06);
 }
 
+.tulda-storefront > footer {
+  margin-top: auto;
+}
+
+.hero-video-overlay {
+  background: linear-gradient(90deg, rgba(2, 11, 16, 0.88) 0%, rgba(2, 11, 16, 0.62) 52%, rgba(2, 11, 16, 0.18) 100%), linear-gradient(0deg, rgba(2, 11, 16, 0.38) 0%, transparent 58%);
+}
+
+@media (min-width: 768px) {
+  .hero-video-overlay {
+    background: linear-gradient(90deg, rgba(2, 11, 16, 0.92) 0%, rgba(2, 11, 16, 0.68) 42%, rgba(2, 11, 16, 0.2) 78%), linear-gradient(0deg, rgba(2, 11, 16, 0.78) 0%, transparent 52%);
+  }
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

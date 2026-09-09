@@ -13,7 +13,7 @@ const workshopStories: WorkshopStory[] = [
   {
     title: 'Clearcoat systems',
     description: 'Professional finishes, built for bodyshops.',
-    image: '/assets/campaign/tulda-ct60-application.jpg',
+    image: '/assets/campaign/tulda-ct60-application-black-coupe.png',
     alt: 'Tulda CT60 HS clearcoat in a professional bodyshop',
     to: '/products/clearcoat',
     className: 'min-h-[300px] md:min-h-[464px]',
@@ -21,7 +21,7 @@ const workshopStories: WorkshopStory[] = [
   {
     title: 'Abrasives',
     description: 'Precision from preparation to finish.',
-    image: '/assets/campaign/tulda-abrasives-range.jpg',
+    image: '/assets/campaign/tulda-abrasives-range-blue.png',
     alt: 'Tulda abrasives range in a professional workshop',
     to: '/products/abrasives',
     className: 'min-h-[224px] md:min-h-0',
@@ -29,7 +29,7 @@ const workshopStories: WorkshopStory[] = [
   {
     title: 'Made for the workshop',
     description: 'Reliable products for every stage of the repair.',
-    image: '/assets/campaign/tulda-abrasives-in-use.jpg',
+    image: '/assets/campaign/tulda-abrasives-in-use-blue.png',
     alt: 'Tulda abrasives being prepared for use',
     to: '/products',
     className: 'min-h-[224px] md:min-h-0',

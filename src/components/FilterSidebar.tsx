@@ -135,15 +135,6 @@ export default function FilterSidebar({ filters, onChange, totalCount, filteredC
         </div>
       </AccordionSection>
 
-      {/* Availability */}
-      <AccordionSection title="Availability">
-        <Checkbox
-          checked={filters.inStockOnly}
-          onChange={() => onChange({ ...filters, inStockOnly: !filters.inStockOnly, page: 1 })}
-          label="In stock only"
-        />
-      </AccordionSection>
-
       {/* Size / Format */}
       <AccordionSection title="Size / Format" defaultOpen={false}>
         <div className="space-y-0.5">

@@ -10,8 +10,6 @@ const CART_STORAGE_VERSION = 1 as const
 interface CartContextValue {
   lines: CartLine[]
   itemCount: number
-  subtotalMinor: number
-  hasUnavailableItems: boolean
   addItem: (item: AddCartItemInput) => void
   removeLine: (variantId: string) => void
   increaseQuantity: (variantId: string) => void
@@ -90,7 +88,7 @@ export function CartProvider({ children, products, catalogueReady }: CartProvide
     setLines((currentLines) => currentLines.map((line) => {
       const product = products.find((candidate) => candidate.id === line.productId)
       const variant = product?.variants.find((candidate) => candidate.id === line.variantId)
-      if (!product || !variant) return { ...line, isInStock: false, unavailableReason: 'missing_variant' }
+      if (!product || !variant) return line
       return {
         ...line,
         productSlug: product.slug,
@@ -125,8 +123,6 @@ export function CartProvider({ children, products, catalogueReady }: CartProvide
   const value = useMemo<CartContextValue>(() => ({
     lines,
     itemCount: lines.reduce((total, line) => total + line.quantity, 0),
-    subtotalMinor: lines.reduce((total, line) => total + line.priceMinor * line.quantity, 0),
-    hasUnavailableItems: lines.some((line) => !line.isInStock),
     addItem,
     removeLine,
     increaseQuantity,
