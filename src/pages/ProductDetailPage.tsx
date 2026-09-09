@@ -7,6 +7,7 @@ import type { CatalogueTechnicalDocument } from '../services/catalogue/repositor
 import type { CatalogueCartLine, CatalogueProduct, CatalogueVariant } from '../types/catalog'
 import { productTechnicalContent, type ProductTechnicalContent } from '../data/productTechnicalContent'
 import { getProductGalleryImages, getProductImageFitScale } from '../lib/productImages'
+import { richTextToPlainText, sanitizeRichText } from '../lib/richText'
 import Seo from '../components/Seo'
 
 interface ProductDetailPageProps {
@@ -77,7 +78,7 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
   if (error) return <ProductError />
   if (!product) return <ProductNotFound />
 
-  const productDescription = product.shortDescription ?? product.description ?? `${product.name} for professional automotive refinishing.`
+  const productDescription = richTextToPlainText(product.shortDescription ?? product.description) || `${product.name} for professional automotive refinishing.`
   const productUrl = `https://tulda.co/product/${product.slug}`
   const productSchema = {
     '@context': 'https://schema.org',
@@ -133,7 +134,7 @@ export default function ProductDetailPage({ allProducts, onAddToCart, wishlist, 
             <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: 'var(--primary)', fontFamily: 'Barlow Condensed, sans-serif' }}>{product.categories.map((category) => category.name).join(' · ')}</p>
             <h1 className="mt-2 text-4xl md:text-5xl font-black leading-none" style={{ fontFamily: 'Barlow Condensed, sans-serif', color: 'var(--foreground)' }}>{product.name}</h1>
             {product.code && <p className="mt-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>Code: {product.code}</p>}
-            {(product.shortDescription ?? product.description) && <p className="mt-5 text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>{product.shortDescription ?? product.description}</p>}
+            {(product.shortDescription ?? product.description) && <RichProductText value={product.shortDescription ?? product.description ?? ''} className="mt-5 text-sm leading-relaxed" />}
 
             <div className="mt-7 border-y py-5" style={{ borderColor: 'var(--border)' }}><p className="text-2xl font-black" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>PRICE ON REQUEST</p><p className="mt-2 text-sm" style={{ color: 'var(--muted-foreground)' }}>Add products to your enquiry and our team will prepare an offer.</p></div>
 
@@ -184,7 +185,7 @@ function ProductInformation({ product, content, documents }: { product: Catalogu
     return href ? <a key={document.id} href={href} target="_blank" rel="noreferrer" className="flex min-h-12 items-center justify-between gap-4 border px-4 py-3 text-sm hover:border-[var(--primary)]" style={{ borderColor: 'var(--border)' }}><span><strong className="mr-2 text-[10px]" style={{ color: 'var(--primary)' }}>{document.documentType.toUpperCase()}</strong>{document.title}</span><span className="shrink-0 text-xs" style={{ color: 'var(--muted-foreground)' }}>PDF ↗</span></a> : null
   })}</div>
   const sections = [
-    overview.length > 0 && { title: 'Overview', body: <div className="space-y-3">{overview.map((paragraph) => <p key={paragraph} className="text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>{paragraph}</p>)}</div> },
+    overview.length > 0 && { title: 'Overview', body: <div className="space-y-3">{overview.map((paragraph) => <RichProductText key={paragraph} value={paragraph} className="text-sm leading-relaxed" />)}</div> },
     content?.features?.length && { title: 'Features & benefits', body: <ul className="grid gap-2 text-sm" style={{ color: 'var(--muted-foreground)' }}>{content.features.map((feature) => <li key={feature} className="flex gap-2"><span style={{ color: 'var(--primary)' }}>✓</span>{feature}</li>)}</ul> },
     (technical.length > 0 || product.code) && { title: 'Technical information', body: <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{product.code && <Detail label="Product code" value={product.code} />}{technical.map((item) => <Detail key={item.label} label={item.label} value={item.value} />)}</div> },
     content?.safety && { title: 'Hazards & safety', body: <p className="text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>{content.safety}</p> },
@@ -196,6 +197,10 @@ function ProductInformation({ product, content, documents }: { product: Catalogu
 
 function Detail({ label, value }: { label: string; value: string }) {
   return <div className="border rounded-sm p-4" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--muted)' }}><p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)' }}>{label}</p><p className="mt-1 text-sm">{value}</p></div>
+}
+
+function RichProductText({ value, className }: { value: string; className: string }) {
+  return <div className={'product-rich-text ' + className} style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }} dangerouslySetInnerHTML={{ __html: sanitizeRichText(value) }} />
 }
 
 function LoadingProduct() { return <main className="max-w-[1400px] mx-auto px-6 py-16"><div className="h-[560px] animate-pulse rounded-sm" style={{ backgroundColor: 'var(--muted)' }} /></main> }

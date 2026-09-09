@@ -90,6 +90,11 @@ export function getProductCardImage(product: CatalogueProduct) {
   return getLocalImages(product).find((image) => image.isPrimary) ?? product.primaryImage
 }
 
+export function getLocalProductImagePath(slug: string) {
+  const images = localProductImages[slug] ?? []
+  return images.find((image) => image.isPrimary)?.path ?? images[0]?.path ?? null
+}
+
 export function getProductGalleryImages(product: CatalogueProduct) {
   const localImages = getLocalImages(product)
   const localPrimaryImage = localImages.find((image) => image.isPrimary)
