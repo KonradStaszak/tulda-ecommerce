@@ -47,7 +47,7 @@ export default function AboutPage() {
           </div>
           <figure className="relative min-h-[320px] overflow-hidden bg-[#071519] md:min-h-[430px]">
             <img
-              src="/assets/campaign/tulda-workshop-range-black-coupe.png"
+              src="/assets/campaign/tulda-workshop-range-black-coupe-xct100.png"
               alt="Tulda professional refinishing products in a working bodyshop"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />

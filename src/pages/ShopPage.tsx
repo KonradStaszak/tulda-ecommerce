@@ -213,8 +213,6 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
                 placeholder="Search products…"
                 className="tulda-field w-full sm:w-[220px] pl-8 pr-8 py-2 text-[12px]"
                 style={{
-                  borderColor: 'var(--border)',
-                  backgroundColor: 'var(--background)',
                   color: 'var(--foreground)',
                   fontFamily: 'Inter, sans-serif',
                 }}
@@ -247,8 +245,6 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
                 onChange={e => setFilters(f => ({ ...f, sort: e.target.value as SortKey, page: 1 }))}
                 className="tulda-field appearance-none min-h-11 pl-3 pr-8 py-2 text-[12px] cursor-pointer"
                 style={{
-                  borderColor: 'var(--border)',
-                  backgroundColor: 'var(--background)',
                   color: 'var(--foreground)',
                   fontFamily: 'Inter, sans-serif',
                 }}>

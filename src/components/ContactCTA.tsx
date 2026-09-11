@@ -59,9 +59,6 @@ export default function ContactCTA() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState("")
 
-  const inputClassName =
-    "w-full rounded-lg border border-[#dde5e9] bg-[#f8fafb] px-4 py-3 text-sm text-[var(--foreground)] outline-none transition-all placeholder:text-[#89949d] focus:border-[var(--primary)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(24,174,229,0.12)]"
-
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError("")
@@ -178,7 +175,7 @@ export default function ContactCTA() {
                           name: event.target.value,
                         }))
                       }
-                      className={`mt-1.5 ${inputClassName}`}
+                      className="tulda-field mt-1.5 w-full px-4 py-3 text-sm"
                       placeholder="James Carter"
                     />
                   </label>
@@ -192,7 +189,7 @@ export default function ContactCTA() {
                           company: event.target.value,
                         }))
                       }
-                      className={`mt-1.5 ${inputClassName}`}
+                      className="tulda-field mt-1.5 w-full px-4 py-3 text-sm"
                       placeholder="Carter Bodyshop Ltd"
                     />
                   </label>
@@ -209,7 +206,7 @@ export default function ContactCTA() {
                         email: event.target.value,
                       }))
                     }
-                    className={`mt-1.5 ${inputClassName}`}
+                    className="tulda-field mt-1.5 w-full px-4 py-3 text-sm"
                     placeholder="james@carterbodyshop.co.uk"
                   />
                 </label>
@@ -224,7 +221,7 @@ export default function ContactCTA() {
                         phone: event.target.value,
                       }))
                     }
-                    className={`mt-1.5 ${inputClassName}`}
+                    className="tulda-field mt-1.5 w-full px-4 py-3 text-sm"
                     placeholder="+44 7700 900123"
                   />
                 </label>
@@ -240,7 +237,7 @@ export default function ContactCTA() {
                         message: event.target.value,
                       }))
                     }
-                    className={`mt-1.5 resize-none ${inputClassName}`}
+                    className="tulda-field mt-1.5 w-full resize-none px-4 py-3 text-sm"
                     placeholder="Tell us about your bodyshop and what you'd like to know about Tulda products…"
                   />
                 </label>

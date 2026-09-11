@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 const SITE_URL = 'https://tulda.co'
 const DEFAULT_TITLE = 'Tulda | Professional Automotive Refinishing Supplies UK'
 const DEFAULT_DESCRIPTION = 'Professional automotive refinishing systems for bodyshops, paintshops and smart repair specialists. Tulda supports localised repairs, larger repairs and full resprays.'
-const DEFAULT_IMAGE = 'https://tulda.co/assets/campaign/tulda-workshop-range-black-coupe.png'
+const DEFAULT_IMAGE = 'https://tulda.co/assets/campaign/tulda-workshop-range-black-coupe-xct100.png'
 
 function cleanDescription(value: string) {
   const plainText = value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()

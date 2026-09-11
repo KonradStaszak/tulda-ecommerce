@@ -494,7 +494,7 @@ function RequestRow({
                 status: event.target.value as QuoteRequest["status"],
               })
             }
-            className="border bg-white px-2 py-1"
+            className="tulda-field min-h-9 px-3 py-1.5 text-xs"
           >
             <option value="new">New</option>
             <option value="contacted">Contacted</option>
@@ -670,7 +670,7 @@ function ContactMessageRow({
                 status: event.target.value as ContactMessage["status"],
               })
             }
-            className="border bg-white px-2 py-1"
+            className="tulda-field min-h-9 px-3 py-1.5 text-xs"
           >
             <option value="new">New</option>
             <option value="contacted">Contacted</option>

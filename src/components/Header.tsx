@@ -285,7 +285,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                     aria-expanded={shouldShowSuggestions}
                     aria-controls="desktop-search-results"
                     aria-activedescendant={activeSuggestion >= 0 ? 'desktop-search-result-' + activeSuggestion : undefined}
-                    className="tulda-header-search h-11 w-full rounded-none border pl-10 pr-4 text-[13px] outline-none"
+                    className="tulda-field tulda-header-search h-11 w-full pl-10 pr-4 text-[13px]"
                     style={transparentHeader ? { backgroundColor: 'rgba(255,255,255,0.94)' } : undefined}
                   />
                 </label>

@@ -175,17 +175,33 @@ button:not(:disabled), select:not(:disabled), input:not(:disabled), textarea:not
 
 .tulda-field {
   min-height: 46px;
-  border: 1px solid var(--border);
+  border: 1px solid #dde5e9;
   border-radius: var(--radius);
-  background: #fff;
+  background: #f8fafb;
   color: var(--foreground);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  outline: none;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
-.tulda-field:focus {
-  border-color: var(--color-brand-hover);
-  box-shadow: 0 0 0 3px rgba(24, 174, 229, 0.18);
+.tulda-field::placeholder {
+  color: #89949d;
+}
+
+.tulda-field:hover:not(:disabled):not(:focus) {
+  border-color: #c7d4da;
+}
+
+.tulda-field:focus,
+.tulda-field:focus-visible {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(24, 174, 229, 0.12);
   outline: none;
+}
+
+.tulda-field:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .tulda-header-search {

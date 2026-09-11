@@ -153,13 +153,44 @@ export default function ShopByCategory({
           {loading || !activeCategory ? (
             <div className="h-[520px] animate-pulse border bg-[var(--muted)] sm:h-[390px]" />
           ) : (
-            <article className="group relative grid overflow-hidden border bg-[#f3f6f7] sm:min-h-[390px] sm:grid-cols-[1fr_0.9fr]">
-              <div className="flex flex-col gap-5 p-5 sm:justify-between sm:p-9">
+            <article className="group relative grid overflow-hidden border border-[#2b3034] bg-[#0a0c0e] sm:min-h-[390px] sm:grid-cols-[1fr_0.9fr]">
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
+                viewBox="0 0 1000 500"
+              >
+                <polygon points="0,0 345,0 250,146" fill="#0d1012" />
+                <polygon points="345,0 520,0 384,153 250,146" fill="#111518" />
+                <polygon points="250,146 384,153 318,286" fill="#181d20" />
+                <polygon points="0,112 250,146 318,286 76,500 0,500" fill="#0e1214" />
+                <polygon points="318,286 520,180 514,500 76,500" fill="#151a1d" />
+                <polygon points="384,153 520,0 586,210 520,180" fill="#0b0e10" />
+                <polygon points="520,180 586,210 514,500" fill="#1b2023" />
+                <polygon points="586,0 1000,0 1000,160 586,210" fill="#15191c" />
+                <polygon points="586,210 1000,160 832,330 514,500" fill="#1d2225" />
+                <polygon points="832,330 1000,160 1000,500 514,500" fill="#121619" />
+                <path
+                  d="M430 0 L1000 146"
+                  fill="none"
+                  stroke="var(--primary)"
+                  strokeOpacity="0.42"
+                  strokeWidth="4"
+                />
+                <path
+                  d="M0 426 L126 500"
+                  fill="none"
+                  stroke="var(--primary)"
+                  strokeOpacity="0.2"
+                  strokeWidth="3"
+                />
+              </svg>
+              <div className="relative z-10 flex flex-col gap-5 p-5 sm:justify-between sm:p-9">
                 <div>
-                  <h4 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-[0.9] tracking-tight text-[var(--foreground)] sm:text-5xl sm:leading-[0.86]">
+                  <h4 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-5xl sm:leading-[0.86]">
                     {activeCategory.name}
                   </h4>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[var(--muted-foreground)] sm:mt-5">
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#aeb8bd] sm:mt-5">
                     {activeCategory.description ??
                       `Professional ${activeCategory.name.toLowerCase()} products for dependable refinishing work.`}
                   </p>
@@ -171,7 +202,7 @@ export default function ShopByCategory({
                   FIND OUT MORE <span aria-hidden="true">→</span>
                 </Link>
               </div>
-              <div className="relative h-[330px] min-h-[330px] overflow-hidden border-t border-[#dbe3e7] sm:h-auto sm:min-h-[220px] sm:border-l sm:border-t-0">
+              <div className="relative z-10 h-[330px] min-h-[330px] overflow-hidden border-t border-white/10 bg-[radial-gradient(circle_at_52%_48%,rgba(255,255,255,0.12),rgba(255,255,255,0.025)_42%,transparent_72%)] sm:h-auto sm:min-h-[220px] sm:border-l sm:border-t-0">
                 {categoryImage ? (
                   <img
                     key={activeCategory.id}
