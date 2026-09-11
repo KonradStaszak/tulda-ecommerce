@@ -23,7 +23,7 @@ const representativeProductMatchers: Record<string, (
   product: CatalogueProduct,
 ) => boolean> = {
   abrasives: (product) => product.name.toLowerCase().includes("sanding film"),
-  clearcoat: (product) => product.name.toLowerCase().includes("ct50"),
+  clearcoat: (product) => product.slug === "xct100-clearcoat-21-vhs-extra-speed-clear",
   filler: (product) => product.name.toLowerCase().includes("bt01"),
   industrial: (product) => product.name.toLowerCase().includes("upvc"),
   kits: (product) => product.name.toLowerCase().includes("ct60"),
@@ -87,6 +87,10 @@ export default function ShopByCategory({
   const categoryImage = activeCategory
     ? getCategoryImage(activeCategory, products)
     : undefined
+  const categoryImageScaleClass =
+    activeCategory?.slug === "clearcoat"
+      ? "scale-[1.28] group-hover:scale-[1.34]"
+      : "scale-100 group-hover:scale-105"
   const changeSlide = (direction: number) => {
     if (displayCategories.length === 0) return
     const nextIndex =
@@ -208,7 +212,7 @@ export default function ShopByCategory({
                     key={activeCategory.id}
                     src={categoryImage}
                     alt={`${activeCategory.name} by Tulda`}
-                    className="absolute inset-0 h-full w-full object-contain p-4 transition duration-500 ease-out group-hover:scale-105 sm:p-8"
+                    className={`absolute inset-0 h-full w-full object-contain p-4 transition duration-500 ease-out sm:p-8 ${categoryImageScaleClass}`}
                   />
                 ) : null}
               </div>
