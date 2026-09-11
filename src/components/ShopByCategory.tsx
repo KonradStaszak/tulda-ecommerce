@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
-import type { CatalogueCategory, CatalogueProduct } from '../types/catalog'
-import { getProductCardImage } from '../lib/productImages'
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import type { CatalogueCategory, CatalogueProduct } from "../types/catalog"
+import { getProductCardImage } from "../lib/productImages"
 
 interface ShopByCategoryProps {
   categories: CatalogueCategory[]
@@ -8,131 +9,202 @@ interface ShopByCategoryProps {
   loading: boolean
 }
 
-function ArrowRight({ className = '' }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
-    </svg>
-  )
+const processOrder = [
+  "abrasives",
+  "filler",
+  "primer",
+  "thinner",
+  "clearcoat",
+  "kits",
+  "industrial",
+]
+
+const representativeProductMatchers: Record<string, (
+  product: CatalogueProduct,
+) => boolean> = {
+  abrasives: (product) => product.name.toLowerCase().includes("sanding film"),
+  clearcoat: (product) => product.name.toLowerCase().includes("ct50"),
+  filler: (product) => product.name.toLowerCase().includes("bt01"),
+  industrial: (product) => product.name.toLowerCase().includes("upvc"),
+  kits: (product) => product.name.toLowerCase().includes("ct60"),
+  primer: (product) => product.name.toLowerCase().includes("pt30"),
+  thinner: (product) => product.name.toLowerCase().includes("st10"),
 }
 
-const secondaryCategoryLabels: Record<string, string> = {
-  industrial: 'Binders',
-  primer: 'Primer Kits',
-}
-
-const representativeProductMatchers: Record<string, (product: CatalogueProduct) => boolean> = {
-  abrasives: (product) => product.name.toLowerCase().includes('sanding film'),
-  clearcoat: (product) => product.name.toLowerCase().includes('ct50'),
-  filler: (product) => product.name.toLowerCase().includes('bt01'),
-  industrial: (product) => product.name.toLowerCase().includes('upvc'),
-  kits: (product) => product.name.toLowerCase().includes('ct60'),
-  primer: (product) => product.name.toLowerCase().includes('pt30'),
-  thinner: (product) => product.name.toLowerCase().includes('st10'),
-}
-
-const loadingCategories: CatalogueCategory[] = Array.from({ length: 7 }, (_, index) => ({
-  id: `loading-${index}`,
-  woocommerceId: null,
-  slug: '',
-  name: '',
-  description: null,
-  parentId: null,
-  productCount: 0,
-  image: null,
-  color: '#f5f6f7',
-}))
-
-function getCategoryImage(category: CatalogueCategory, products: CatalogueProduct[]) {
+function getCategoryImage(
+  category: CatalogueCategory,
+  products: CatalogueProduct[],
+) {
   const categoryProducts = products.filter((product) =>
-    product.categories.some((productCategory) => productCategory.id === category.id),
+    product.categories.some(
+      (productCategory) => productCategory.id === category.id,
+    ),
   )
   const matcher = representativeProductMatchers[category.slug]
-  const representativeProduct = matcher ? categoryProducts.find(matcher) : undefined
-  const representativeImage = representativeProduct ? getProductCardImage(representativeProduct) : undefined
-
-  return representativeImage?.path
-    ?? categoryProducts.map(getProductCardImage).find((image) => image)?.path
-    ?? category.image
+  const representativeProduct = matcher
+    ? categoryProducts.find(matcher)
+    : undefined
+  return (
+    (representativeProduct
+      ? getProductCardImage(representativeProduct)
+      : undefined
+    )?.path ??
+    categoryProducts.map(getProductCardImage).find((image) => image)?.path ??
+    category.image
+  )
 }
 
-export default function ShopByCategory({ categories, products, loading }: ShopByCategoryProps) {
-  const mainCategories = categories.filter((category) => category.parentId === null)
-  const displayCategories = loading ? loadingCategories : mainCategories
+function orderCategories(categories: CatalogueCategory[]) {
+  return [...categories].sort((left, right) => {
+    const leftIndex = processOrder.indexOf(left.slug)
+    const rightIndex = processOrder.indexOf(right.slug)
+    return (
+      (leftIndex === -1 ? processOrder.length : leftIndex) -
+        (rightIndex === -1 ? processOrder.length : rightIndex) ||
+      left.name.localeCompare(right.name)
+    )
+  })
+}
+
+export default function ShopByCategory({
+  categories,
+  products,
+  loading,
+}: ShopByCategoryProps) {
+  const displayCategories = orderCategories(
+    categories.filter((category) => category.parentId === null),
+  )
+  const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(
+    null,
+  )
+  const activeIndex = Math.max(
+    0,
+    displayCategories.findIndex(
+      (category) => category.slug === activeCategorySlug,
+    ),
+  )
+  const activeCategory = displayCategories[activeIndex]
+  const categoryImage = activeCategory
+    ? getCategoryImage(activeCategory, products)
+    : undefined
+  const changeSlide = (direction: number) => {
+    if (displayCategories.length === 0) return
+    const nextIndex =
+      (activeIndex + direction + displayCategories.length) %
+      displayCategories.length
+    setActiveCategorySlug(displayCategories[nextIndex].slug)
+  }
 
   return (
-    <section id="categories" className="bg-[var(--background)] py-16 md:py-20">
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-6">
-        <div className="mb-8 flex items-end justify-between gap-5 md:mb-9">
+    <section id="categories" className="bg-[var(--background)] py-16 md:py-24">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div className="flex flex-col justify-between border-l-4 border-[var(--primary)] pl-6 md:pl-8">
           <div>
-            <h2 className="font-[var(--font-heading)] text-3xl font-bold uppercase leading-[0.95] tracking-tight text-[var(--foreground)] sm:text-4xl md:text-5xl">
-              Shop by category
+            <h2 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-[0.9] tracking-tight text-[var(--foreground)] sm:text-5xl">
+              TULDA. Built for the way automotive refinishing works today.
             </h2>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-[var(--muted-foreground)]">
+              Developed for professional painters, bodyshops and smart repair
+              specialists, our systems support everything from small, localised
+              repairs to larger repairs and full resprays.
+            </p>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-[var(--muted-foreground)]">
+              Explore the range in the order your work happens: prepare, repair,
+              prime and finish.
+            </p>
           </div>
           <Link
             to="/products"
-            className="group hidden shrink-0 items-center gap-2 border-b border-[var(--primary)] pb-1 text-xs font-bold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors hover:text-[var(--primary)] sm:inline-flex"
+            className="mt-8 inline-flex w-fit items-center gap-2 border-b border-[var(--primary)] pb-1 text-xs font-bold uppercase tracking-[0.08em] transition-colors hover:text-[var(--primary)]"
           >
-            View all products
-            <ArrowRight className="h-[15px] w-[15px] transition-transform duration-200 group-hover:translate-x-1" />
+            View the complete range <span aria-hidden="true">→</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
-          {displayCategories.map((category) => {
-            const image = getCategoryImage(category, products)
-            const secondaryLabel = secondaryCategoryLabels[category.slug]
+        <div className="min-w-0">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <h3 className="font-[var(--font-heading)] text-3xl font-bold uppercase leading-none sm:text-4xl">
+                Explore by category
+              </h3>
+            </div>
+            {!loading && displayCategories.length > 1 && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => changeSlide(-1)}
+                  className="flex h-10 w-10 items-center justify-center border transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  aria-label="Previous category"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => changeSlide(1)}
+                  className="flex h-10 w-10 items-center justify-center border transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                  aria-label="Next category"
+                >
+                  →
+                </button>
+              </div>
+            )}
+          </div>
 
-            if (loading) {
-              return (
-                <div
+          {loading || !activeCategory ? (
+            <div className="h-[520px] animate-pulse border bg-[var(--muted)] sm:h-[390px]" />
+          ) : (
+            <article className="group relative grid overflow-hidden border bg-[#f3f6f7] sm:min-h-[390px] sm:grid-cols-[1fr_0.9fr]">
+              <div className="flex flex-col gap-5 p-5 sm:justify-between sm:p-9">
+                <div>
+                  <h4 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-[0.9] tracking-tight text-[var(--foreground)] sm:text-5xl sm:leading-[0.86]">
+                    {activeCategory.name}
+                  </h4>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[var(--muted-foreground)] sm:mt-5">
+                    {activeCategory.description ??
+                      `Professional ${activeCategory.name.toLowerCase()} products for dependable refinishing work.`}
+                  </p>
+                </div>
+                <Link
+                  to={`/products/${activeCategory.slug}`}
+                  className="tulda-button mt-0 w-fit px-5 sm:mt-8"
+                >
+                  FIND OUT MORE <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              <div className="relative h-[330px] min-h-[330px] overflow-hidden border-t border-[#dbe3e7] sm:h-auto sm:min-h-[220px] sm:border-l sm:border-t-0">
+                {categoryImage ? (
+                  <img
+                    key={activeCategory.id}
+                    src={categoryImage}
+                    alt={`${activeCategory.name} by Tulda`}
+                    className="absolute inset-0 h-full w-full object-contain p-4 transition duration-500 ease-out group-hover:scale-105 sm:p-8"
+                  />
+                ) : null}
+              </div>
+            </article>
+          )}
+          {!loading && displayCategories.length > 1 && (
+            <div
+              className="mt-5 flex gap-2"
+              aria-label="Category slide selector"
+            >
+              {displayCategories.map((category, index) => (
+                <button
                   key={category.id}
-                  className="h-[248px] animate-pulse border border-[#e2e5e8] bg-[#f5f6f7] sm:h-[330px] xl:h-[380px]"
+                  type="button"
+                  onClick={() => setActiveCategorySlug(category.slug)}
+                  className={`h-1.5 flex-1 transition-colors ${
+                    index === activeIndex
+                      ? "bg-[var(--primary)]"
+                      : "bg-[var(--border)] hover:bg-[var(--muted-foreground)]"
+                  }`}
+                  aria-label={`Show ${category.name}`}
+                  aria-current={index === activeIndex ? "true" : undefined}
                 />
-              )
-            }
-
-            return (
-              <Link
-                key={category.id}
-                to={`/products/${category.slug}`}
-                className="group flex h-[248px] min-w-0 flex-col border border-[#e2e5e8] bg-[#f5f6f7] transition-[border-color] duration-200 hover:border-[var(--primary)] sm:h-[330px] xl:h-[380px]"
-              >
-                <div className="relative flex min-h-0 flex-[0_0_67%] items-center justify-center px-5 pb-2 pt-5 sm:px-7">
-                  <span className="absolute left-5 top-5 h-0.5 w-6 bg-[var(--primary)] sm:left-6" aria-hidden="true" />
-                  {image ? (
-                    <img
-                      src={image}
-                      alt=""
-                      className="pointer-events-none h-full max-h-full w-full max-w-full object-contain object-center transition-transform duration-200 group-hover:-translate-y-[3px]"
-                    />
-                  ) : null}
-                </div>
-
-                <div className="flex min-w-0 flex-1 items-end justify-between gap-3 border-t border-[#e2e5e8] px-4 py-3 sm:px-5">
-                  <div className="min-w-0">
-                    <h3 className="font-[var(--font-heading)] text-lg font-bold uppercase leading-none tracking-tight text-[var(--foreground)] transition-colors duration-200 group-hover:text-[var(--primary)] sm:text-xl">
-                      {category.name}
-                    </h3>
-                    <p className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--muted-foreground)]">
-                      {category.productCount} {category.productCount === 1 ? 'product' : 'products'}
-                      {secondaryLabel ? <><span aria-hidden="true"> &middot; </span>{secondaryLabel}</> : null}
-                    </p>
-                  </div>
-                  <ArrowRight className="mb-0.5 h-[18px] w-[18px] shrink-0 text-[var(--primary)] transition-transform duration-200 group-hover:translate-x-1" />
-                </div>
-              </Link>
-            )
-          })}
+              ))}
+            </div>
+          )}
         </div>
-
-        <Link
-          to="/products"
-          className="mt-7 inline-flex items-center gap-2 border-b border-[var(--primary)] pb-1 text-xs font-bold uppercase tracking-[0.08em] text-[var(--foreground)] sm:hidden"
-        >
-          View all products
-          <ArrowRight className="h-[15px] w-[15px]" />
-        </Link>
       </div>
     </section>
   )

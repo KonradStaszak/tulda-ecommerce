@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { filterProducts } from '../services/catalogue/repository'
+import { filterProducts, SPEED_LINE_CATEGORY_ID } from '../services/catalogue/repository'
 import { getCategoryAncestors, getCategoryTree } from '../services/catalogue/categoryHierarchy'
 import type { CatalogueCartLine, CatalogueCategory, CatalogueProduct, FilterState, SortKey } from '../types/catalog'
 import ProductCard from '../components/ProductCard'
@@ -40,6 +40,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
   const { categorySlug } = useParams()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const speedLineCollection = searchParams.get('collection') === SPEED_LINE_CATEGORY_ID
   const routeCategory = categories.find((category) => category.slug === categorySlug)
   const categoryTree = useMemo(() => getCategoryTree(categories), [categories])
   const categoryBreadcrumbs = routeCategory ? [...getCategoryAncestors(routeCategory, categories), routeCategory] : []
@@ -48,8 +49,8 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   useEffect(() => {
-    setFilters((current) => ({ ...current, categories: routeCategory ? [routeCategory.id] : [], page: 1 }))
-  }, [routeCategory?.id, categorySlug])
+    setFilters((current) => ({ ...current, categories: speedLineCollection ? [SPEED_LINE_CATEGORY_ID] : routeCategory ? [routeCategory.id] : [], page: 1 }))
+  }, [routeCategory?.id, categorySlug, speedLineCollection])
 
   useEffect(() => {
     const routeSearch = searchParams.get('search') ?? ''
@@ -62,6 +63,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
 
   const updateFilters = (next: FilterState) => {
     if (next.categories.length === 0 && categorySlug) navigate('/products')
+    if (next.categories.length === 1 && next.categories[0] === SPEED_LINE_CATEGORY_ID && categorySlug) navigate('/products')
     if (next.categories.length === 1) {
       const nextCategory = categories.find((category) => category.id === next.categories[0])
       if (nextCategory && nextCategory.slug !== categorySlug) navigate(`/products/${nextCategory.slug}`)
@@ -71,7 +73,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
 
   const activeFilterChips: { label: string; remove: () => void }[] = [
     ...filters.categories.map(c => ({
-      label: categories.find(x => x.id === c)?.name ?? c,
+      label: c === SPEED_LINE_CATEGORY_ID ? 'Speed Line' : categories.find(x => x.id === c)?.name ?? c,
       remove: () => updateFilters({ ...filters, categories: filters.categories.filter(x => x !== c), page: 1 }),
     })),
     ...(filters.inStockOnly ? [{ label: 'In stock', remove: () => setFilters(f => ({ ...f, inStockOnly: false, page: 1 })) }] : []),
@@ -86,8 +88,8 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
     ? `${routeCategory.name} for Professional Bodyshops UK | Tulda`
     : 'Professional Automotive Refinishing Products UK | Tulda'
   const pageDescription = routeCategory?.description
-    ? `${routeCategory.description} Shop professional automotive refinishing supplies with UK delivery from Tulda.`
-    : 'Shop professional automotive refinishing products for UK bodyshops, including clearcoats, primers, abrasives, fillers and hardeners.'
+    ? `${routeCategory.description} Explore Tulda professional automotive refinishing products for bodyshops, paintshops and smart repair specialists.`
+    : 'Explore Tulda automotive refinishing products for smart repairs, localised repairs, larger repairs and full resprays.'
 
   return (
     <div style={{ backgroundColor: 'var(--background)', minHeight: '100vh' }}>
@@ -127,11 +129,11 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
                 {routeCategory?.name ?? 'Products'}
               </h1>
               <p className="text-[13px]" style={{ color: 'var(--muted-foreground)', fontFamily: 'Inter, sans-serif' }}>
-                Professional automotive refinishing — clearcoats, primers, abrasives, fillers & more.
+                Professional automotive refinishing: clearcoats, primers, abrasives, fillers & more.
               </p>
             </div>
 
-            {/* Category nav pills — horizontal scroll */}
+            {/* Category nav pills - horizontal scroll */}
             <div className="flex max-w-full flex-wrap gap-2 pb-1 shrink-0">
               <button
                 onClick={() => navigate('/products')}
@@ -143,6 +145,17 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
                   fontFamily: 'Inter, sans-serif',
                 }}>
                 All
+              </button>
+              <button
+                onClick={() => updateFilters({ ...filters, categories: filters.categories.includes(SPEED_LINE_CATEGORY_ID) ? [] : [SPEED_LINE_CATEGORY_ID], page: 1 })}
+                className="shrink-0 px-3.5 py-1.5 text-[12px] font-semibold rounded-sm border transition-all"
+                style={{
+                  borderColor: filters.categories.includes(SPEED_LINE_CATEGORY_ID) ? 'var(--primary)' : 'var(--border)',
+                  backgroundColor: filters.categories.includes(SPEED_LINE_CATEGORY_ID) ? 'var(--primary)' : 'var(--background)',
+                  color: filters.categories.includes(SPEED_LINE_CATEGORY_ID) ? 'var(--primary-foreground)' : 'var(--foreground)',
+                  fontFamily: 'Inter, sans-serif',
+                }}>
+                Speed Line
               </button>
               {categoryTree.flatMap((node) => [node.category, ...node.children.map((child) => child.category)]).map((category) => {
                 const active = filters.categories.includes(category.id)
@@ -274,7 +287,7 @@ export default function ShopPage({ onAddToCart, wishlist, onToggleWishlist, prod
           </div>
         )}
 
-        {/* Main content — sidebar + grid */}
+        {/* Main content - sidebar + grid */}
         <div className="flex gap-10">
           {/* Desktop sidebar */}
           <div className="hidden lg:block shrink-0" style={{ width: 220 }}>

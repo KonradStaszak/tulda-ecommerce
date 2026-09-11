@@ -38,6 +38,17 @@ export interface CatalogueTechnicalDocument {
 
 let cataloguePromise: Promise<CatalogueData> | null = null
 
+export const SPEED_LINE_CATEGORY_ID = 'speed-line'
+export const SPEED_LINE_PRODUCT_SLUGS = [
+  'xct100-clearcoat-21-vhs-extra-speed-clear',
+  'tulda-ct90-vhs-speedline-acrylic-clearcoat-1l',
+  'tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l',
+]
+
+export function isSpeedLineProduct(product: CatalogueProduct) {
+  return SPEED_LINE_PRODUCT_SLUGS.includes(product.slug)
+}
+
 function requireData<T>(data: T | null, error: { message: string } | null): T {
   if (error) throw new Error(`Unable to load the Tulda catalogue: ${error.message}`)
   if (data === null) throw new Error('Unable to load the Tulda catalogue: Supabase returned no data.')
@@ -56,7 +67,7 @@ const namedHtmlEntities: Record<string, string> = {
   hellip: '…',
   lt: '<',
   nbsp: ' ',
-  ndash: '–',
+  ndash: '-',
   quot: '"',
   rsquo: '’',
 }
@@ -289,7 +300,9 @@ export function filterProducts(products: CatalogueProduct[], filters: { categori
   const filtered = products.filter((product) => {
     const searchMatches = !query || [product.name, product.code, product.shortDescription, ...product.categories.map((category) => category.name), ...product.variants.map((variant) => variant.sku)]
       .some((value) => value?.toLocaleLowerCase().includes(query))
-    const categoryMatches = filters.categories.length === 0 || product.categories.some((category) => filters.categories.includes(category.id))
+    const categoryMatches = filters.categories.length === 0
+      || (filters.categories.includes(SPEED_LINE_CATEGORY_ID) && isSpeedLineProduct(product))
+      || product.categories.some((category) => filters.categories.includes(category.id))
     const stockMatches = !filters.inStockOnly || product.isInStock
     const sizeMatches = filters.sizes.length === 0 || product.variants.some((variant) => filters.sizes.some((size) => variant.label.includes(size)))
     return searchMatches && categoryMatches && stockMatches && sizeMatches

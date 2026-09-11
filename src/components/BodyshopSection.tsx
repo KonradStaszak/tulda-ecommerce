@@ -2,12 +2,12 @@ const features = [
   {
     number: '01',
     title: 'Formulated for Daily Volume',
-    body: 'Tulda products are engineered for high-throughput bodyshop environments — fast curing times, consistent results, and simplified application mean more cars through your bay each week.',
+    body: 'Tulda products are engineered for high-throughput bodyshop environments. Fast curing times, consistent results, and simplified application mean more cars through your bay each week.',
   },
   {
     number: '02',
     title: '2K Technology Throughout',
-    body: 'Our 2-component system ensures maximum durability, chemical resistance, and colour retention across every product in the range — from primer to clearcoat.',
+    body: 'Our 2-component system ensures maximum durability, chemical resistance, and colour retention across every product in the range, from primer to clearcoat.',
   },
   {
     number: '03',
@@ -16,8 +16,8 @@ const features = [
   },
   {
     number: '04',
-    title: 'Consistent Supply Chain',
-    body: 'Stocked and shipped from our London distribution centre. Free next-day delivery on orders over £50 means your team never runs short mid-job.',
+    title: 'Practical Technical Guidance',
+    body: 'Clear product information and technical documentation help your team choose, prepare and apply each system with confidence.',
   },
 ]
 
@@ -54,13 +54,13 @@ export default function BodyshopSection() {
                 className="text-white text-4xl font-black leading-none"
                 style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
               >
-                15+
+                COMPLETE
               </p>
               <p
                 className="text-white/80 text-xs mt-1"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
-                Professional products<br />in the Tulda range
+                Professional products for the<br />complete refinishing process
               </p>
             </div>
 
@@ -85,7 +85,7 @@ export default function BodyshopSection() {
               className="text-base leading-relaxed mb-10"
               style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif', fontWeight: 300 }}
             >
-              Tulda is a professional refinish brand built around the real demands of the automotive bodyshop. Our products are tested and proven in working environments — not just in a lab.
+              Tulda is a professional refinish brand built around the real demands of the automotive bodyshop. Our products are tested and proven in working environments, not just in a lab.
             </p>
 
             {/* Features list */}

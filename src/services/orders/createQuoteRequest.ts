@@ -31,6 +31,7 @@ export async function createQuoteRequest(
       })),
     },
   })
-  if (error || !data) throw new Error("Unable to send your enquiry.")
+  if (error) throw new Error(error.message)
+  if (!data) throw new Error("The enquiry service returned no confirmation.")
   return data
 }

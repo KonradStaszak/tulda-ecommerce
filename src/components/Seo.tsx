@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 
 const SITE_URL = 'https://tulda.co'
 const DEFAULT_TITLE = 'Tulda | Professional Automotive Refinishing Supplies UK'
-const DEFAULT_DESCRIPTION = 'Professional automotive refinishing supplies for UK bodyshops. Shop Tulda clearcoats, primers, abrasives, fillers and hardeners with UK delivery.'
-const DEFAULT_IMAGE = 'https://tulda.co/assets/campaign/tulda-workshop-range.jpg'
+const DEFAULT_DESCRIPTION = 'Professional automotive refinishing systems for bodyshops, paintshops and smart repair specialists. Tulda supports localised repairs, larger repairs and full resprays.'
+const DEFAULT_IMAGE = 'https://tulda.co/assets/campaign/tulda-workshop-range-black-coupe.png'
 
 function cleanDescription(value: string) {
   const plainText = value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()

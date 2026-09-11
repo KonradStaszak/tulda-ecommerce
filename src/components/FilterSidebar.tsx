@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { CatalogueCategory, FilterState } from '../types/catalog'
 import { getCategoryTree } from '../services/catalogue/categoryHierarchy'
+import { SPEED_LINE_CATEGORY_ID } from '../services/catalogue/repository'
 
 interface FilterSidebarProps {
   filters: FilterState
@@ -12,7 +13,7 @@ interface FilterSidebarProps {
 
 const SIZE_GROUPS = [
   { label: 'Small (1L / 1kg)', values: ['1L', '1kg'] },
-  { label: 'Medium (1.5–3.5L / 3kg)', values: ['1.5L', '3.5L', '3kg'] },
+  { label: 'Medium (1.5-3.5L / 3kg)', values: ['1.5L', '3.5L', '3kg'] },
   { label: 'Large (5L+)', values: ['5L', '7.5L'] },
   { label: 'Boxes / Kits', values: ['Box/50', 'Box/100', 'Kit', 'Bundle'] },
 ]
@@ -113,6 +114,11 @@ export default function FilterSidebar({ filters, onChange, totalCount, filteredC
       {/* Category */}
       <AccordionSection title="Category">
         <div className="space-y-0.5">
+          <Checkbox
+            checked={filters.categories.includes(SPEED_LINE_CATEGORY_ID)}
+            onChange={() => toggleCategory(SPEED_LINE_CATEGORY_ID)}
+            label="Speed Line"
+          />
           {categoryTree.flatMap((node) => [
             <Checkbox
               key={node.category.id}

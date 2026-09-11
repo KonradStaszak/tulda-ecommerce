@@ -196,7 +196,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
       <div style={{ backgroundColor: transparentHeader ? 'rgba(2,11,16,0.38)' : 'rgba(17,17,17,0.92)', color: 'rgba(255,255,255,0.65)', transition: 'background-color 300ms ease' }} className="hidden backdrop-blur-md md:block">
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center h-8">
           <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px' }}>
-            Free UK delivery on orders over £50
+            Professional automotive refinishing support
           </span>
           <div className="flex gap-5" style={{ fontSize: '11px' }}>
             <a href="tel:+442088193278" className="hover:text-white transition-colors">+44 (0) 2088 193278</a>
@@ -334,7 +334,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
               <button
                 onClick={() => { closeMobileOverlays(); onCartOpen() }}
                 className="relative flex h-11 w-11 items-center justify-center rounded-sm transition-colors hover:text-[var(--primary)] focus-visible:text-[var(--primary)] lg:ml-1"
-                aria-label={`Cart — ${cartCount} items`}
+                aria-label={`Cart: ${cartCount} items`}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18" />
@@ -433,7 +433,7 @@ export default function Header({ cartCount, onCartOpen, categories, products, is
                       Engineered for the Bodyshop
                     </h3>
                     <p className="text-xs leading-relaxed" style={{ color: 'var(--surface-dark-muted)', fontFamily: 'Inter, sans-serif' }}>
-                      Every Tulda product is formulated for professional results — consistent, reliable, and built for daily use in demanding environments.
+                      Every Tulda product is formulated for professional results: consistent, reliable, and built for daily use in demanding environments.
                     </p>
                   </div>
                   <Link to="/products" className="inline-flex items-center gap-1.5 text-xs font-semibold mt-5 transition-opacity hover:opacity-80"

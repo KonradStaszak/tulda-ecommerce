@@ -1,7 +1,7 @@
 const trustItems = [
   {
-    title: `Free delivery over \u00A350`,
-    subtitle: 'UK mainland delivery',
+    title: 'Exceptional value',
+    subtitle: 'Professional performance, made practical',
     icon: <svg className="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /><circle cx="12" cy="12" r="10" /></svg>,
   },
   {
@@ -15,8 +15,8 @@ const trustItems = [
     icon: <svg className="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 018 0 4 4 0 018 0z" /></svg>,
   },
   {
-    title: 'Easy returns',
-    subtitle: 'Hassle-free within 30 days',
+    title: 'Consistent results',
+    subtitle: 'Reliable performance, repair after repair',
     icon: <svg className="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
   },
 ]

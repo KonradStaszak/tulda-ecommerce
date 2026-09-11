@@ -95,7 +95,7 @@ export default function ContactCTA() {
             </h2>
             <p className="mb-10 max-w-xl text-base font-normal leading-relaxed text-[var(--muted-foreground)]">
               Our technical team visits bodyshops across the UK to demonstrate
-              the Tulda range in your own environment. No obligation — just a
+              the Tulda range in your own environment. No obligation, just a
               real-world look at what our products can do for your workflow.
             </p>
             <div className="space-y-5">

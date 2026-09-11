@@ -76,7 +76,7 @@ export default function WorkshopGallery() {
               Built for the workshop.
             </h2>
             <p className="mt-4 max-w-[550px] text-[15px] leading-7 text-[#5f6870] md:text-base">
-              From prep to final finish, Tulda products are made to perform in the real world — where consistency matters.
+              From prep to final finish, Tulda products are made to perform in the real world, where consistency matters.
             </p>
           </div>
           <Link

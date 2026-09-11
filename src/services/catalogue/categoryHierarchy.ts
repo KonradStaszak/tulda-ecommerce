@@ -5,6 +5,15 @@ export interface CategoryTreeNode {
   children: CategoryTreeNode[]
 }
 
+const processOrder = ['abrasives', 'filler', 'primer', 'thinner', 'clearcoat', 'kits', 'industrial']
+
+function compareCategories(left: CategoryTreeNode, right: CategoryTreeNode) {
+  const leftIndex = processOrder.indexOf(left.category.slug)
+  const rightIndex = processOrder.indexOf(right.category.slug)
+  return (leftIndex === -1 ? processOrder.length : leftIndex) - (rightIndex === -1 ? processOrder.length : rightIndex)
+    || left.category.name.localeCompare(right.category.name)
+}
+
 export function getCategoryTree(categories: CatalogueCategory[]) {
   const nodes = new Map(categories.map((category) => [category.id, { category, children: [] as CategoryTreeNode[] }]))
   const topLevel: CategoryTreeNode[] = []
@@ -15,9 +24,8 @@ export function getCategoryTree(categories: CatalogueCategory[]) {
     else topLevel.push(node)
   }
 
-  const byName = (left: CategoryTreeNode, right: CategoryTreeNode) => left.category.name.localeCompare(right.category.name)
-  for (const node of nodes.values()) node.children.sort(byName)
-  return topLevel.sort(byName)
+  for (const node of nodes.values()) node.children.sort(compareCategories)
+  return topLevel.sort(compareCategories)
 }
 
 export function getCategoryAncestors(category: CatalogueCategory, categories: CatalogueCategory[]) {
