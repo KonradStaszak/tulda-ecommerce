@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+tulda-co-thecamels-upload*.zip
 .cache/
 .env*
 !.env.example
