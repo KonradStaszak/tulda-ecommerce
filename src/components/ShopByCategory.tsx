@@ -19,8 +19,6 @@ const processOrder = [
   "industrial",
 ]
 
-const enlargedShowcaseCategories = new Set(["primer", "thinner", "kits"])
-
 const representativeProductMatchers: Record<string, (
   product: CatalogueProduct,
 ) => boolean> = {
@@ -34,149 +32,14 @@ const representativeProductMatchers: Record<string, (
   thinner: (product) => product.name.toLowerCase().includes("st10"),
 }
 
-interface CategoryShowcase {
-  background: string
-  backgroundPosition?: string
-  products: Array<{ src: string className: string }>
-}
-
-const categoryShowcases: Record<string, CategoryShowcase> = {
-  abrasives: {
-    background: "/assets/category-banners/abrasives-workshop.webp",
-    products: [
-      {
-        src: "/assets/products/tulda-6-150mm-15h-sanding-paper-disc-all-grits-box-of-100/product-cutout-p800.png",
-        className:
-          "absolute bottom-[8%] left-[3%] z-20 h-[72%] w-[58%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-paper-strips-70x420-14h-all-grits-box-of-50/product-cutout-p120.png",
-        className:
-          "absolute bottom-[3%] left-[15%] z-30 h-[47%] w-[82%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-6-150mm-15h-sanding-film-discs-all-grits/product-cutout-p800.png",
-        className:
-          "absolute bottom-[12%] right-[1%] z-10 h-[58%] w-[43%] object-contain object-bottom opacity-95",
-      },
-    ],
-  },
-  filler: {
-    background: "/assets/category-banners/filler-workshop.webp",
-    backgroundPosition: "object-[66%_center]",
-    products: [
-      {
-        src: "/assets/products/bt01-bodyfiller/cutout-bt01-bodyfiller.png",
-        className:
-          "absolute inset-x-[10%] bottom-[4%] h-[87%] w-[80%] object-contain object-bottom",
-      },
-    ],
-  },
-  primer: {
-    background: "/assets/category-banners/primer-workshop.webp",
-    backgroundPosition: "object-[65%_center]",
-    products: [
-      {
-        src: "/assets/products/tulda-pt30-multiprimer/cutout-pt30-4.png",
-        className:
-          "absolute bottom-[5%] left-[2%] z-20 h-[61%] w-[36%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-pt30-multiprimer/cutout-pt30-kit.png",
-        className:
-          "absolute bottom-[3%] left-[22%] z-30 h-[88%] w-[58%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-pt30-multiprimer/cutout-pt30-1.png",
-        className:
-          "absolute bottom-[6%] right-[1%] z-20 h-[53%] w-[31%] object-contain object-bottom",
-      },
-    ],
-  },
-  thinner: {
-    background: "/assets/category-banners/thinner-workshop.webp",
-    backgroundPosition: "object-[64%_center]",
-    products: [
-      {
-        src: "/assets/products/tulda-st10/cutout-st10-1.png",
-        className:
-          "absolute bottom-[6%] left-[4%] z-20 h-[55%] w-[31%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-st10/cutout-st10-5.png",
-        className:
-          "absolute bottom-[3%] left-[25%] z-30 h-[86%] w-[48%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-st11-acrylic-thinner-slow-1l/cutout-st11-1.png",
-        className:
-          "absolute bottom-[6%] right-[3%] z-20 h-[55%] w-[31%] object-contain object-bottom",
-      },
-    ],
-  },
-  clearcoat: {
-    background: "/assets/category-banners/clearcoat-workshop.webp",
-    backgroundPosition: "object-[68%_center]",
-    products: [
-      {
-        src: "/assets/products/tulda-ct90-vhs-speedline-acrylic-clearcoat-1l/cutout-ct90-7-5-kit.png",
-        className:
-          "absolute bottom-[5%] left-[0%] z-20 h-[65%] w-[39%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/xct100-clearcoat-21-vhs-extra-speed-clear/cutout-xct100-7-5-kit.png",
-        className:
-          "absolute bottom-[2%] left-[20%] z-30 h-[90%] w-[60%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l/cutout-ct60-7-5-kit.png",
-        className:
-          "absolute bottom-[5%] right-[0%] z-20 h-[65%] w-[39%] object-contain object-bottom",
-      },
-    ],
-  },
-  kits: {
-    background: "/assets/category-banners/kits-workshop.webp",
-    backgroundPosition: "object-[65%_center]",
-    products: [
-      {
-        src: "/assets/products/tulda-ct90-vhs-speedline-acrylic-clearcoat-1l/cutout-ct90-1-5-kit.png",
-        className:
-          "absolute bottom-[5%] left-[1%] z-20 h-[62%] w-[38%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/xct100-clearcoat-21-vhs-extra-speed-clear/cutout-xct100-1-5-kit.png",
-        className:
-          "absolute bottom-[3%] left-[22%] z-30 h-[82%] w-[56%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/tulda-ct60-multi-clear-21-hs-speedline-acrylic-lacquer-kit-7-5l/cutout-ct60-1-5-kit.png",
-        className:
-          "absolute bottom-[5%] right-[1%] z-20 h-[62%] w-[38%] object-contain object-bottom",
-      },
-    ],
-  },
-  industrial: {
-    background: "/assets/category-banners/industrial-workshop.webp",
-    backgroundPosition: "object-[66%_center]",
-    products: [
-      {
-        src: "/assets/products/upvc-1k-binder-731-topcoat-4-25l/cutout-1k-binder-731.png",
-        className:
-          "absolute bottom-[5%] left-[1%] z-20 h-[61%] w-[35%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/upvc-2k-binder-561-topcoat-4l/cutout-upvc-2k-binder-561.png",
-        className:
-          "absolute bottom-[3%] left-[22%] z-30 h-[86%] w-[56%] object-contain object-bottom",
-      },
-      {
-        src: "/assets/products/upvc-2k-binder-561-topcoat-4l/cutout-h63-hardener-1.png",
-        className:
-          "absolute bottom-[5%] right-[2%] z-20 h-[57%] w-[32%] object-contain object-bottom",
-      },
-    ],
-  },
+const categoryPhotos: Record<string, string> = {
+  abrasives: "/assets/category-banners/abrasives-photoshoot.webp",
+  filler: "/assets/category-banners/filler-photoshoot.webp",
+  primer: "/assets/category-banners/primer-photoshoot.webp",
+  thinner: "/assets/category-banners/thinner-photoshoot.webp",
+  clearcoat: "/assets/category-banners/clearcoat-photoshoot.webp",
+  kits: "/assets/category-banners/kits-photoshoot.webp",
+  industrial: "/assets/category-banners/industrial-photoshoot.webp",
 }
 
 function getCategoryImage(
@@ -235,15 +98,9 @@ export default function ShopByCategory({
   const categoryImage = activeCategory
     ? getCategoryImage(activeCategory, products)
     : undefined
-  const categoryImageScaleClass =
-    activeCategory?.slug === "clearcoat" ? "scale-[1.28]" : "scale-100"
-  const activeShowcase = activeCategory
-    ? categoryShowcases[activeCategory.slug]
+  const activePhoto = activeCategory
+    ? categoryPhotos[activeCategory.slug]
     : undefined
-  const hasShowcase = Boolean(activeShowcase)
-  const enlargeShowcaseProducts = activeCategory
-    ? enlargedShowcaseCategories.has(activeCategory.slug)
-    : false
   const changeSlide = (direction: number) => {
     if (displayCategories.length === 0) return
     const nextIndex =
@@ -311,73 +168,14 @@ export default function ShopByCategory({
             <div className="h-[520px] animate-pulse border bg-[var(--muted)] sm:h-[390px]" />
           ) : (
             <article className="relative grid overflow-hidden border border-[#2b3034] bg-[#0a0c0e] sm:min-h-[390px] sm:grid-cols-[1fr_0.9fr]">
-              {hasShowcase ? (
-                <>
-                  <img
-                    src={activeShowcase?.background}
-                    alt=""
-                    className={`pointer-events-none absolute inset-0 h-full w-full object-cover ${
-                      activeShowcase?.backgroundPosition ??
-                      "object-[62%_center]"
-                    }`}
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(4,9,12,0.97)_0%,rgba(4,9,12,0.86)_43%,rgba(4,9,12,0.28)_72%,rgba(4,9,12,0.18)_100%)] sm:bg-[linear-gradient(90deg,rgba(4,9,12,0.97)_0%,rgba(4,9,12,0.88)_42%,rgba(4,9,12,0.25)_67%,rgba(4,9,12,0.12)_100%)]" />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/65 to-transparent" />
-                </>
-              ) : (
-                <svg
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 h-full w-full"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 1000 500"
-                >
-                  <polygon points="0,0 345,0 250,146" fill="#0d1012" />
-                  <polygon
-                    points="345,0 520,0 384,153 250,146"
-                    fill="#111518"
-                  />
-                  <polygon points="250,146 384,153 318,286" fill="#181d20" />
-                  <polygon
-                    points="0,112 250,146 318,286 76,500 0,500"
-                    fill="#0e1214"
-                  />
-                  <polygon
-                    points="318,286 520,180 514,500 76,500"
-                    fill="#151a1d"
-                  />
-                  <polygon
-                    points="384,153 520,0 586,210 520,180"
-                    fill="#0b0e10"
-                  />
-                  <polygon points="520,180 586,210 514,500" fill="#1b2023" />
-                  <polygon
-                    points="586,0 1000,0 1000,160 586,210"
-                    fill="#15191c"
-                  />
-                  <polygon
-                    points="586,210 1000,160 832,330 514,500"
-                    fill="#1d2225"
-                  />
-                  <polygon
-                    points="832,330 1000,160 1000,500 514,500"
-                    fill="#121619"
-                  />
-                  <path
-                    d="M430 0 L1000 146"
-                    fill="none"
-                    stroke="var(--primary)"
-                    strokeOpacity="0.42"
-                    strokeWidth="4"
-                  />
-                  <path
-                    d="M0 426 L126 500"
-                    fill="none"
-                    stroke="var(--primary)"
-                    strokeOpacity="0.2"
-                    strokeWidth="3"
-                  />
-                </svg>
+              {(activePhoto ?? categoryImage) && (
+                <img
+                  src={activePhoto ?? categoryImage}
+                  alt=""
+                  className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[74%_center] sm:object-center"
+                />
               )}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#04090c]/85 via-[#04090c]/35 to-transparent sm:bg-gradient-to-r sm:from-[#04090c]/85 sm:via-[#04090c]/35 sm:to-transparent" />
               <div className="relative z-10 flex flex-col gap-5 p-5 sm:justify-between sm:p-9">
                 <div>
                   <h4 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-5xl sm:leading-[0.86]">
@@ -395,38 +193,7 @@ export default function ShopByCategory({
                   FIND OUT MORE <span aria-hidden="true">→</span>
                 </Link>
               </div>
-              <div
-                className={`relative z-10 h-[330px] min-h-[330px] overflow-hidden sm:h-auto sm:min-h-[220px] ${
-                  hasShowcase
-                    ? "bg-[radial-gradient(circle_at_45%_55%,rgba(24,174,229,0.13),transparent_65%)]"
-                    : "bg-[radial-gradient(circle_at_52%_48%,rgba(255,255,255,0.12),rgba(255,255,255,0.025)_42%,transparent_72%)]"
-                }`}
-              >
-                {activeShowcase ? (
-                  <div className="absolute inset-0">
-                    <div className="pointer-events-none absolute inset-x-[8%] bottom-[3%] h-[18%] rounded-[50%] bg-black/35 blur-xl" />
-                    {activeShowcase.products.map((product) => (
-                      <img
-                        key={product.src}
-                        src={product.src}
-                        alt=""
-                        className={`${product.className} origin-bottom drop-shadow-[0_18px_14px_rgba(0,0,0,0.58)] ${
-                          enlargeShowcaseProducts
-                            ? "scale-[1.5] sm:scale-[1.7]"
-                            : "scale-100"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                ) : categoryImage ? (
-                  <img
-                    key={activeCategory.id}
-                    src={categoryImage}
-                    alt={`${activeCategory.name} by Tulda`}
-                    className={`absolute inset-0 h-full w-full object-contain p-4 transition duration-500 ease-out sm:p-8 ${categoryImageScaleClass}`}
-                  />
-                ) : null}
-              </div>
+              <div aria-hidden="true" className="relative z-10 h-[330px] sm:h-auto sm:min-h-[390px]" />
             </article>
           )}
           {!loading && displayCategories.length > 1 && (
